@@ -22,7 +22,7 @@ namespace Gringotts.UnitTests.Persistence
         [SetUp]
         public void SetUp()
         {
-            session = this.CreateSession();
+            session = CreateSession();
         }
 
         [TearDown]
@@ -36,7 +36,7 @@ namespace Gringotts.UnitTests.Persistence
         {
             String nameOfVenture = "Venture-1";
             int overlay = 100;
-            Venture venture = new Venture() { Name = nameOfVenture, Outlay = overlay };
+            Venture venture = new Venture { Name = nameOfVenture, Outlay = overlay };
             session.Save(venture);
             IQuery query = session.CreateQuery("from Venture");
             IList<Venture> ventures = query.List<Venture>();
