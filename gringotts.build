@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<project name="Gringotts" default="all">
+  <property name="projectName" value="Gringotts" />
+  <property name="mode" value="Debug" />
+  <property name="debug" value="true" />
+
+  <target name="clean">
+    <echo message="${projectName}/bin/*.*" />
+    <delete>
+      <fileset>
+        <include name="${projectName}/bin/**/*.*" />
+        <include name="${projectName}.UnitTests/bin/**/*.*" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="build" depends="clean">
+    <csc target="library" output="${projectName}/bin/${mode}/${projectName}.dll" debug="${debug}">
+      <sources>
+        <include name="${projectName}/**/*.*" />
+      </sources>
+    </csc>
+  </target>
+
+  <target name="all" depends="build">
+
+  </target>
+</project>
