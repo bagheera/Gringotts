@@ -8,7 +8,7 @@
     <ProjectGuid>{4014305D-34BD-41C9-AE30-61EDF2597249}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gringotts.UnitTests</RootNamespace>
+    <RootNamespace>Gringotts</RootNamespace>
     <AssemblyName>Gringotts.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,10 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\InvestorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <ProjectReference Include="..\Gringotts\Gringotts.csproj">
+      <Project>{28F84B47-F0E2-476F-8E40-05D89C8D3113}</Project>
+      <Name>Gringotts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Persistence\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
