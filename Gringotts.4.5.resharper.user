@@ -34,20 +34,8 @@
     </ItemStatistics>
   </CompletionStatisticsManager>
   <RecentFiles>
-    <RecentFiles>
-      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="415" fromTop="7" />
-      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="356" fromTop="20" />
-      <File id="4014305D-34BD-41C9-AE30-61EDF2597249/d:Domain/f:VentureTest.cs" caret="566" fromTop="17" />
-      <File id="4014305D-34BD-41C9-AE30-61EDF2597249/d:Persistence/f:VentureTest.cs" caret="558" fromTop="14" />
-    </RecentFiles>
-    <RecentEdits>
-      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="279" fromTop="15" />
-      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="221" fromTop="2" />
-      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="415" fromTop="7" />
-      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="179" fromTop="9" />
-      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="260" fromTop="14" />
-      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="356" fromTop="20" />
-    </RecentEdits>
+    <RecentFiles />
+    <RecentEdits />
   </RecentFiles>
   <UnitTestRunner>
     <Providers />

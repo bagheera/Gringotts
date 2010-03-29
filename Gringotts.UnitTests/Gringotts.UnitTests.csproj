@@ -57,13 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Domain\VentureTest.cs" />
     <Compile Include="Persistence\NHibernateInMemoryTestFixtureBase.cs" />
     <Compile Include="Persistence\VentureTest.cs" />
-=======
     <Compile Include="Domain\InvestorTest.cs" />
->>>>>>> df3fd95c47410259dee0ea953254c5066f3aa914
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,12 +68,9 @@
       <Project>{28F84B47-F0E2-476F-8E40-05D89C8D3113}</Project>
       <Name>Gringotts</Name>
     </ProjectReference>
-<<<<<<< HEAD
-=======
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistence\" />
->>>>>>> df3fd95c47410259dee0ea953254c5066f3aa914
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -57,7 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Domain\Venture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,15 +66,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-=======
     <Compile Include="Domain\Corpus.cs" />
     <Compile Include="Domain\GringottsDate.cs" />
     <Compile Include="Domain\Investor.cs" />
     <Compile Include="Domain\Name.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
->>>>>>> df3fd95c47410259dee0ea953254c5066f3aa914
     <Folder Include="Persistence\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
