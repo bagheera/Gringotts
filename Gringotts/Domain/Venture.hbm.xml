@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="Gringotts" namespace="Gringotts.Domain">
+  <class name="Gringotts.Domain.Venture" table="Venture">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <property name="Name" column="Name" type="String" length="40"/>
+    <property name="Outlay" column="Outlay" type="int"/>
+  </class>
+ </hibernate-mapping>

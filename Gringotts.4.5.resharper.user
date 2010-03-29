@@ -1,0 +1,55 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="tf" priority="0" />
+      <Item value="venture" priority="3" />
+      <Item value="Venture" priority="2" />
+      <Item value="ventures" priority="4" />
+      <Item value="public" priority="0" />
+      <Item value="string" priority="0" />
+      <Item value="outlay" priority="0" />
+      <Item value="loopVenture" priority="0" />
+      <Item value="Assert" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Gringotts.Domain.Venture">
+      <Item value="nameOfVenture" priority="3" />
+      <Item value="overlay" priority="0" />
+      <Item value="Id" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IList`1">
+      <Item value="First" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@NUnit.Framework.Assert">
+      <Item value="IsNull" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="415" fromTop="7" />
+      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="356" fromTop="20" />
+      <File id="4014305D-34BD-41C9-AE30-61EDF2597249/d:Domain/f:VentureTest.cs" caret="566" fromTop="17" />
+      <File id="4014305D-34BD-41C9-AE30-61EDF2597249/d:Persistence/f:VentureTest.cs" caret="558" fromTop="14" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="279" fromTop="15" />
+      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="221" fromTop="2" />
+      <File id="d:&amp;/f:Venture.hbm.xml/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.hbm.xml" caret="415" fromTop="7" />
+      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="179" fromTop="9" />
+      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="260" fromTop="14" />
+      <File id="d:&amp;/f:Venture.cs/l:F!?Workspace?Gringotts?Gringotts?Domain?Venture.cs" caret="356" fromTop="20" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+</Configuration>
