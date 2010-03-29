@@ -5,22 +5,22 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Gringotts")]
+[assembly: AssemblyTitle("Gringotts.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ThoughtWorks Technologies India Pvt Ltd")]
-[assembly: AssemblyProduct("Gringotts")]
-[assembly: AssemblyCopyright("Copyright © ThoughtWorks Technologies India Pvt Ltd 2010")]
+[assembly: AssemblyCompany("ThoughtWorks India")]
+[assembly: AssemblyProduct("Gringotts.UnitTests")]
+[assembly: AssemblyCopyright("Copyright © ThoughtWorks India 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Gringotts.UnitTests")]
+
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cb58f374-83ce-4ea6-937f-f612a36beaa0")]
+[assembly: Guid("25f17ce6-6583-4d07-b434-178cd7bd9abc")]
 
 // Version information for an assembly consists of the following four values:
 //
