@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Domain\Amount.cs" />
     <Compile Include="Domain\GringottsDate.cs" />
+    <Compile Include="Domain\Investment.cs" />
     <Compile Include="Domain\Investor.cs" />
     <Compile Include="Domain\Name.cs" />
     <Compile Include="Persistence\VentureRepository.cs" />
