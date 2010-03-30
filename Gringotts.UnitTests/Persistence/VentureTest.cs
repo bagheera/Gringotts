@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Gringotts.Domain;
+using Gringotts.Persistence;
 using NHibernate;
 using NUnit.Framework;
 using System.Linq;
@@ -38,10 +39,12 @@ namespace Gringotts.UnitTests.Persistence
             Amount outlay = new Amount(100);
             Amount minInvestment = new Amount(0);
             Venture venture = new Venture() { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment };
+            VentureRepository ventureRepository = new VentureRepository(session);
 
-            session.Save(venture);
-            IQuery query = session.CreateQuery("from Venture");
-            IList<Venture> ventures = query.List<Venture>();
+            Assert.IsNull(venture.Id);
+            ventureRepository.Save(venture);            
+            IList<Venture> ventures = ventureRepository.FetchAll();
+
             foreach (Venture loopVenture in ventures)
             {
                 Console.WriteLine("{0} {1} {2}", loopVenture.Id, loopVenture.Name.GetValue(), loopVenture.Outlay.Value);
