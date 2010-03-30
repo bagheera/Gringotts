@@ -45,11 +45,7 @@ namespace Gringotts.UnitTests.Persistence
             ventureRepository.Save(venture);            
             IList<Venture> ventures = ventureRepository.FetchAll();
 
-            foreach (Venture loopVenture in ventures)
-            {
-                Console.WriteLine("{0} {1} {2}", loopVenture.Id, loopVenture.Name.GetValue(), loopVenture.Outlay.Value);
-            }
-
+            ventures.ToList().ForEach(v => Console.WriteLine("{0} {1} {2}", v.Id, v.Name.GetValue(), v.Outlay.Value));
             Assert.AreEqual(1, ventures.Count);
             Assert.AreEqual(venture.Name, ventures.First().Name);
             Assert.IsNotNull(ventures.First().Id);
