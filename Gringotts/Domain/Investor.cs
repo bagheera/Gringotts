@@ -5,33 +5,40 @@ namespace Gringotts.Domain
 	public class Investor
 	{
 		private int id;
-
 		private readonly Name name;
 		private readonly GringottsDate date;
-		private readonly Corpus corpus;
+		private Amount corpus;
 
-		public Investor() {} // For NHibernate
+		public Investor() { } // For NHibernate
 
-		public Investor(Name name, GringottsDate date, Corpus corpus)
+		public Investor(Name name, GringottsDate date, Amount amount)
 		{
 			this.name = name;
 			this.date = date;
-			this.corpus = corpus;
+			corpus = amount;
 		}
 
-		public virtual int Corpus
+		public virtual Amount Corpus
 		{
-			get { return corpus.Amount; }
+			get { return corpus; }
 		}
 
-		public virtual int Id
+		public virtual void Pay(Amount amount)
 		{
-			get { return id; }
+			corpus -= amount;
 		}
 
 		public virtual string Name
 		{
 			get { return name.GetValue(); }
+		}
+
+		public virtual int Id
+		{
+			get
+			{
+				return id;
+			}
 		}
 	}
 }

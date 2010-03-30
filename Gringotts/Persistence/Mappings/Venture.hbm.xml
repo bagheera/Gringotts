@@ -4,7 +4,13 @@
     <id name="Id">
       <generator class="native" />
     </id>
-    <property name="Name" column="Name" type="String" length="40"/>
-    <property name="Outlay" column="Outlay" type="int"/>
+    <component name="Name">
+      <property name="name" column="Name" type="String" length="40" access="field"/>
+    </component>
+    
+    <component name="Outlay">
+      <property name="Value" column="Outlay" type="int"/>
+    </component>
+
   </class>
- </hibernate-mapping>
+</hibernate-mapping>

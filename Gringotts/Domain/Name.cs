@@ -1,5 +1,3 @@
-using System;
-
 namespace Gringotts.Domain
 {
 	public class Name

@@ -36,7 +36,7 @@ namespace Gringotts.Persistence
 			DateTime date = DateTime.Today;
 			int amount = 100;
 			
-			Investor investor = new Investor(new Name(name), new GringottsDate(date), new Corpus(amount));
+			Investor investor = new Investor(new Name(name), new GringottsDate(date), new Amount(amount));
 			
 			InvestorRepository investorRepository = new InvestorRepository();
 			investorRepository.NHibernateSession = session;
