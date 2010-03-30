@@ -1,5 +1,3 @@
-using System;
-
 namespace Gringotts.Domain
 {
     public class Investor
@@ -12,7 +10,7 @@ namespace Gringotts.Domain
         {
             this.name = name;
             this.date = date;
-            this.corpus = amount;
+            corpus = amount;
         }
 
         public Amount Corpus
@@ -22,7 +20,7 @@ namespace Gringotts.Domain
 
         public void Pay(Amount amount)
         {
-            this.corpus -= amount;
+            corpus -= amount;
         }
     }
 }

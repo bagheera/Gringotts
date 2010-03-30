@@ -1,5 +1,4 @@
-﻿using System;
-using Gringotts.Domain;
+﻿using Gringotts.Domain;
 using NUnit.Framework;
 
 namespace Gringotts.UnitTests.Domain
@@ -13,8 +12,7 @@ namespace Gringotts.UnitTests.Domain
             Name nameOfVenture = new Name("Ventura");
             Amount outlay = new Amount(100);
             Amount minInvestment = new Amount(0);
-            Venture venture = new Venture() { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment};
-
+            Venture venture = new Venture { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment };
             Assert.IsNull(venture.Id);
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);

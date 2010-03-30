@@ -4,7 +4,7 @@ namespace Gringotts.Domain
     {
         public Amount(int amount)
         {
-            this.Value = amount;
+            Value = amount;
         }
 
         public Amount()

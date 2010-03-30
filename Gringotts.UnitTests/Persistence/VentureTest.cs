@@ -38,7 +38,7 @@ namespace Gringotts.UnitTests.Persistence
             Name nameOfVenture = new Name("Ventura");
             Amount outlay = new Amount(100);
             Amount minInvestment = new Amount(0);
-            Venture venture = new Venture() { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment };
+            Venture venture = new Venture { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment };
             VentureRepository ventureRepository = new VentureRepository(session);
 
             Assert.IsNull(venture.Id);
