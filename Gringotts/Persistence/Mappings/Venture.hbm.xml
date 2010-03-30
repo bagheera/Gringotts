@@ -7,10 +7,11 @@
     <component name="Name">
       <property name="name" column="Name" type="String" length="40" access="field"/>
     </component>
-    
     <component name="Outlay">
       <property name="Value" column="Outlay" type="int"/>
     </component>
-
+    <component name="MinInvestment">
+      <property name="Value" column="MinInvestment" type="int"/>
+    </component>
   </class>
 </hibernate-mapping>

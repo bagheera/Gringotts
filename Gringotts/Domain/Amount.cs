@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Amount
@@ -37,6 +39,26 @@ namespace Gringotts.Domain
         public override int GetHashCode()
         {
             return Value;
+        }
+
+        public static bool operator <=(Amount left, Amount right)
+        {
+            return left.Value <= right.Value;
+        }
+
+        public static bool operator >=(Amount left, Amount right)
+        {
+            return left.Value >= right.Value;
+        }
+
+        public static bool operator >(Amount left, Amount right)
+        {
+            return left.Value > right.Value;
+        }
+
+        public static bool operator <(Amount left, Amount right)
+        {
+            return left.Value < right.Value;
         }
     }
 }
