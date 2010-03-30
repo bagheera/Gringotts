@@ -14,8 +14,8 @@ namespace Gringotts.Persistence
 
         public static void InitalizeSessionFactory(params FileInfo[] hbmFiles)
         {
-            if (sessionFactory != null)
-                return;
+//            if (sessionFactory != null)
+//                return;
 
             var properties = new Dictionary<string, string>();
             properties.Add("connection.driver_class", "NHibernate.Driver.SQLite20Driver");
