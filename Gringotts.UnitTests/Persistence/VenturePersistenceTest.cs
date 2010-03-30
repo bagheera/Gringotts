@@ -37,8 +37,8 @@ namespace Gringotts.Persistence
         {
             Name nameOfVenture = new Name("Ventura");
             Amount outlay = new Amount(100);
-            Amount minInvestment = new Amount(0);
-            Venture venture = new Venture { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment };
+            Amount minInvestment = new Amount(1);
+            Venture venture = new Venture(nameOfVenture, outlay, minInvestment);
             VentureRepository ventureRepository = new VentureRepository(session);
 
             Assert.IsNull(venture.Id);
@@ -48,6 +48,8 @@ namespace Gringotts.Persistence
             ventures.ToList().ForEach(v => Console.WriteLine("{0} {1} {2}", v.Id, v.Name.GetValue(), v.Outlay.Value));
             Assert.AreEqual(1, ventures.Count);
             Assert.AreEqual(venture.Name, ventures.First().Name);
+            Assert.AreEqual(venture.MinInvestment, ventures.First().MinInvestment);
+            Assert.AreEqual(venture.Outlay, ventures.First().Outlay);
             Assert.IsNotNull(ventures.First().Id);
         }
     }

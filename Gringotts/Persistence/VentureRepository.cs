@@ -20,7 +20,7 @@ namespace Gringotts.Persistence
 
         public IList<Venture> FetchAll()
         {
-            IQuery query = Session.CreateQuery("from Venture");
+            IQuery query = Session.CreateQuery("from Venture");            
             return query.List<Venture>();
         }
     }
