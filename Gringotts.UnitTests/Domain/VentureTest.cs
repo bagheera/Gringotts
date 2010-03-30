@@ -12,13 +12,15 @@ namespace Gringotts.UnitTests.Domain
         {
             Name nameOfVenture = new Name("Ventura");
             Amount outlay = new Amount(100);
-            Amount minInvestment = new Amount(0);
+            Amount minInvestment = new Amount(1);
             Venture venture = new Venture() { Name = nameOfVenture, Outlay = outlay, MinInvestment = minInvestment};
 
             Assert.IsNull(venture.Id);
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
+            Assert.Greater(venture.MinInvestment.Value, 0);
+            Assert.Greater(venture.Outlay.Value, venture.MinInvestment.Value);
         }
     }
 }
