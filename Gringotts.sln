@@ -6,9 +6,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gringotts.UnitTests", "Gringotts.UnitTests\Gringotts.UnitTests.csproj", "{4014305D-34BD-41C9-AE30-61EDF2597249}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6008BC7E-F490-4710-A459-3A886A93E925}"
-	ProjectSection(SolutionItems) = preProject
-		gringotts.build = gringotts.build
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
