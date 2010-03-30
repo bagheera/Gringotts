@@ -14,7 +14,6 @@ namespace Gringotts.UnitTests.Domain
             Amount outlay = new Amount(100);
             Amount minInvestment = new Amount(1);
             Venture venture = new Venture(nameOfVenture, outlay, minInvestment);
-
             Assert.IsNull(venture.Id);
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
