@@ -10,8 +10,8 @@ namespace Gringotts.Domain
 		{
 			Name name = new Name("Investor 1");
 			GringottsDate date = new GringottsDate(System.DateTime.Now);
-			Corpus corpus = new Corpus(10);
-			Investor investor = new Investor(name, date, corpus);
+			Amount _amount = new Amount(10);
+			Investor investor = new Investor(name, date, _amount);
 			Assert.AreEqual(10, investor.Corpus);
 		}
 	}

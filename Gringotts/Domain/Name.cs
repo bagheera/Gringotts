@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
 	public class Name
@@ -8,5 +10,13 @@ namespace Gringotts.Domain
 		{
 			this.name = name;
 		}
+
+        public Name()
+        {            
+        }
+	    public string GetValue()
+	    {
+	        return name;
+	    }
 	}
 }
