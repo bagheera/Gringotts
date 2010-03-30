@@ -13,7 +13,8 @@ namespace Gringotts.Domain
 
         public Name()
         {            
-        }
+        }
+
 	    public string GetValue()
 	    {
 	        return name;

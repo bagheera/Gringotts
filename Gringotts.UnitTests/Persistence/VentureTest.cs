@@ -16,7 +16,7 @@ namespace Gringotts.UnitTests.Persistence
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            InitalizeSessionFactory(new FileInfo("Domain/Venture.hbm.xml"));
+            InitalizeSessionFactory(new FileInfo("Persistence/Mappings/Venture.hbm.xml"));
         }
 
         [SetUp]
