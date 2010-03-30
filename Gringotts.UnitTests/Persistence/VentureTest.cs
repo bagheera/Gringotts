@@ -6,7 +6,7 @@ using NHibernate;
 using NUnit.Framework;
 using System.Linq;
 
-namespace Gringotts.UnitTests.Persistence
+namespace Gringotts.Persistence
 {
     [TestFixture]
     public class VentureTest : NHibernateInMemoryTestFixtureBase

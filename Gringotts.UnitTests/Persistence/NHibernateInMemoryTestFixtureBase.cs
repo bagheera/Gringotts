@@ -5,7 +5,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Gringotts.UnitTests.Persistence
+namespace Gringotts.Persistence
 {
     public class NHibernateInMemoryTestFixtureBase
     {
