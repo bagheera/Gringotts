@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Gringotts.Domain;
 
@@ -15,7 +15,11 @@ public class Subscription
     {
         get
         {
-            Amount total = new Amount();
+            Amount total = new Amount(0);
+            foreach (var investment in subscription)
+            {
+                total += investment.Value;
+            }
             return total;
         }
     }

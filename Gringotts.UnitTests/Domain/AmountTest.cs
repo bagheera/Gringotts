@@ -1,15 +1,27 @@
 ﻿using Gringotts.Domain;
 using NUnit.Framework;
 
-[TestFixture]
-public class AmountTest
+namespace Gringotts.Domain
 {
-    [Test]
-    public void Should_Be_Able_To_Subtract()
+    [TestFixture]
+    public class AmountTest
     {
-        Amount amount = new Amount(500);
-        Amount another = new Amount(400);
-        amount -= another;
-        Assert.AreEqual(100, amount.Value);
+        [Test]
+        public void Should_Be_Able_To_Subtract()
+        {
+            Amount amount = new Amount(500);
+            Amount another = new Amount(400);
+            amount -= another;
+            Assert.AreEqual(100, amount.Value);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Add()
+        {
+            Amount amount = new Amount(500);
+            Amount another = new Amount(400);
+            amount += another;
+            Assert.AreEqual(900, amount.Value);
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace Gringotts.Domain
 {
     public class Venture
@@ -44,8 +46,8 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Venture)) return false;
-            return Equals((Venture) obj);
+            if (obj.GetType() != typeof(Venture)) return false;
+            return Equals((Venture)obj);
         }
 
         public override int GetHashCode()
@@ -53,11 +55,17 @@ namespace Gringotts.Domain
             unchecked
             {
                 int result = (Id != null ? Id.GetHashCode() : 0);
-                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result*397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
-                result = (result*397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
+                result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result * 397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
+                result = (result * 397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
                 return result;
             }
+        }
+
+        public Amount GetSubscribedAmount()
+        {
+            return Subscription.Value;
+            throw new NotImplementedException();
         }
     }
 }

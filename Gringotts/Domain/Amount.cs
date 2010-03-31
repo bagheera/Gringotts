@@ -21,6 +21,11 @@ namespace Gringotts.Domain
             return new Amount(self.Value - another.Value);
         }
 
+        public static Amount operator +(Amount self, Amount another)
+        {
+            return new Amount(self.Value + another.Value);
+        }
+
         public bool Equals(Amount other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -32,8 +37,8 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Amount)) return false;
-            return Equals((Amount) obj);
+            if (obj.GetType() != typeof(Amount)) return false;
+            return Equals((Amount)obj);
         }
 
         public override int GetHashCode()
