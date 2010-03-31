@@ -22,7 +22,6 @@ namespace Gringotts.Domain
             Assert.AreEqual(new Amount(100), investor.Corpus);
         }
 
-
         [Test]
         public void Corpus_Decreases_To_The_Extent_Of_The_Offer()
         {
