@@ -23,13 +23,22 @@ namespace Gringotts.Domain
         [Test]
         public void Should_not_be_able_to_create_a_venture_for_negative_min_investment()
         {
-            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(100), new Amount(-1)); });            
+            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(100), new Amount(-1)); });
         }
 
         [Test]
         public void Should_not_be_able_to_create_a_venture_for_outlay_lesser_than_min_investment()
         {
-            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(0), new Amount(1)); });            
+            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(0), new Amount(1)); });
+        }
+
+        [Test]
+        public void Should_Increase_Subscription()
+        {
+            Venture venture = new Venture(new Name("Venture1"), new Amount(50099), new Amount(1345));
+            Investor investor = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(5000));
+            venture.AddOffer(investor, new Amount(500));
+            Assert.AreEqual(new Amount(500), venture.SubscribedAmount());
         }
 
         [Test]

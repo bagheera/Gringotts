@@ -9,7 +9,7 @@ namespace Gringotts.Domain
         [Test]
         public void Can_Create_Investor()
         {
-        	Amount amount = new Amount(10);
+            Amount amount = new Amount(10);
             Investor investor = new Investor(new Name("Investor 1"), new GringottsDate(DateTime.Now), amount);
             Assert.AreEqual(amount, investor.Corpus);
         }
@@ -28,11 +28,11 @@ namespace Gringotts.Domain
         {
             //todo: move the setters to constructors.
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
-            Venture venture = new Venture { Name = new Name("venture1"), MinInvestment = new Amount(500), Outlay = new Amount(1000) };
+            Venture venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
             Investment investment = venture.AddOffer(investor, new Amount(600));
             Assert.NotNull(investment);
             Assert.AreEqual(new Amount(400), investor.Corpus);
+            //Assert.AreEqual(new Amount(1000), venture.Subscription.Value);
         }
     }
 }
-
