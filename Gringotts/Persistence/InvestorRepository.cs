@@ -9,12 +9,12 @@ namespace Gringotts.Persistence
 	{
 		private ISession nhibernateSession;
 
-		public ISession NHibernateSession
+		public ISession Session
 		{
 			get
 			{
 				if (nhibernateSession == null)
-					throw new InvalidOperationException("The NHibernateSession property is null");
+					throw new InvalidOperationException("The Session property is null");
 				return nhibernateSession;
 			}
 			set
@@ -25,12 +25,12 @@ namespace Gringotts.Persistence
 
 		public int Save(Investor newInvestor)
 		{
-			return (int)NHibernateSession.Save(newInvestor);
+			return (int)Session.Save(newInvestor);
 		}
 
 		public Investor GetInvestorById(int id)
 		{
-			return NHibernateSession.Load<Investor>(id);
+			return Session.Load<Investor>(id);
 		}
 	}
 }

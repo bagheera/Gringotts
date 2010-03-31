@@ -39,9 +39,9 @@ namespace Gringotts.Persistence
 			Investor investor = new Investor(new Name(name), new GringottsDate(date), new Amount(amount));
 			
 			InvestorRepository investorRepository = new InvestorRepository();
-			investorRepository.NHibernateSession = session;
+			investorRepository.Session = session;
 			int newId = investorRepository.Save(investor);
-			Assert.IsNotNull(investor.Id);
+			
 			Investor newInvestor = investorRepository.GetInvestorById(newId);
 			Assert.AreEqual(name, newInvestor.Name);
 		}

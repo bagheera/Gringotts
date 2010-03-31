@@ -1,5 +1,3 @@
-using System;
-
 namespace Gringotts.Domain
 {
 	public class Investor
@@ -7,7 +5,6 @@ namespace Gringotts.Domain
 		private int id;
 		private readonly Name name;
 		private readonly GringottsDate date;
-		private Amount corpus;
 
 		public Investor() { } // For NHibernate
 
@@ -15,17 +12,14 @@ namespace Gringotts.Domain
 		{
 			this.name = name;
 			this.date = date;
-			corpus = amount;
+			Corpus = amount;
 		}
 
-		public virtual Amount Corpus
-		{
-			get { return corpus; }
-		}
+		public virtual Amount Corpus { get; private set; }
 
 		public virtual void Pay(Amount amount)
 		{
-			corpus -= amount;
+			Corpus -= amount;
 		}
 
 		public virtual string Name
