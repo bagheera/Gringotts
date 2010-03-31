@@ -31,7 +31,6 @@ namespace Gringotts.Domain
         {
             //todo: move the setters to constructors.
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
-<<<<<<< HEAD
             Venture venture = new Venture { Name = new Name("venture1"), MinInvestment = new Amount(500), Outlay = new Amount(1000) };
             Investment investment = venture.AddOffer(investor, new Amount(600));
             Assert.NotNull(investment);
