@@ -5,6 +5,7 @@ namespace Gringotts.Domain
 {
     public class Venture
     {
+        private Holding holding;
         public const string PROPOSED_STATE = "Proposed";
         public const string STARTED_STATE = "Started";
         public const string CANCELLED_STATE = "Cancelled";
@@ -22,6 +23,7 @@ namespace Gringotts.Domain
             MinInvestment = minInvestment;
             Subscription = new Subscription();
             State = PROPOSED_STATE;
+            holding = new Holding();
         }
 
         public Venture()
@@ -34,6 +36,13 @@ namespace Gringotts.Domain
         internal virtual Amount MinInvestment { get; set; }
         public virtual Subscription Subscription { get; set; }
         public virtual String State { get; set; }
+
+        public virtual Holding Holding
+        {
+            get {
+                return holding;
+            }
+        }
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
@@ -92,6 +101,12 @@ namespace Gringotts.Domain
         public virtual void ChangeStateToStarted()
         {
             State = STARTED_STATE;
+        }
+
+        public virtual void HandOutDividends()
+        {
+            if (State != STARTED_STATE)
+                throw new Exception("Cannot hand out dividends for an un-started venture");
         }
     }
 }
