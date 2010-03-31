@@ -5,16 +5,23 @@ namespace Gringotts.Domain
 {
     public class Venture
     {
-        public Venture(Name name, Amount outlay, Amount minInvestment)
-        {
-            if (minInvestment <= new Amount(0))
+        public const string PROPOSED_STATE = "Proposed";
+        public const string STARTED_STATE = "Started";
+        public const string CANCELLED_STATE = "Cancelled";
+        public const string CLOSED_STATE = "Closed";
+        //public static readonly string[] STATES = new string[] { PROPOSED_STATE, STARTED_STATE, CANCELLED_STATE, CLOSED_STATE };
+
+        public Venture(Name	name, Amount outlay, Amount minInvestment)
+        {            
+            if(minInvestment <= new Amount(0))
                 throw new Exception("Minimum investment must be greater than 0");
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
             Name = name;
             Outlay = outlay;
             MinInvestment = minInvestment;
-            Subscription = new Subscription();
+			Subscription = new Subscription();
+            State = PROPOSED_STATE;
         }
 
         public Venture()
@@ -25,7 +32,8 @@ namespace Gringotts.Domain
         internal virtual Name Name { get; set; }
         internal virtual Amount Outlay { get; set; }
         internal virtual Amount MinInvestment { get; set; }
-        public virtual Subscription Subscription { get; set; }
+		public virtual Subscription Subscription { get; set; }
+        public virtual String State { get; set; }
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
@@ -39,15 +47,15 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Id, Id) && Equals(other.Name, Name) && Equals(other.Outlay, Outlay) && Equals(other.MinInvestment, MinInvestment);
+            return Equals(other.Id, Id) && Equals(other.Name, Name) && Equals(other.Outlay, Outlay) && Equals(other.MinInvestment, MinInvestment) && Equals(other.State, State);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(Venture)) return false;
-            return Equals((Venture)obj);
+            if (obj.GetType() != typeof (Venture)) return false;
+            return Equals((Venture) obj);
         }
 
         public override int GetHashCode()
@@ -55,16 +63,26 @@ namespace Gringotts.Domain
             unchecked
             {
                 int result = (Id != null ? Id.GetHashCode() : 0);
-                result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result * 397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
-                result = (result * 397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
+                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result*397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
+                result = (result*397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
+                result = (result*397) ^ (State != null ? State.GetHashCode() : 0);
                 return result;
             }
         }
-
-        public virtual Amount SubscribedAmount()
+		public virtual Amount SubscribedAmount()
         {
             return Subscription.Value;
+        }
+
+        public virtual void ChangeStateToCancelled()
+        {
+            State = CANCELLED_STATE;
+        }
+
+        public virtual void ChangeStateToStarted()
+        {
+            State = STARTED_STATE;
         }
     }
 }

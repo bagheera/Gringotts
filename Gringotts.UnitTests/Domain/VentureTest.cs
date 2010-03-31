@@ -17,6 +17,7 @@ namespace Gringotts.Domain
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
+            Assert.AreEqual(Venture.PROPOSED_STATE, venture.State);
         }
 
         [Test]
@@ -38,6 +39,22 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(5000));
             venture.AddOffer(investor, new Amount(500));
             Assert.AreEqual(new Amount(500), venture.SubscribedAmount());
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Change_State_Of_A_New_Venture_To_Cancelled()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            venture.ChangeStateToCancelled();
+            Assert.AreEqual(Venture.CANCELLED_STATE, venture.State);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Change_State_Of_A_New_Venture_To_Started()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            venture.ChangeStateToStarted();
+            Assert.AreEqual(Venture.STARTED_STATE, venture.State);
         }
 
         //[Test]
