@@ -49,16 +49,13 @@ namespace Gringotts.Domain
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
             if (Subscription.AlreadyInvested(investor))
-            if (Subscription.AlreadyInvested(investor))
                 throw new InvalidOfferException("Cannot invest more than once.");
-            if (MinimumInvestment(investedAmount))
-            {
-                Investment investment = new Investment(investor,investedAmount);
-                investor.Pay(investedAmount);
-                Subscription.Add(investment);
-                return investment;
-            }
-            throw new InvalidOfferException("Investment amount less than the required minimum amount.");
+            if (!MinimumInvestment(investedAmount))
+                throw new InvalidOfferException("Investment amount less than the required minimum amount.");
+            Investment investment = new Investment(investor, investedAmount);
+            investor.Pay(investedAmount);
+            Subscription.Add(investment);
+            return investment;
         }
 
         private bool MinimumInvestment(Amount investedAmount)
