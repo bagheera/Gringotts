@@ -13,5 +13,6 @@
     <component name="MinInvestment">
       <property name="Value" column="MinInvestment" type="int"/>
     </component>
+    <property name="State" column="State" type="String" length="40"/>
   </class>
 </hibernate-mapping>

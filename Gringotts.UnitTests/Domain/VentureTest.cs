@@ -17,6 +17,7 @@ namespace Gringotts.Domain
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
+            Assert.AreEqual(Venture.PROPOSED_STATE, venture.State);
         }
 
         [Test]
@@ -29,6 +30,22 @@ namespace Gringotts.Domain
         public void Should_not_be_able_to_create_a_venture_for_outlay_lesser_than_min_investment()
         {
             Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(0), new Amount(1)); });            
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Change_State_Of_A_New_Venture_To_Cancelled()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            venture.ChangeStateToCancelled();
+            Assert.AreEqual(Venture.CANCELLED_STATE, venture.State);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Change_State_Of_A_New_Venture_To_Started()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            venture.ChangeStateToStarted();
+            Assert.AreEqual(Venture.STARTED_STATE, venture.State);
         }
     }
 }
