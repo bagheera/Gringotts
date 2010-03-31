@@ -22,7 +22,6 @@ namespace Gringotts.Domain
             Assert.AreEqual(new Amount(100), investor.Corpus);
         }
 
-
         [Test]
         public void Corpus_Decreases_To_The_Extent_Of_The_Offer()
         {
@@ -32,7 +31,6 @@ namespace Gringotts.Domain
             Investment investment = venture.AddOffer(investor, new Amount(600));
             Assert.NotNull(investment);
             Assert.AreEqual(new Amount(400), investor.Corpus);
-            //Assert.AreEqual(new Amount(1000), venture.Subscription.Value);
         }
     }
 }
