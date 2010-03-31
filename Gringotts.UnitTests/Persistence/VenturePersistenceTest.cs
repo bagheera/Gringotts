@@ -41,16 +41,10 @@ namespace Gringotts.Persistence
             Venture venture = new Venture(nameOfVenture, outlay, minInvestment);
             VentureRepository ventureRepository = new VentureRepository(session);
 
-            Assert.IsNull(venture.Id);
             ventureRepository.Save(venture);            
             IList<Venture> ventures = ventureRepository.FetchAll();
-
-            ventures.ToList().ForEach(v => Console.WriteLine("{0} {1} {2}", v.Id, v.Name.GetValue(), v.Outlay.Value));
-            Assert.AreEqual(1, ventures.Count);
-            Assert.AreEqual(venture.Name, ventures.First().Name);
-            Assert.AreEqual(venture.MinInvestment, ventures.First().MinInvestment);
-            Assert.AreEqual(venture.Outlay, ventures.First().Outlay);
-            Assert.IsNotNull(ventures.First().Id);
+            
+            Assert.AreEqual(venture, ventures.First());
         }
     }
 }

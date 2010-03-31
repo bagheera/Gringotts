@@ -24,10 +24,37 @@ namespace Gringotts.Domain
         internal virtual Amount Outlay { get; set; }
         internal virtual Amount MinInvestment { get; set; }
 
-        public virtual Investment OfferToInvest(Investor investor, Amount amount)
+        public virtual Investment AddOffer(Investor investor, Amount investment)
         {
-            investor.Pay(amount);
+            investor.Pay(investment);
             return new Investment();
+        }
+
+        public virtual bool Equals(Venture other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Id, Id) && Equals(other.Name, Name) && Equals(other.Outlay, Outlay) && Equals(other.MinInvestment, MinInvestment);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Venture)) return false;
+            return Equals((Venture) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = (Id != null ? Id.GetHashCode() : 0);
+                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result*397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
+                result = (result*397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
+                return result;
+            }
         }
     }
 }
