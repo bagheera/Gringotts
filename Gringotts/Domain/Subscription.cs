@@ -15,12 +15,7 @@ public class Subscription
     {
         get
         {
-            Amount total = new Amount(0);
-            foreach (var investment in subscription)
-            {
-                total += investment.Value;
-            }
-            return total;
+            return subscription.Aggregate(new Amount(0), (amt, inv) => amt + inv.Value);
         }
     }
 
