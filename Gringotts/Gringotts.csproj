@@ -71,7 +71,13 @@
     <Compile Include="Domain\Investment.cs" />
     <Compile Include="Domain\Investor.cs" />
     <Compile Include="Domain\Name.cs" />
-    <Compile Include="Persistence\VentureRepository.cs" />
+	<Compile Include="Persistence\VentureRepository.cs" />
+    <Compile Include="Persistence\InvestorRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Persistence\Mappings\Investor.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

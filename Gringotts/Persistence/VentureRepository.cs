@@ -4,7 +4,7 @@ using NHibernate;
 
 namespace Gringotts.Persistence
 {
-    class VentureRepository
+    public class VentureRepository
     {
         private ISession Session;
 

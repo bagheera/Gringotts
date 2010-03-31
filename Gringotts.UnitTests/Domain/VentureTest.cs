@@ -2,7 +2,7 @@
 using Gringotts.Domain;
 using NUnit.Framework;
 
-namespace Gringotts.UnitTests.Domain
+namespace Gringotts.Domain
 {
     [TestFixture]
     public class VentureTest
