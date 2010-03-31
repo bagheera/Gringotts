@@ -24,9 +24,9 @@ namespace Gringotts.Domain
         internal virtual Amount Outlay { get; set; }
         internal virtual Amount MinInvestment { get; set; }
 
-        public virtual Investment OfferToInvest(Investor investor, Amount amount)
+        public virtual Investment AddOffer(Investor investor, Amount investment)
         {
-            investor.Pay(amount);
+            investor.Pay(investment);
             return new Investment();
         }
 
