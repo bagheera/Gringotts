@@ -11,16 +11,16 @@ namespace Gringotts.Domain
         public const string CLOSED_STATE = "Closed";
         //public static readonly string[] STATES = new string[] { PROPOSED_STATE, STARTED_STATE, CANCELLED_STATE, CLOSED_STATE };
 
-        public Venture(Name	name, Amount outlay, Amount minInvestment)
-        {            
-            if(minInvestment <= new Amount(0))
+        public Venture(Name name, Amount outlay, Amount minInvestment)
+        {
+            if (minInvestment <= new Amount(0))
                 throw new Exception("Minimum investment must be greater than 0");
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
             Name = name;
             Outlay = outlay;
             MinInvestment = minInvestment;
-			Subscription = new Subscription();
+            Subscription = new Subscription();
             State = PROPOSED_STATE;
         }
 
@@ -32,15 +32,24 @@ namespace Gringotts.Domain
         internal virtual Name Name { get; set; }
         internal virtual Amount Outlay { get; set; }
         internal virtual Amount MinInvestment { get; set; }
-		public virtual Subscription Subscription { get; set; }
+        public virtual Subscription Subscription { get; set; }
         public virtual String State { get; set; }
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
-            Investment investment = new Investment(investedAmount);
-            investor.Pay(investedAmount);
-            Subscription.Add(investment);
-            return investment;
+            if (MinimumInvestment(investedAmount))
+            {
+                Investment investment = new Investment(investedAmount);
+                investor.Pay(investedAmount);
+                Subscription.Add(investment);
+                return investment;
+            }
+            throw new InvalidOfferException("Investment amount less than the required minimum amount.");
+        }
+
+        private bool MinimumInvestment(Amount investedAmount)
+        {
+            return investedAmount >= MinInvestment;
         }
 
         public virtual bool Equals(Venture other)
@@ -54,8 +63,8 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Venture)) return false;
-            return Equals((Venture) obj);
+            if (obj.GetType() != typeof(Venture)) return false;
+            return Equals((Venture)obj);
         }
 
         public override int GetHashCode()
@@ -63,14 +72,14 @@ namespace Gringotts.Domain
             unchecked
             {
                 int result = (Id != null ? Id.GetHashCode() : 0);
-                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result*397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
-                result = (result*397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
-                result = (result*397) ^ (State != null ? State.GetHashCode() : 0);
+                result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result * 397) ^ (Outlay != null ? Outlay.GetHashCode() : 0);
+                result = (result * 397) ^ (MinInvestment != null ? MinInvestment.GetHashCode() : 0);
+                result = (result * 397) ^ (State != null ? State.GetHashCode() : 0);
                 return result;
             }
         }
-		public virtual Amount SubscribedAmount()
+        public virtual Amount SubscribedAmount()
         {
             return Subscription.Value;
         }

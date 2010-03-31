@@ -23,13 +23,13 @@ namespace Gringotts.Domain
         [Test]
         public void Should_not_be_able_to_create_a_venture_for_negative_min_investment()
         {
-            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(100), new Amount(-1)); });
+            Assert.Throws<Exception>(() => new Venture(new Name("Ventura"), new Amount(100), new Amount(-1)));
         }
 
         [Test]
         public void Should_not_be_able_to_create_a_venture_for_outlay_lesser_than_min_investment()
         {
-            Assert.Throws<Exception>(delegate { new Venture(new Name("Ventura"), new Amount(0), new Amount(1)); });
+            Assert.Throws<Exception>(() => new Venture(new Name("Ventura"), new Amount(0), new Amount(1)));
         }
 
         [Test]
@@ -37,8 +37,8 @@ namespace Gringotts.Domain
         {
             Venture venture = new Venture(new Name("Venture1"), new Amount(50099), new Amount(1345));
             Investor investor = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(5000));
-            venture.AddOffer(investor, new Amount(500));
-            Assert.AreEqual(new Amount(500), venture.SubscribedAmount());
+            venture.AddOffer(investor, new Amount(2000));
+            Assert.AreEqual(new Amount(2000), venture.SubscribedAmount());
         }
 
         [Test]
@@ -55,6 +55,21 @@ namespace Gringotts.Domain
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             venture.ChangeStateToStarted();
             Assert.AreEqual(Venture.STARTED_STATE, venture.State);
+        }
+
+        [Test]
+        public void Should_Accept_Investment_Only_If_Greater_Than_MinimumAmount()
+        {
+            Venture venture = new Venture(new Name("Venture"), new Amount(1000000), new Amount(23538));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(investor, new Amount(3000)));
+        }
+        [Test]
+        public void Should_Accept_Investment()
+        {
+            Venture venture = new Venture(new Name("Venture"), new Amount(1000000), new Amount(23538));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
         }
 
         //[Test]
