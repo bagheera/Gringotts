@@ -29,7 +29,7 @@ namespace Gringotts.Domain
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
-            Investment investment = new Investment();
+            Investment investment = new Investment(investedAmount);
             investor.Pay(investedAmount);
             Subscription.Add(investment);
             return investment;
@@ -62,10 +62,9 @@ namespace Gringotts.Domain
             }
         }
 
-        public Amount GetSubscribedAmount()
+        public virtual Amount SubscribedAmount()
         {
             return Subscription.Value;
-            throw new NotImplementedException();
         }
     }
 }

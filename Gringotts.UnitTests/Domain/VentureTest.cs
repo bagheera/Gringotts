@@ -37,7 +37,7 @@ namespace Gringotts.Domain
             Venture venture = new Venture(new Name("Venture1"), new Amount(50099), new Amount(1345));
             Investor investor = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(5000));
             venture.AddOffer(investor, new Amount(500));
-            Assert.AreEqual(new Amount(500), venture.GetSubscribedAmount());
+            Assert.AreEqual(new Amount(500), venture.SubscribedAmount());
         }
 
         //[Test]
