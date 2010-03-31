@@ -71,8 +71,7 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
         }
-
-        [Test]
+        
         public void Should_Be_Able_To_Hand_Out_Dividends()
         {
             Venture venture = new Venture(new Name("Venture"), new Amount(1000), new Amount(1));

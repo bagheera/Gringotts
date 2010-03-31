@@ -132,7 +132,7 @@ namespace Gringotts.Domain
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
         }
 
-        public bool IsProposed()
+        public virtual bool IsProposed()
         {
             return State == PROPOSED_STATE;
         }
