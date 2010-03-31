@@ -58,6 +58,19 @@ namespace Gringotts.Domain
         }
 
         [Test]
+        public void Should_Be_Able_To_Create_And_Add_Investments_To_Holdings()
+        {
+            Holding holding = new Holding();
+            holding.Add(new Investment(new Amount(100)));
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Get_Ventures_Holdings()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Assert.NotNull(venture.Holding);
+        }
+
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
         {
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));

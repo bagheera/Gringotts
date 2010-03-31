@@ -1,21 +1,28 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Gringotts.Domain;
 
-public class Subscription
+namespace Gringotts.Domain
 {
-    private readonly List<Investment> subscription = new List<Investment>();
-
-    public Amount Value
+    public class Subscription
     {
-        get
+        private readonly List<Investment> subscription = new List<Investment>();
+
+        public int Count
         {
-            return subscription.Aggregate(new Amount(0), (amt, inv) => amt + inv.Value);
+            get { return subscription.Count; }
         }
-    }
 
-    public void Add(Investment investment)
-    {
-        subscription.Add(investment);
+        public Amount Value
+        {
+            get
+            {
+                return subscription.Aggregate(new Amount(0), (amt, inv) => amt + inv.Value);
+            }
+        }
+
+        public void Add(Investment investment)
+        {
+            subscription.Add(investment);
+        }
     }
 }
