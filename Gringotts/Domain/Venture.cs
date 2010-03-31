@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Gringotts.Domain
 {
@@ -39,21 +38,22 @@ namespace Gringotts.Domain
 
         public virtual Holding Holding
         {
-            get {
+            get
+            {
                 return holding;
             }
         }
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
-            if (MinimumInvestment(investedAmount))
-            {
-                Investment investment = new Investment(investedAmount);
-                investor.Pay(investedAmount);
-                Subscription.Add(investment);
-                return investment;
-            }
-            throw new InvalidOfferException("Investment amount less than the required minimum amount.");
+            if (Subscription.AlreadyInvested(investor))
+                throw new InvalidOfferException("Cannot invest more than once.");
+            if (!MinimumInvestment(investedAmount))
+                throw new InvalidOfferException("Investment amount less than the required minimum amount.");
+            Investment investment = new Investment(investor, investedAmount);
+            investor.Pay(investedAmount);
+            Subscription.Add(investment);
+            return investment;
         }
 
         private bool MinimumInvestment(Amount investedAmount)
@@ -107,6 +107,14 @@ namespace Gringotts.Domain
         {
             if (!IsStarted())
                 throw new Exception("Cannot hand out dividends for an un-started venture");
+            Amount profits = GenerateProfits();
+            //Send the profit generated to holding
+            //Hope that Holding distributes the profits properly
+        }
+
+        private Amount GenerateProfits()
+        {
+            return new Amount(1000);
         }
 
         private bool IsStarted()
@@ -127,7 +135,7 @@ namespace Gringotts.Domain
             Holding.AddRange(Subscription.Confirm(Outlay));
         }
 
-        private bool IsProposed()
+        public virtual bool IsProposed()
         {
             return State == PROPOSED_STATE;
         }

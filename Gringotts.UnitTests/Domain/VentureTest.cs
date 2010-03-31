@@ -19,7 +19,7 @@ namespace Gringotts.Domain
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
-            Assert.AreEqual(Venture.PROPOSED_STATE, venture.State);
+            Assert.True(venture.IsProposed());
         }
 
         [Test]
@@ -73,12 +73,28 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
         }
+        
+        public void Should_Be_Able_To_Hand_Out_Dividends()
+        {
+            Venture venture = new Venture(new Name("Venture"), new Amount(1000), new Amount(1));
+            Investor quarterInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+            Investor threeFourthsInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+
+            venture.AddOffer(quarterInvestor, new Amount(250));
+            venture.AddOffer(threeFourthsInvestor, new Amount(750));
+
+            venture.Start();
+
+            venture.HandOutDividends();
+        }
 
         [Test]
         public void Should_Be_Able_To_Create_And_Add_Investments_To_Holdings()
         {
             Holding holding = new Holding();
-            holding.Add(new Investment(new Amount(100)));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+
+            holding.Add(new Investment(investor,new Amount(100)));
         }
 
         [Test]
@@ -121,10 +137,14 @@ namespace Gringotts.Domain
         public void Should_Be_Able_To_Confirm_Subscription()
         {
             Subscription subscription = new Subscription();
-            subscription.Add(new Investment(new Amount(100)));
-            subscription.Add(new Investment(new Amount(200)));
-            subscription.Add(new Investment(new Amount(300)));
-            Investment excess = new Investment(new Amount(400));
+            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
+            Investor investor1 = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(100));
+            Investor investor2 = new Investor(new Name("Investor2"), new GringottsDate(DateTime.Now), new Amount(100));
+            Investor investor3 = new Investor(new Name("Investor3"), new GringottsDate(DateTime.Now), new Amount(100));
+            subscription.Add(new Investment(investor0, new Amount(100)));
+            subscription.Add(new Investment(investor1, new Amount(200)));
+            subscription.Add(new Investment(investor2, new Amount(300)));
+            Investment excess = new Investment(investor3, new Amount(400));
             subscription.Add(excess);
             Amount outlay = new Amount(600);
             List<Investment> confirmations = subscription.Confirm(outlay);
@@ -140,6 +160,15 @@ namespace Gringotts.Domain
             Assert.Throws<Exception>(venture.HandOutDividends);
             venture.ChangeStateToStarted();
             Assert.DoesNotThrow(venture.HandOutDividends);
+        }
+
+        [Test]
+        public void Should_Allow_Investor_To_Invest_Only_Once()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            venture.AddOffer(investor, new Amount(2));
+            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(investor, new Amount(2)));
         }
 
         //[Test]
