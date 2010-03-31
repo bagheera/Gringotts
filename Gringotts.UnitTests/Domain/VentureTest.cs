@@ -39,5 +39,26 @@ namespace Gringotts.Domain
             venture.AddOffer(investor, new Amount(500));
             Assert.AreEqual(new Amount(500), venture.GetSubscribedAmount());
         }
+
+        //[Test]
+        //public void Should_Be_Able_To_Start_A_Venture()
+        //{
+        //    Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+        //    Investor investor0 = new Investor(new Name("Investor 0"), new GringottsDate(DateTime.Now), new Amount(100));
+        //    Investor investor1 = new Investor(new Name("Investor 1"), new GringottsDate(DateTime.Now), new Amount(300));
+        //    Investor investor2 = new Investor(new Name("Investor 2"), new GringottsDate(DateTime.Now), new Amount(250));
+        //    Investor investor3 = new Investor(new Name("Investor 3"), new GringottsDate(DateTime.Now), new Amount(300));
+        //    Investor investor4 = new Investor(new Name("Investor 4"), new GringottsDate(DateTime.Now), new Amount(150));
+        //    Investor investor5 = new Investor(new Name("Investor 5"), new GringottsDate(DateTime.Now), new Amount(400));
+
+        //    Investment investment0 = venture.AddOffer(investor0, new Amount(10));
+        //    Investment investment1 = venture.AddOffer(investor1, new Amount(30));
+        //    Investment investment2 = venture.AddOffer(investor2, new Amount(25));
+        //    Investment investment3 = venture.AddOffer(investor3, new Amount(20));
+        //    Investment investment4 = venture.AddOffer(investor4, new Amount(15));
+        //    Investment investment5 = venture.AddOffer(investor5, new Amount(40));
+
+
+        //}
     }
 }
