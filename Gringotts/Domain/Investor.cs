@@ -22,9 +22,9 @@ namespace Gringotts.Domain
 			Corpus -= amount;
 		}
 
-		public virtual string Name
+		public virtual Name Name
 		{
-			get { return name.GetValue(); }
+			get { return name; }
 		}
 
 		public virtual int Id

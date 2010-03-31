@@ -12,10 +12,10 @@ namespace Gringotts.Persistence
         protected static ISessionFactory sessionFactory;
         protected static Configuration configuration;
 
-        public static void InitalizeSessionFactory(params FileInfo[] hbmFiles)
+        public static void InitalizeSessionFactory()
         {
-//            if (sessionFactory != null)
-//                return;
+            if (sessionFactory != null)
+                return;
 
             var properties = new Dictionary<string, string>();
             properties.Add("connection.driver_class", "NHibernate.Driver.SQLite20Driver");
@@ -27,11 +27,8 @@ namespace Gringotts.Persistence
 
             configuration = new Configuration();
             configuration.Properties = properties;
+        	configuration.AddAssembly("Gringotts");
 
-            foreach (FileInfo mappingFile in hbmFiles)
-            {
-                configuration = configuration.AddFile(mappingFile);
-            }
             configuration.BuildMapping();
             sessionFactory = configuration.BuildSessionFactory();
         }

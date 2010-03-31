@@ -14,7 +14,7 @@ namespace Gringotts.Persistence
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
-			InitalizeSessionFactory(new FileInfo("Persistence/Mappings/Investor.hbm.xml"));
+			InitalizeSessionFactory();
 		}
 
 		[SetUp]
@@ -43,7 +43,7 @@ namespace Gringotts.Persistence
 			int newId = investorRepository.Save(investor);
 			
 			Investor newInvestor = investorRepository.GetInvestorById(newId);
-			Assert.AreEqual(name, newInvestor.Name);
+			Assert.AreEqual(new Name(name), newInvestor.Name);
 		}
 
 	}
