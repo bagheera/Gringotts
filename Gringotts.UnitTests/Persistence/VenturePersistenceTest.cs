@@ -17,7 +17,7 @@ namespace Gringotts.Persistence
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            InitalizeSessionFactory(new FileInfo("Persistence/Mappings/Venture.hbm.xml"));
+            InitalizeSessionFactory();
         }
 
         [SetUp]
