@@ -117,7 +117,8 @@ namespace Gringotts.Domain
         private bool IsStarted()
         {
             return State == STARTED_STATE;
-        }
+        }
+
         public virtual void Start()
         {
             if (!IsProposed())
