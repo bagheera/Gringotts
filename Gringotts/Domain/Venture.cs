@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 namespace Gringotts.Domain
 {
@@ -39,16 +40,20 @@ namespace Gringotts.Domain
 
         public virtual Holding Holding
         {
-            get {
+            get
+            {
                 return holding;
             }
         }
 
         public virtual Investment AddOffer(Investor investor, Amount investedAmount)
         {
+            if (Subscription.AlreadyInvested(investor))
+            if (Subscription.AlreadyInvested(investor))
+                throw new InvalidOfferException("Cannot invest more than once.");
             if (MinimumInvestment(investedAmount))
             {
-                Investment investment = new Investment(investedAmount);
+                Investment investment = new Investment(investor,investedAmount);
                 investor.Pay(investedAmount);
                 Subscription.Add(investment);
                 return investment;

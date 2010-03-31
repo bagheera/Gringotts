@@ -76,7 +76,9 @@ namespace Gringotts.Domain
         public void Should_Be_Able_To_Create_And_Add_Investments_To_Holdings()
         {
             Holding holding = new Holding();
-            holding.Add(new Investment(new Amount(100)));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+
+            holding.Add(new Investment(investor,new Amount(100)));
         }
 
         [Test]
@@ -95,6 +97,15 @@ namespace Gringotts.Domain
             Assert.Throws<Exception>(venture.HandOutDividends);
             venture.ChangeStateToStarted();
             Assert.DoesNotThrow(venture.HandOutDividends);
+        }
+
+        [Test]
+        public void Should_Allow_Investor_To_Invest_Only_Once()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            venture.AddOffer(investor, new Amount(2));
+            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(investor, new Amount(2)));
         }
 
         //[Test]

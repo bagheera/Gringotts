@@ -4,11 +4,19 @@ namespace Gringotts.Domain
 {
     public class Investment
     {
-        public Investment(Amount amount)
+        private readonly Investor investor;
+        
+        public Investment(Investor investor  , Amount amount)
         {
-            Value = amount;
+            this.investor = investor;
+            this.Value = amount;
         }
 
         public Amount Value { get; set; }
+
+        public bool HasInvestor(Investor investor)
+        {
+            return this.investor == investor;
+        }
     }
 }
