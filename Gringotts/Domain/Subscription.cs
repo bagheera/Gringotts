@@ -16,13 +16,18 @@ namespace Gringotts.Domain
         {
             get
             {
-                return subscription.Aggregate(new Amount(0), (amt, inv) => amt + inv.Value);
+                return subscription.Aggregate(new Amount(0), (amount, investment) => amount + investment.Value);
             }
         }
 
         public void Add(Investment investment)
         {
             subscription.Add(investment);
+        }
+
+        public bool AlreadyInvested(Investor investor)
+        {
+            return subscription.Any(investment => investment.HasInvestor(investor));
         }
     }
 }
