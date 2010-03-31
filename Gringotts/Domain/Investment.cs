@@ -1,9 +1,7 @@
-using System;
-
 namespace Gringotts.Domain
 {
     public class Investment
-    {
+    {        
         private readonly Investor investor;
         
         public Investment(Investor investor  , Amount amount)

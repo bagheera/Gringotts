@@ -17,7 +17,7 @@ namespace Gringotts.Domain
             Assert.AreEqual(nameOfVenture, venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
-            Assert.AreEqual(Venture.PROPOSED_STATE, venture.State);
+            Assert.True(venture.IsProposed());
         }
 
         [Test]
@@ -70,6 +70,20 @@ namespace Gringotts.Domain
             Venture venture = new Venture(new Name("Venture"), new Amount(1000000), new Amount(23538));
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
+        }
+        
+        public void Should_Be_Able_To_Hand_Out_Dividends()
+        {
+            Venture venture = new Venture(new Name("Venture"), new Amount(1000), new Amount(1));
+            Investor quarterInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+            Investor threeFourthsInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+
+            venture.AddOffer(quarterInvestor, new Amount(250));
+            venture.AddOffer(threeFourthsInvestor, new Amount(750));
+
+            venture.Start();
+
+            venture.HandOutDividends();
         }
 
         [Test]

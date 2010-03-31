@@ -107,6 +107,14 @@ namespace Gringotts.Domain
         {
             if (!IsStarted())
                 throw new Exception("Cannot hand out dividends for an un-started venture");
+            Amount profits = GenerateProfits();
+            //Send the profit generated to holding
+            //Hope that Holding distributes the profits properly
+        }
+
+        private Amount GenerateProfits()
+        {
+            return new Amount(1000);
         }
 
         private bool IsStarted()
@@ -122,7 +130,7 @@ namespace Gringotts.Domain
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
         }
 
-        private bool IsProposed()
+        public virtual bool IsProposed()
         {
             return State == PROPOSED_STATE;
         }
