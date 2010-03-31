@@ -57,6 +57,15 @@ namespace Gringotts.Domain
             Assert.AreEqual(Venture.STARTED_STATE, venture.State);
         }
 
+        [Test]
+        public void Should_Not_Be_Able_To_Divide_Dividends_In_A_Non_Started_State()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(); });
+            venture.ChangeStateToCancelled();
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(); });
+        }    
+
         //[Test]
         //public void Should_Be_Able_To_Start_A_Venture()
         //{
