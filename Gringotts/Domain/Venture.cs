@@ -93,5 +93,11 @@ namespace Gringotts.Domain
         {
             State = STARTED_STATE;
         }
+
+        public virtual void HandOutDividends()
+        {
+            if (State != STARTED_STATE)
+                throw new Exception("Cannot hand out dividends for an un-started venture");
+        }
     }
 }
