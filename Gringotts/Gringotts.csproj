@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28F84B47-F0E2-476F-8E40-05D89C8D3113}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -71,8 +71,9 @@
     <Compile Include="Domain\Investment.cs" />
     <Compile Include="Domain\Investor.cs" />
     <Compile Include="Domain\Name.cs" />
-	<Compile Include="Persistence\VentureRepository.cs" />
+    <Compile Include="Persistence\VentureRepository.cs" />
     <Compile Include="Persistence\InvestorRepository.cs" />
+    <Compile Include="Domain\Subscription.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Mappings\Investor.hbm.xml">
@@ -80,11 +81,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+  <!--<To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.>-->
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  -->
 </Project>
