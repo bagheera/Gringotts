@@ -87,12 +87,14 @@ namespace Gringotts.Domain
         }
 
         [Test]
-        public void Should_Not_Be_Able_To_Divide_Dividends_In_A_Non_Started_State()
+        public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
         {
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             Assert.Throws<Exception>(venture.HandOutDividends);
             venture.ChangeStateToCancelled();
             Assert.Throws<Exception>(venture.HandOutDividends);
+            venture.ChangeStateToStarted();
+            Assert.DoesNotThrow(venture.HandOutDividends);
         }
 
         //[Test]
