@@ -71,12 +71,29 @@ namespace Gringotts.Domain
             Assert.NotNull(venture.Holding);
         }
 
+        [Test]
+        public void Should_Not_Be_Able_To_Start_A_Venture_If_Status_Is_Not_Proposed()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            venture.ChangeStateToCancelled();
+            Assert.Throws<Exception>(venture.Start);
+        }
+
+        [Test]
+        public void Should_Not_Be_Able_To_Start_A_Venture_If_Subscription_Is_Less_Than_Overlay()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Investor investor = new Investor(new Name("Investor"), new GringottsDate(DateTime.Now), new Amount(50));
+            venture.AddOffer(investor, new Amount(40));
+            Assert.Throws<Exception>(venture.Start);
+        }
+
         public void Should_Not_Be_Able_To_Divide_Dividends_In_A_Non_Started_State()
         {
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
-            Assert.Throws<Exception>(delegate { venture.HandOutDividends(); });
+            Assert.Throws<Exception>(venture.HandOutDividends);
             venture.ChangeStateToCancelled();
-            Assert.Throws<Exception>(delegate { venture.HandOutDividends(); });
+            Assert.Throws<Exception>(venture.HandOutDividends);
         }    
 
         //[Test]

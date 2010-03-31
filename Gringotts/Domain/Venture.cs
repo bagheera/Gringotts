@@ -96,8 +96,25 @@ namespace Gringotts.Domain
 
         public virtual void HandOutDividends()
         {
-            if (State != STARTED_STATE)
+            if (!IsStarted())
                 throw new Exception("Cannot hand out dividends for an un-started venture");
+        }
+
+        private bool IsStarted()
+        {
+            return State == STARTED_STATE;
+        }
+        public virtual void Start()
+        {
+            if (!IsProposed())
+                throw new Exception("Venture can only start from Proposed State");
+            if (Subscription.Value < Outlay)
+                throw new Exception("Venture cannot start with Total Subscription less than Outlay");
+        }
+
+        private bool IsProposed()
+        {
+            return State == PROPOSED_STATE;
         }
     }
 }
