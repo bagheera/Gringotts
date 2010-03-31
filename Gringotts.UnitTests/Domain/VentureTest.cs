@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Gringotts.Domain;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Gringotts.Domain
 {
@@ -101,6 +103,33 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("Investor"), new GringottsDate(DateTime.Now), new Amount(50));
             venture.AddOffer(investor, new Amount(40));
             Assert.Throws<Exception>(venture.Start);
+        }
+
+        [Test]
+        public void Holding_Should_Be_Created_When_Venture_Starts()
+        {
+            Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
+            Investor investor1 = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.AddOffer(investor1, new Amount(50));
+            venture.Start();
+            Assert.Greater(venture.Holding.Investments.Count, 0);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Confirm_Subscription()
+        {
+            Subscription subscription = new Subscription();
+            subscription.Add(new Investment(new Amount(100)));
+            subscription.Add(new Investment(new Amount(200)));
+            subscription.Add(new Investment(new Amount(300)));
+            Investment excess = new Investment(new Amount(400));
+            subscription.Add(excess);
+            Amount outlay = new Amount(600);
+            List<Investment> confirmations = subscription.Confirm(outlay);
+            Assert.IsFalse(confirmations.Contains(excess));
+            Assert.AreEqual(outlay, confirmations.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
         }
 
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()

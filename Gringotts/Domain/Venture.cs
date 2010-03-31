@@ -112,13 +112,19 @@ namespace Gringotts.Domain
         private bool IsStarted()
         {
             return State == STARTED_STATE;
-        }
+        }
+
         public virtual void Start()
         {
             if (!IsProposed())
                 throw new Exception("Venture can only start from Proposed State");
             if (Subscription.Value < Outlay)
+            {
+                State = CANCELLED_STATE;
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
+            }
+
+            Holding.AddRange(Subscription.Confirm(Outlay));
         }
 
         private bool IsProposed()
