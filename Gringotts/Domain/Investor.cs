@@ -8,6 +8,7 @@ namespace Gringotts.Domain
         private readonly Name name;
         private readonly GringottsDate date;
         private readonly Portfolio portfolio = new Portfolio();
+        private Offers offers = new Offers();
 
         public Investor() { } // For NHibernate
 
@@ -66,15 +67,15 @@ namespace Gringotts.Domain
             }
         }
 
-        private void AddInvestmentToPortfolio(Investment investment)
+        public virtual void AcceptInvestment(Investment investment)
         {
             portfolio.AddInvestment(investment);
         }
 
-        public virtual void AcceptInvestment(Investment investment)
+        public virtual void AcceptOffer(Offer offer)
         {
-            Pay(investment.Value);
-            AddInvestmentToPortfolio(investment);
+            Pay(offer.Value);
+            offers.AddOffer(offer);
         }
     }
 }

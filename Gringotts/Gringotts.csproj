@@ -66,12 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Amount.cs" />
+    <Compile Include="Domain\Offer.cs" />
     <Compile Include="Domain\GringottsDate.cs" />
     <Compile Include="Domain\InvalidOfferException.cs" />
     <Compile Include="Domain\Holding.cs" />
     <Compile Include="Domain\Investment.cs" />
     <Compile Include="Domain\Investor.cs" />
     <Compile Include="Domain\Name.cs" />
+    <Compile Include="Domain\Offers.cs" />
     <Compile Include="Domain\Portfolio.cs" />
     <Compile Include="Persistence\VentureRepository.cs" />
     <Compile Include="Persistence\InvestorRepository.cs" />

@@ -92,8 +92,7 @@ namespace Gringotts.Domain
         {
             Holding holding = new Holding();
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
-
-            holding.Add(new Investment(investor,new Amount(100)));
+            holding.Add(new Investment(investor,new Amount(100), null));
         }
 
         [Test]
@@ -140,10 +139,10 @@ namespace Gringotts.Domain
             Investor investor1 = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(100));
             Investor investor2 = new Investor(new Name("Investor2"), new GringottsDate(DateTime.Now), new Amount(100));
             Investor investor3 = new Investor(new Name("Investor3"), new GringottsDate(DateTime.Now), new Amount(100));
-            subscription.Add(new Investment(investor0, new Amount(100)));
-            subscription.Add(new Investment(investor1, new Amount(200)));
-            subscription.Add(new Investment(investor2, new Amount(300)));
-            Investment excess = new Investment(investor3, new Amount(400));
+            subscription.Add(new Investment(investor0, new Amount(100), null));
+            subscription.Add(new Investment(investor1, new Amount(200), null));
+            subscription.Add(new Investment(investor2, new Amount(300), null));
+            Investment excess = new Investment(investor3, new Amount(400), null);
             subscription.Add(excess);
             Amount outlay = new Amount(600);
             List<Investment> confirmations = subscription.Confirm(outlay);

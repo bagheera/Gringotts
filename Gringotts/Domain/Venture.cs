@@ -29,12 +29,12 @@ namespace Gringotts.Domain
         {
         }
 
-        internal virtual string Id { get; set; }
-        internal virtual Name Name { get; set; }
-        internal virtual Amount Outlay { get; set; }
-        internal virtual Amount MinInvestment { get; set; }
+        internal virtual string Id { get; private set; }
+        internal virtual Name Name { get; private set; }
+        internal virtual Amount Outlay { get; private set; }
+        internal virtual Amount MinInvestment { get; private set; }
         public virtual Subscription Subscription { get; set; }
-        public virtual String State { get; set; }
+        public virtual String State { get; private set; }
 
         public virtual Holding Holding
         {
@@ -44,18 +44,16 @@ namespace Gringotts.Domain
             }
         }
 
-        public virtual Investment AddOffer(Investor investor, Amount investedAmount)
+        public virtual Offer AddOffer(Investor investor, Amount investedAmount)
         {
             if (Subscription.AlreadyInvested(investor))
                 throw new InvalidOfferException("Cannot invest more than once.");
             if (!MinimumInvestment(investedAmount))
                 throw new InvalidOfferException("Investment amount less than the required minimum amount.");
-            Investment investment = new Investment(investor, investedAmount);
-            investor.AcceptInvestment(investment);
-            //investor.Pay(investedAmount);
-            //investor.AddInvestmentToPortfolio(investment);
-            Subscription.Add(investment);
-            return investment;
+            Offer offer = new Offer(investor, investedAmount, null);
+            investor.AcceptOffer(offer);
+            Subscription.Add(offer);
+            return offer;
         }
 
         private bool MinimumInvestment(Amount investedAmount)

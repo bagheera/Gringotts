@@ -12,7 +12,7 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             Subscription subscription = new Subscription();
-            subscription.Add(new Investment(investor, new Amount(500)));
+            subscription.Add(new Investment(investor, new Amount(500), null));
             
             Assert.IsTrue(subscription.AlreadyInvested(investor));
          

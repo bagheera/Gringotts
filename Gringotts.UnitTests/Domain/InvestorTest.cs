@@ -19,8 +19,8 @@ namespace Gringotts.Domain
         {
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
             Venture venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
-            Investment investment = venture.AddOffer(investor, new Amount(600));
-            Assert.NotNull(investment);
+            Offer offer = venture.AddOffer(investor, new Amount(600));
+            Assert.NotNull(offer);
             Assert.AreEqual(new Amount(400), investor.Corpus);
         }
 
@@ -28,8 +28,15 @@ namespace Gringotts.Domain
         public void Should_Be_Able_To_Accept_Investment()
         {
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
-            investor.AcceptInvestment(new Investment(investor, new Amount(600)));
+            investor.AcceptInvestment(new Investment(investor, new Amount(600), null));
             Assert.AreEqual(new Amount(600), investor.PortfolioValue);
+        }
+
+        [Test]
+        public void Should_Be_Able_ToAccept_Offer()
+        {
+            Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
+            investor.AcceptOffer(new Offer(investor, new Amount(600), null));
         }
 
         [Test]

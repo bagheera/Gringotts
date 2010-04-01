@@ -1,11 +1,11 @@
 namespace Gringotts.Domain
 {
-    public class Investment
+    public class Offer
     {        
         private readonly Investor investor;
         private readonly Venture venture;
 
-        public Investment(Investor investor, Amount amount, Venture venture)
+        public Offer(Investor investor, Amount amount, Venture venture)
         {
             this.investor = investor;
             this.venture = venture;
