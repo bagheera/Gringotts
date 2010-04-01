@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Gringotts.Domain
@@ -9,6 +10,10 @@ namespace Gringotts.Domain
         public void Add(Investment investment)
         {
             investments.Add(investment);
+        }
+        public void	 DistributeDividends(Amount amount)
+        {
+            throw new NotImplementedException();
         }
     }
 }
