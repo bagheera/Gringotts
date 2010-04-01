@@ -1,5 +1,3 @@
-using System;
-
 namespace Gringotts.Domain
 {
     public class Investor
@@ -41,9 +39,10 @@ namespace Gringotts.Domain
 
         public virtual Amount PortfolioValue
         {
-            get { return portfolio.Value;}
+            get { return portfolio.Value; }
         }
 
+        //todo : remove the name
         public virtual bool Equals(Investor other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -67,7 +66,12 @@ namespace Gringotts.Domain
             }
         }
 
-        public virtual void AcceptInvestment(Investment investment)
+        public virtual void AcceptSurplus(Amount surplus)
+        {
+            Corpus += surplus;
+        }
+
+        public virtual void AddInvestmentToPortfolio(Investment investment)
         {
             portfolio.AddInvestment(investment);
         }
@@ -76,6 +80,11 @@ namespace Gringotts.Domain
         {
             Pay(offer.Value);
             offers.AddOffer(offer);
+        }
+
+        public virtual void AcceptReturn(Amount dividend)
+        {
+            Corpus += dividend;
         }
     }
 }

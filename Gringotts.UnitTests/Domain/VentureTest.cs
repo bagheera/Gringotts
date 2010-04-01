@@ -72,19 +72,20 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
         }
-        
+
         public void Should_Be_Able_To_Hand_Out_Dividends()
         {
             Venture venture = new Venture(new Name("Venture"), new Amount(1000), new Amount(1));
             Investor quarterInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
             Investor threeFourthsInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+            Amount dividend = new Amount(1000);
 
             venture.AddOffer(quarterInvestor, new Amount(250));
             venture.AddOffer(threeFourthsInvestor, new Amount(750));
 
             venture.Start();
 
-            venture.HandOutDividends();
+            venture.HandOutDividends(dividend);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace Gringotts.Domain
         {
             Holding holding = new Holding();
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
-            holding.Add(new Investment(investor,new Amount(100), null));
+            holding.Add(new Investment(investor, new Amount(100), null));
         }
 
         [Test]
@@ -161,14 +162,37 @@ namespace Gringotts.Domain
             Assert.AreEqual(outlay, venture.Holding.Investments.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
         }
 
+        [Test]
+        public void Should_Return_Over_Investment_To_Investor_When_Start()
+        {
+            Amount outlay = new Amount(40);
+            Venture venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            Assert.AreEqual(new Amount(60), investor0.Corpus);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Start_A_Venture()
+        {
+            Amount outlay = new Amount(40);
+            Venture venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            Assert.True(venture.IsStarted());
+        }
+
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
         {
+            Amount dividend = new Amount(1000);
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
-            Assert.Throws<Exception>(venture.HandOutDividends);
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(dividend); });
             venture.ChangeStateToCancelled();
-            Assert.Throws<Exception>(venture.HandOutDividends);
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(dividend); });
             venture.ChangeStateToStarted();
-            Assert.DoesNotThrow(venture.HandOutDividends);
+            Assert.DoesNotThrow(delegate { venture.HandOutDividends(dividend); });
         }
 
         [Test]
@@ -180,26 +204,5 @@ namespace Gringotts.Domain
             venture.AddOffer(investor, new Amount(2));
             Assert.Throws<InvalidOfferException>(() => venture.AddOffer(duplicateInvestor, new Amount(2)));
         }
-
-        //[Test]
-        //public void Should_Be_Able_To_Start_A_Venture()
-        //{
-        //    Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
-        //    Investor investor0 = new Investor(new Name("Investor 0"), new GringottsDate(DateTime.Now), new Amount(100));
-        //    Investor investor1 = new Investor(new Name("Investor 1"), new GringottsDate(DateTime.Now), new Amount(300));
-        //    Investor investor2 = new Investor(new Name("Investor 2"), new GringottsDate(DateTime.Now), new Amount(250));
-        //    Investor investor3 = new Investor(new Name("Investor 3"), new GringottsDate(DateTime.Now), new Amount(300));
-        //    Investor investor4 = new Investor(new Name("Investor 4"), new GringottsDate(DateTime.Now), new Amount(150));
-        //    Investor investor5 = new Investor(new Name("Investor 5"), new GringottsDate(DateTime.Now), new Amount(400));
-
-        //    Investment investment0 = venture.AddOffer(investor0, new Amount(10));
-        //    Investment investment1 = venture.AddOffer(investor1, new Amount(30));
-        //    Investment investment2 = venture.AddOffer(investor2, new Amount(25));
-        //    Investment investment3 = venture.AddOffer(investor3, new Amount(20));
-        //    Investment investment4 = venture.AddOffer(investor4, new Amount(15));
-        //    Investment investment5 = venture.AddOffer(investor5, new Amount(40));
-
-
-        //}
     }
 }

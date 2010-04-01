@@ -12,7 +12,7 @@ namespace Gringotts.Domain
             Amount amount = new Amount(500);
             Amount another = new Amount(400);
             amount -= another;
-            Assert.AreEqual(100, amount.Value);
+            Assert.AreEqual(new Amount(100), amount);
         }
 
         [Test]
@@ -21,7 +21,25 @@ namespace Gringotts.Domain
             Amount amount = new Amount(500);
             Amount another = new Amount(400);
             amount += another;
-            Assert.AreEqual(900, amount.Value);
+            Assert.AreEqual(new Amount(900), amount);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Divide()
+        {
+            Amount amount = new Amount(500);
+            Amount another = new Amount(400);
+            amount = amount / another;
+            Assert.AreEqual(new Amount((decimal) 500/400), amount);
+        }
+
+        [Test]
+        public void Should_Be_Able_To_Multiply()
+        {
+            Amount amount = new Amount(500);
+            Amount another = new Amount(400);
+            amount = amount * another;
+            Assert.AreEqual(new Amount((decimal)500 * 400), amount);
         }
     }
 }
