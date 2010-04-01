@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gringotts.Domain;
 using NUnit.Framework;
 using System.Linq;
 
