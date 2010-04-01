@@ -14,7 +14,7 @@ namespace Gringotts.Domain
 
         public bool HasInvestor(Investor investor)
         {
-            return this.investor == investor;
+            return this.investor.Equals(investor);
         }
     }
 }
