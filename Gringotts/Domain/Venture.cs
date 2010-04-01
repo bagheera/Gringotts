@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 
 namespace Gringotts.Domain
 {
@@ -105,18 +103,11 @@ namespace Gringotts.Domain
             State = STARTED_STATE;
         }
 
-        public virtual void HandOutDividends()
+        public virtual void HandOutDividends(Amount dividend)
         {
             if (!IsStarted())
-                throw new Exception("Cannot hand out dividends for an un-started venture");
-            Amount profits = GenerateProfits();
-            //Send the profit generated to holding
-            //Hope that Holding distributes the profits properly
-        }
-
-        private Amount GenerateProfits()
-        {
-            return new Amount(1000);
+                throw new Exception("Cannot hand out dividends for an un-started venture");            
+            holding.DistributeDividends(dividend);
         }
 
         private bool IsStarted()
@@ -129,7 +120,12 @@ namespace Gringotts.Domain
             if (!IsProposed())
                 throw new Exception("Venture can only start from Proposed State");
             if (Subscription.Value < Outlay)
+            {
+                State = CANCELLED_STATE;
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
+            }
+
+            Holding.AddRange(Subscription.Confirm(Outlay));
         }
 
         public virtual bool IsProposed()

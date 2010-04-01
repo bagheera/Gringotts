@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Gringotts.Domain
@@ -23,6 +24,21 @@ namespace Gringotts.Domain
         public void Add(Investment investment)
         {
             subscription.Add(investment);
+        }
+
+        public List<Investment> Confirm(Amount outlay)
+        {
+            var sortedInvestments = subscription.OrderBy(inv => inv.Value.Value);
+            int currentSubscriptionTotal = 0;
+            List<Investment> finalSubscription = new List<Investment>();
+            foreach(Investment investment in sortedInvestments)
+            {
+                if(outlay.Value <= currentSubscriptionTotal) break;
+                finalSubscription.Add(investment);
+                currentSubscriptionTotal += investment.Value.Value;
+            }
+
+            return finalSubscription;
         }
 
         public bool AlreadyInvested(Investor investor)
