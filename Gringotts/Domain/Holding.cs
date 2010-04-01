@@ -20,7 +20,11 @@ namespace Gringotts.Domain
 
         public void	DistributeDividends(Amount amount)
         {
-            CalculateParticipation();
+            Dictionary<Investment, Amount> participation = CalculateParticipation();
+            foreach (var participant in participation)
+            {
+                participant.Key.GiveReturn(participant.Value * amount);
+            }
         }
 
         public void AddRange(List<Investment> confirmedInvestments)
@@ -32,7 +36,7 @@ namespace Gringotts.Domain
         {
             Amount totalInvestment = investments.Aggregate(new Amount(0), (total, investment) => total + investment.Value);
             Dictionary<Investment, Amount> participation = new Dictionary<Investment, Amount>();
-            //investments.ForEach(investment => participation.Add(investment, new Amount(totalInvestment / investment.Value)));
+            investments.ForEach(investment => participation.Add(investment, totalInvestment / investment.Value));
             
             return participation;
         }

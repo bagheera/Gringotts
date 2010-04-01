@@ -76,5 +76,10 @@ namespace Gringotts.Domain
             Pay(investment.Value);
             AddInvestmentToPortfolio(investment);
         }
+
+        public virtual void AcceptReturn(Amount dividend)
+        {
+            Corpus += dividend;
+        }
     }
 }
