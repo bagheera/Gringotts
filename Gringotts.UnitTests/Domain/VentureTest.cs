@@ -72,19 +72,20 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
             Assert.DoesNotThrow(() => venture.AddOffer(investor, new Amount(30000)));
         }
-        
+
         public void Should_Be_Able_To_Hand_Out_Dividends()
         {
             Venture venture = new Venture(new Name("Venture"), new Amount(1000), new Amount(1));
             Investor quarterInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
             Investor threeFourthsInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(1000));
+            Amount dividend = new Amount(1000);
 
             venture.AddOffer(quarterInvestor, new Amount(250));
             venture.AddOffer(threeFourthsInvestor, new Amount(750));
 
             venture.Start();
 
-            venture.HandOutDividends();
+            venture.HandOutDividends(dividend);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Gringotts.Domain
             Holding holding = new Holding();
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
 
-            holding.Add(new Investment(investor,new Amount(100)));
+            holding.Add(new Investment(investor, new Amount(100)));
         }
 
         [Test]
@@ -186,12 +187,13 @@ namespace Gringotts.Domain
 
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
         {
+            Amount dividend = new Amount(1000);
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
-            Assert.Throws<Exception>(venture.HandOutDividends);
+            Assert.Throws<Exception>(delegate{venture.HandOutDividends(dividend);});
             venture.ChangeStateToCancelled();
-            Assert.Throws<Exception>(venture.HandOutDividends);
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(dividend); });
             venture.ChangeStateToStarted();
-            Assert.DoesNotThrow(venture.HandOutDividends);
+            Assert.DoesNotThrow(delegate { venture.HandOutDividends(dividend); });
         }
 
         [Test]

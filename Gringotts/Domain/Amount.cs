@@ -2,11 +2,18 @@ using System;
 
 namespace Gringotts.Domain
 {
-    public class Amount
+    public class Amount : IComparable
     {
+        private decimal value;
+
         public Amount(int amount)
         {
-            Value = amount;
+            value = amount;
+        }
+
+        public Amount(decimal amount)
+        {
+            value = amount;
         }
 
         public Amount()
@@ -14,23 +21,21 @@ namespace Gringotts.Domain
 
         }
 
-        public int Value { get; private set; }
-
         public static Amount operator -(Amount self, Amount another)
         {
-            return new Amount(self.Value - another.Value);
+            return new Amount(self.value - another.value);
         }
 
         public static Amount operator +(Amount self, Amount another)
         {
-            return new Amount(self.Value + another.Value);
+            return new Amount(self.value + another.value);
         }
 
         public bool Equals(Amount other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.Value == Value;
+            return other.value == value;
         }
 
         public override bool Equals(object obj)
@@ -43,36 +48,45 @@ namespace Gringotts.Domain
 
         public override string ToString()
         {
-            return Value.ToString();
+            return value.ToString();
         }
 
         public override int GetHashCode()
         {
-            return Value;
+            return value.GetHashCode();
+        }
+
+        public int CompareTo(object obj)
+        {
+            Amount other = obj as Amount;
+            if(other == null)
+                throw new ArgumentException();
+            return value.CompareTo(other.value);
         }
 
         public static bool operator <=(Amount left, Amount right)
         {
-            return left.Value <= right.Value;
+            return left.value <= right.value;
         }
 
         public static bool operator >=(Amount left, Amount right)
         {
-            return left.Value >= right.Value;
+            return left.value >= right.value;
         }
 
         public static bool operator >(Amount left, Amount right)
         {
-            return left.Value > right.Value;
+            return left.value > right.value;
         }
 
         public static bool operator <(Amount left, Amount right)
         {
-            return left.Value < right.Value;
-        }
+            return left.value < right.value;
+        }
+
         public Amount Abs()
         {
-            return new Amount(Math.Abs(Value));
+            return new Amount(Math.Abs(value));
         }
     }
 }
