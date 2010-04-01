@@ -160,6 +160,7 @@ namespace Gringotts.Domain
             Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
             venture.AddOffer(investor0, new Amount(50));
             venture.Start();
+            // TODO: make aggregation in venture
             Assert.AreEqual(outlay, venture.Holding.Investments.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
         }
 
@@ -168,10 +169,11 @@ namespace Gringotts.Domain
         {
             Amount outlay = new Amount(40);
             Venture venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
-            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
-            venture.AddOffer(investor0, new Amount(50));
+            Amount initialCorpus = new Amount(100);
+            Investor investor = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), initialCorpus);
+            venture.AddOffer(investor, new Amount(50));
             venture.Start();
-            Assert.AreEqual(new Amount(60), investor0.Corpus);
+            Assert.AreEqual(initialCorpus - outlay, investor.Corpus);
         }
 
         [Test]
