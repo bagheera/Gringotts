@@ -112,7 +112,7 @@ namespace Gringotts.Domain
             holding.DistributeDividends(dividend);
         }
 
-        private bool IsStarted()
+        public virtual bool IsStarted()
         {
             return State == STARTED_STATE;
         }

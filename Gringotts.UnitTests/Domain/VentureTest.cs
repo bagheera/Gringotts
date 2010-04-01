@@ -182,7 +182,7 @@ namespace Gringotts.Domain
             Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
             venture.AddOffer(investor0, new Amount(50));
             venture.Start();
-            Assert.AreEqual("Started", venture.State);
+            Assert.True(venture.IsStarted());
         }
 
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
