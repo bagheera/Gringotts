@@ -52,6 +52,7 @@ namespace Gringotts.Domain
                 throw new InvalidOfferException("Investment amount less than the required minimum amount.");
             Investment investment = new Investment(investor, investedAmount);
             investor.Pay(investedAmount);
+            investor.AddInvestmentToPortfolio(investment);
             Subscription.Add(investment);
             return investment;
         }
