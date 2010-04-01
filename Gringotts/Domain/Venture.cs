@@ -135,6 +135,7 @@ namespace Gringotts.Domain
             }
 
             Holding.AddRange(Subscription.Confirm(Outlay));
+            State = STARTED_STATE;
         }
 
         public virtual bool IsProposed()
