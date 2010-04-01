@@ -93,5 +93,10 @@ namespace Gringotts.Domain
         {
             return left.value < right.value;
         }
+
+        public Amount Abs()
+        {
+            return new Amount(Math.Abs(value));
+        }
     }
 }

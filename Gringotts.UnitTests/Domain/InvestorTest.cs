@@ -40,5 +40,13 @@ namespace Gringotts.Domain
             venture.AddOffer(investor, new Amount(600));
             Assert.AreEqual(new Amount(600), investor.PortfolioValue);
         }
+
+        [Test]
+        public void Should_Be_Able_To_Accept_Credit_Surplus()
+        {
+            Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
+            investor.AcceptSurplus(new Amount(50));
+            Assert.AreEqual(new Amount(1050), investor.Corpus);
+        }
     }
 }

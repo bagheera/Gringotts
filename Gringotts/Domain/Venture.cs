@@ -112,7 +112,7 @@ namespace Gringotts.Domain
             holding.DistributeDividends(dividend);
         }
 
-        private bool IsStarted()
+        public virtual bool IsStarted()
         {
             return State == STARTED_STATE;
         }
@@ -128,6 +128,7 @@ namespace Gringotts.Domain
             }
 
             Holding.AddRange(Subscription.Confirm(Outlay));
+            State = STARTED_STATE;
         }
 
         public virtual bool IsProposed()
