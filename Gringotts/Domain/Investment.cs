@@ -36,6 +36,11 @@ namespace Gringotts.Domain
             return this.investor.Equals(investor);
         }
 
+        public virtual void GiveReturn(Amount dividend)
+        {
+            investor.AcceptReturn(dividend);
+        }
+
         public virtual void CreditSurplus(Amount creditSurplus)
         {
             investor.AcceptSurplus(creditSurplus);

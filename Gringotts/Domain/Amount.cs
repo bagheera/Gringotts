@@ -31,6 +31,16 @@ namespace Gringotts.Domain
             return new Amount(self.value + another.value);
         }
 
+        public static Amount operator /(Amount self, Amount another)
+        {
+            return new Amount(self.value / another.value);
+        }
+
+        public static Amount operator *(Amount self, Amount another)
+        {
+            return new Amount(self.value * another.value);
+        }
+
         public bool Equals(Amount other)
         {
             if (ReferenceEquals(null, other)) return false;
