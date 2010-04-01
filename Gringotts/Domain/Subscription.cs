@@ -28,7 +28,7 @@ namespace Gringotts.Domain
 
         public List<Investment> Confirm(Amount outlay)
         {
-            var sortedInvestments = subscription.OrderBy(inv => inv.Value.Value);
+            var sortedInvestments = subscription.OrderBy(inv => inv.Value);
             Amount difference = outlay;
             List<Investment> finalSubscription = new List<Investment>();
             Amount zero = new Amount(0);

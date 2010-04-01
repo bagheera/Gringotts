@@ -2,7 +2,7 @@ using System;
 
 namespace Gringotts.Domain
 {
-    public class Amount
+    public class Amount : IComparable
     {
         private decimal value;
 
@@ -48,13 +48,21 @@ namespace Gringotts.Domain
 
         public override string ToString()
         {
-            return Value.ToString();
+            return value.ToString();
         }
 
         public override int GetHashCode()
         {
             return value.GetHashCode();
-        }        
+        }
+
+        public int CompareTo(object obj)
+        {
+            Amount other = obj as Amount;
+            if(other == null)
+                throw new ArgumentException();
+            return value.CompareTo(other.value);
+        }
 
         public static bool operator <=(Amount left, Amount right)
         {

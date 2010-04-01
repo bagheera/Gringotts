@@ -22,7 +22,7 @@ namespace Gringotts.Domain
             Holding holding = new Holding();
             holding.Add(new Investment(new Investor(new Name("quarter"), new GringottsDate(DateTime.Now), new Amount(1500)), new Amount(250)));
             holding.Add(new Investment(new Investor(new Name("threeFourths"), new GringottsDate(DateTime.Now), new Amount(1000)), new Amount(750)));
-            holding.CalculateParticipation();
+            holding.DistributeDividends(new Amount(1000));
         }
     }
 }
