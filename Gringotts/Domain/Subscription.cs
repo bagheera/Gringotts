@@ -31,11 +31,12 @@ namespace Gringotts.Domain
             var sortedInvestments = subscription.OrderBy(inv => inv.Value.Value);
             Amount difference = outlay;
             List<Investment> finalSubscription = new List<Investment>();
+            Amount zero = new Amount(0);
             foreach(Investment investment in sortedInvestments)
             {
                 finalSubscription.Add(investment);
                 difference -= investment.Value;
-                if (difference <= new Amount())
+                if (difference <= zero)
                 {
                     investment.Value += difference;
                     break;
