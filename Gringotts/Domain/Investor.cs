@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Investor
@@ -56,6 +58,10 @@ namespace Gringotts.Domain
             {
                 return (id * 397) ^ (name != null ? name.GetHashCode() : 0);
             }
+        }
+        public virtual void AcceptSurplus(Amount surplus)
+        {
+            Corpus += surplus;
         }
     }
 }

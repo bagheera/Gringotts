@@ -39,6 +39,7 @@ namespace Gringotts.Domain
                 if (difference <= zero)
                 {
                     investment.Value += difference;
+                    investment.CreditSurplus(difference.Abs());
                     break;
                 }
             }

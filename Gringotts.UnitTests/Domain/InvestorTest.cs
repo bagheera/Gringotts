@@ -31,5 +31,13 @@ namespace Gringotts.Domain
             Assert.NotNull(investment);
             Assert.AreEqual(new Amount(400), investor.Corpus);
         }
+
+        [Test]
+        public void Should_Be_Able_To_Accept_Credit_Surplus()
+        {
+            Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
+            investor.AcceptSurplus(new Amount(50));
+            Assert.AreEqual(new Amount(1050), investor.Corpus);
+        }
     }
 }

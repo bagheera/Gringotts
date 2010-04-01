@@ -69,6 +69,10 @@ namespace Gringotts.Domain
         public static bool operator <(Amount left, Amount right)
         {
             return left.Value < right.Value;
+        }
+        public Amount Abs()
+        {
+            return new Amount(Math.Abs(Value));
         }
     }
 }
