@@ -166,8 +166,9 @@ namespace Gringotts.Domain
         {
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            Investor duplicateInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(500));
             venture.AddOffer(investor, new Amount(2));
-            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(investor, new Amount(2)));
+            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(duplicateInvestor, new Amount(2)));
         }
 
         //[Test]

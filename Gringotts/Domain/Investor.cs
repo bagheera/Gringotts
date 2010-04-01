@@ -34,5 +34,28 @@ namespace Gringotts.Domain
                 return id;
             }
         }
+
+        public virtual bool Equals(Investor other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other.id == id && Equals(other.name, name);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(Investor)) return false;
+            return Equals((Investor)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (id * 397) ^ (name != null ? name.GetHashCode() : 0);
+            }
+        }
     }
 }
