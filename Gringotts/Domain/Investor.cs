@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Investor
@@ -5,6 +7,7 @@ namespace Gringotts.Domain
         private int id;
         private readonly Name name;
         private readonly GringottsDate date;
+        private readonly Portfolio portfolio = new Portfolio();
 
         public Investor() { } // For NHibernate
 
@@ -17,7 +20,7 @@ namespace Gringotts.Domain
 
         public virtual Amount Corpus { get; private set; }
 
-        public virtual void Pay(Amount amount)
+        private void Pay(Amount amount)
         {
             Corpus -= amount;
         }
@@ -33,6 +36,11 @@ namespace Gringotts.Domain
             {
                 return id;
             }
+        }
+
+        public virtual Amount PortfolioValue
+        {
+            get { return portfolio.Value;}
         }
 
         public virtual bool Equals(Investor other)
@@ -56,6 +64,17 @@ namespace Gringotts.Domain
             {
                 return (id * 397) ^ (name != null ? name.GetHashCode() : 0);
             }
+        }
+
+        private void AddInvestmentToPortfolio(Investment investment)
+        {
+            portfolio.AddInvestment(investment);
+        }
+
+        public virtual void AcceptInvestment(Investment investment)
+        {
+            Pay(investment.Value);
+            AddInvestmentToPortfolio(investment);
         }
     }
 }
