@@ -20,7 +20,7 @@ namespace Gringotts.Domain
 
         public virtual Amount Corpus { get; private set; }
 
-        public virtual void Pay(Amount amount)
+        private void Pay(Amount amount)
         {
             Corpus -= amount;
         }
@@ -66,9 +66,15 @@ namespace Gringotts.Domain
             }
         }
 
-        public virtual void AddInvestmentToPortfolio(Investment investment)
+        private void AddInvestmentToPortfolio(Investment investment)
         {
             portfolio.AddInvestment(investment);
+        }
+
+        public virtual void AcceptInvestment(Investment investment)
+        {
+            Pay(investment.Value);
+            AddInvestmentToPortfolio(investment);
         }
     }
 }

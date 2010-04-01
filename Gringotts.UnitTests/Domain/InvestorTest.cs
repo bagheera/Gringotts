@@ -13,15 +13,7 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("Investor 1"), new GringottsDate(DateTime.Now), amount);
             Assert.AreEqual(amount, investor.Corpus);
         }
-
-        [Test]
-        public void Should_Be_Able_To_Pay()
-        {
-            Investor investor = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(500));
-            investor.Pay(new Amount(400));
-            Assert.AreEqual(new Amount(100), investor.Corpus);
-        }
-
+        
         [Test]
         public void Corpus_Decreases_To_The_Extent_Of_The_Offer()
         {
@@ -33,10 +25,10 @@ namespace Gringotts.Domain
         }
 
         [Test]
-        public void Should_Be_Able_To_Add_Investment_To_Investors_Portfolio()
+        public void Should_Be_Able_To_Accept_Investment()
         {
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
-            investor.AddInvestmentToPortfolio(new Investment(investor, new Amount(600)));
+            investor.AcceptInvestment(new Investment(investor, new Amount(600)));
             Assert.AreEqual(new Amount(600), investor.PortfolioValue);
         }
 
