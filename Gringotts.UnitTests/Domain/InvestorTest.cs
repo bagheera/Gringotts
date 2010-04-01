@@ -25,7 +25,6 @@ namespace Gringotts.Domain
         [Test]
         public void Corpus_Decreases_To_The_Extent_Of_The_Offer()
         {
-            //todo: move the setters to constructors.
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
             Venture venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
             Investment investment = venture.AddOffer(investor, new Amount(600));

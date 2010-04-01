@@ -46,6 +46,11 @@ namespace Gringotts.Domain
             return Equals((Amount)obj);
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         public override int GetHashCode()
         {
             return value.GetHashCode();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gringotts.Domain;
 using NUnit.Framework;
 using System.Linq;
 
@@ -153,6 +152,17 @@ namespace Gringotts.Domain
             Assert.AreEqual(outlay, confirmations.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
         }
 
+        [Test]
+        public void Should_Not_Take_More_Investment_Than_Outlay()
+        {
+            Amount outlay = new Amount(40);
+            Venture venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            Investor investor0 = new Investor(new Name("Investor0"), new GringottsDate(DateTime.Now), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            Assert.AreEqual(outlay, venture.Holding.Investments.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
+        }
+
         public void Should_Not_Be_Able_To_Divide_Dividends_Unless_In_A_Started_State()
         {
             Amount dividend = new Amount(1000);
@@ -169,8 +179,9 @@ namespace Gringotts.Domain
         {
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
+            Investor duplicateInvestor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(500));
             venture.AddOffer(investor, new Amount(2));
-            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(investor, new Amount(2)));
+            Assert.Throws<InvalidOfferException>(() => venture.AddOffer(duplicateInvestor, new Amount(2)));
         }
 
         //[Test]
