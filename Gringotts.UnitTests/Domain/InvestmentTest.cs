@@ -14,7 +14,7 @@ namespace Gringotts.Domain
             Amount dividend = new Amount(50);
             Investor investor = new Investor(new Name("Dummy"), new GringottsDate(DateTime.Now), corpus);
 
-            Investment investment = new Investment(investor, offer, null);
+            Investment investment = new Investment(investor, null, offer);
             investment.GiveReturn(dividend);
             Assert.AreEqual(corpus + dividend, investor.Corpus);
         }

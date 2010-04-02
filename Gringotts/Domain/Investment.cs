@@ -1,37 +1,51 @@
-using System;
-
 namespace Gringotts.Domain
 {
     public class Investment
     {        
         private readonly Investor investor;
         private readonly Venture venture;
+        private string id;
 
-        public Investment(Investor investor, Amount amount, Venture venture)
+        public virtual string Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        public Investment(Investor investor, Amount amount) : this (investor, null, amount)
+        {
+        }
+
+        public Investment(Investor investor, Venture venture, Amount amount)
         {
             this.investor = investor;
             this.venture = venture;
             this.Value = amount;
+            this.venture = venture;
         }
 
-        public Amount Value { get; set; }
+        public Investment() {}
 
-        public bool HasInvestor(Investor investor)
+        public virtual Amount Value { get; set; }
+
+        public virtual bool HasInvestor(Investor investor)
         {
             return this.investor.Equals(investor);
         }
 
-        public void GiveReturn(Amount dividend)
+        public virtual void GiveReturn(Amount dividend)
         {
             investor.AcceptReturn(dividend);
         }
 
-        public void CreditSurplus(Amount creditSurplus)
+        public virtual void CreditSurplus(Amount creditSurplus)
         {
             investor.AcceptSurplus(creditSurplus);
         }
 
-        public bool Equals(Investment other)
+        public virtual bool Equals(Investment other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

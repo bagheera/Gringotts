@@ -28,7 +28,7 @@ namespace Gringotts.Domain
 
         public virtual Investment ToInvestment(Amount difference)
         {
-            return new Investment(investor, Value - difference, venture);
+            return new Investment(investor, venture, Value - difference);
         }
     }
 }

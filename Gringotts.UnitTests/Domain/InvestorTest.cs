@@ -28,7 +28,7 @@ namespace Gringotts.Domain
         public void Should_Be_Able_To_Accept_Investment()
         {
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
-            investor.AddInvestmentToPortfolio(new Investment(investor, new Amount(600), null));
+            investor.AddInvestmentToPortfolio(new Investment(investor, null, new Amount(600)));
             Assert.AreEqual(new Amount(600), investor.PortfolioValue);
         }
 
