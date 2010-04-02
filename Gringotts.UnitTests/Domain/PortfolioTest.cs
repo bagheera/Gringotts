@@ -11,7 +11,7 @@ namespace Gringotts.Domain
         {
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
             Portfolio portfolio = new Portfolio();
-            portfolio.AddInvestment(new Investment(investor, new Amount(500)));
+            portfolio.AddInvestment(new Investment(investor, null, new Amount(500)));
             Assert.AreEqual(new Amount(500), portfolio.Value);
         }
     }

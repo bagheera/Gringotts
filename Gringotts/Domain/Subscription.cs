@@ -6,7 +6,7 @@ namespace Gringotts.Domain
 {
     public class Subscription
     {
-        private readonly List<Investment> subscription = new List<Investment>();
+        private readonly List<Offer> subscription = new List<Offer>();
 
         public int Count
         {
@@ -21,7 +21,7 @@ namespace Gringotts.Domain
             }
         }
 
-        public void Add(Investment investment)
+        public void Add(Offer investment)
         {
             subscription.Add(investment);
         }
@@ -32,10 +32,11 @@ namespace Gringotts.Domain
             Amount difference = outlay;
             List<Investment> finalSubscription = new List<Investment>();
             Amount zero = new Amount(0);
-            foreach(Investment investment in sortedInvestments)
+            foreach(Offer offer in sortedInvestments)
             {
+                Investment investment = offer.ToInvestment();
                 finalSubscription.Add(investment);
-                difference -= investment.Value;
+                difference -= offer.Value;
                 if (difference <= zero)
                 {
                     investment.Value += difference;

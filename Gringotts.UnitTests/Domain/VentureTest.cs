@@ -93,8 +93,7 @@ namespace Gringotts.Domain
         {
             Holding holding = new Holding();
             Investor investor = new Investor(new Name("investor"), new GringottsDate(DateTime.Now), new Amount(50000));
-
-            holding.Add(new Investment(investor, new Amount(100)));
+            holding.Add(new Investment(investor, null, new Amount(100)));
         }
 
         [Test]
@@ -141,14 +140,14 @@ namespace Gringotts.Domain
             Investor investor1 = new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(100));
             Investor investor2 = new Investor(new Name("Investor2"), new GringottsDate(DateTime.Now), new Amount(100));
             Investor investor3 = new Investor(new Name("Investor3"), new GringottsDate(DateTime.Now), new Amount(100));
-            subscription.Add(new Investment(investor0, new Amount(100)));
-            subscription.Add(new Investment(investor1, new Amount(200)));
-            subscription.Add(new Investment(investor2, new Amount(300)));
-            Investment excess = new Investment(investor3, new Amount(400));
+            subscription.Add(new Offer(investor0, new Amount(100), null));
+            subscription.Add(new Offer(investor1, new Amount(200), null));
+            subscription.Add(new Offer(investor2, new Amount(300), null));
+            Offer excess = new Offer(investor3, new Amount(400), null);
             subscription.Add(excess);
             Amount outlay = new Amount(600);
             List<Investment> confirmations = subscription.Confirm(outlay);
-            Assert.IsFalse(confirmations.Contains(excess));
+            Assert.IsFalse(confirmations.Contains(excess.ToInvestment()));
             Assert.AreEqual(outlay, confirmations.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
         }
 
@@ -191,7 +190,7 @@ namespace Gringotts.Domain
         {
             Amount dividend = new Amount(1000);
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
-            Assert.Throws<Exception>(delegate{venture.HandOutDividends(dividend);});
+            Assert.Throws<Exception>(delegate { venture.HandOutDividends(dividend); });
             venture.ChangeStateToCancelled();
             Assert.Throws<Exception>(delegate { venture.HandOutDividends(dividend); });
             venture.ChangeStateToStarted();

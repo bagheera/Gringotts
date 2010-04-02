@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using NHibernate;
 using NUnit.Framework;
 using Gringotts.Domain;
-using System.Collections;
 
 namespace Gringotts.Persistence
 {
     [TestFixture]
-    public class InvestmentPersistenceTest : NHibernateInMemoryTestFixtureBase
+    [Ignore]
+    public class InvestmentRepositoryPersitenceTest : NHibernateInMemoryTestFixtureBase
     {
         private ISession session;
 
@@ -40,14 +40,23 @@ namespace Gringotts.Persistence
 
             Venture venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             VentureRepository ventureRepository = new VentureRepository(session);
-            ventureRepository.Save(venture);    
-  
+            ventureRepository.Save(venture);
+
             Investment investment = new Investment(investor, venture, new Amount(10));
             InvestmentRepository investmentRepository = new InvestmentRepository(session);
             investmentRepository.Save(investment);
 
             IList<Investment> investments = investmentRepository.FetchAll();
             Assert.Greater(investments.Count, 0);
+        }
+
+        [Test]
+        public void Should_Be_Able_Save()
+        {
+            Investment investment =
+                new Investment(new Investor(new Name("Investor"), new GringottsDate(DateTime.Now), new Amount(6000)),
+                                new Venture(new Name("Venture"), new Amount(5000), new Amount(1250)), new Amount(400));
+            Assert.AreEqual("expected", "actual");
         }
     }
 }
