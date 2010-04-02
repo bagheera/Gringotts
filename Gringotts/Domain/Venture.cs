@@ -52,7 +52,7 @@ namespace Gringotts.Domain
                 throw new InvalidOfferException("Investment amount less than the required minimum amount.");
             Offer offer = new Offer(investor, investedAmount, null);
             investor.AcceptOffer(offer);
-            //Subscription.Add(offer);
+            Subscription.Add(offer);
             return offer;
         }
 

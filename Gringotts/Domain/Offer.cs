@@ -1,7 +1,9 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Offer
-    {        
+    {
         private readonly Investor investor;
         private readonly Venture venture;
 
@@ -9,7 +11,7 @@ namespace Gringotts.Domain
         {
             this.investor = investor;
             this.venture = venture;
-            this.Value = amount;
+            Value = amount;
         }
 
         public Amount Value { get; set; }
@@ -17,6 +19,16 @@ namespace Gringotts.Domain
         public bool HasInvestor(Investor investor)
         {
             return this.investor.Equals(investor);
+        }
+
+        public virtual Investment ToInvestment()
+        {
+            return ToInvestment(new Amount(0));
+        }
+
+        public virtual Investment ToInvestment(Amount difference)
+        {
+            return new Investment(investor, Value - difference, venture);
         }
     }
 }

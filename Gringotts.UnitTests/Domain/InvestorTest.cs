@@ -13,7 +13,7 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("Investor 1"), new GringottsDate(DateTime.Now), amount);
             Assert.AreEqual(amount, investor.Corpus);
         }
-        
+
         [Test]
         public void Corpus_Decreases_To_The_Extent_Of_The_Offer()
         {
@@ -45,7 +45,7 @@ namespace Gringotts.Domain
             Investor investor = new Investor(new Name("Inverstor1"), new GringottsDate(DateTime.Now), new Amount(1000));
             Venture venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
             venture.AddOffer(investor, new Amount(600));
-            Assert.AreEqual(new Amount(600), investor.PortfolioValue);
+            Assert.AreEqual(new Amount(600), investor.OfferValue);
         }
 
         [Test]

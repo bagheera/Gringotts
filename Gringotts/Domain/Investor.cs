@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Investor
@@ -40,6 +42,11 @@ namespace Gringotts.Domain
         public virtual Amount PortfolioValue
         {
             get { return portfolio.Value; }
+        }
+
+        public virtual Amount OfferValue
+        {
+            get { return offers.Value; }
         }
 
         //todo : remove the name
