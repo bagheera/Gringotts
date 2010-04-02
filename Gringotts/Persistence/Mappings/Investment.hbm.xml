@@ -4,7 +4,15 @@
     <id name="Id" access="field.camelcase">
       <generator class="native" />
     </id>
-    <!--<many-to-one name="Investor" unique="true"	column="InvestorId"/>
-    <many-to-one name="Venture"	unique="true"	column="VentureId"/>-->
+    <many-to-one name="investor" class="Gringotts.Domain.Investor" unique="true"	column="InvestorId"  access="field"/>
+    <many-to-one name="venture" class="Gringotts.Domain.Venture"	unique="true"	column="VentureId" access="field"/>
+    <!--<bag name="investor" cascade="all" access="field">
+      <key column="investor_id"/>
+      <one-to-many class="Gringotts.Domain.Investor"/>
+    </bag>
+    <bag name="venture" cascade="all" access="field">
+      <key column="venture_id"/>
+      <one-to-many class="Gringotts.Domain.Venture"/>
+    </bag>-->
   </class>
 </hibernate-mapping>

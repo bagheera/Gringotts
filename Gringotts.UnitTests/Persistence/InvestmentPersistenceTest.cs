@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using NHibernate;
 using NUnit.Framework;
 using Gringotts.Domain;
+using System.Collections;
 
 namespace Gringotts.Persistence
 {
@@ -43,6 +45,9 @@ namespace Gringotts.Persistence
             Investment investment = new Investment(investor, venture, new Amount(10));
             InvestmentRepository investmentRepository = new InvestmentRepository(session);
             investmentRepository.Save(investment);
+
+            IList<Investment> investments = investmentRepository.FetchAll();
+            Assert.Greater(investments.Count, 0);
         }
     }
 }

@@ -18,11 +18,10 @@ namespace Gringotts.Persistence
             Session.Save(investment);
         }
 
-        public IList<Venture> FetchAll()
+        public IList<Investment> FetchAll()
         {
-            //IQuery query = Session.CreateQuery("from In");            
-            //return query.List<Venture>();
-            return null;
+            IQuery query = Session.CreateQuery("from Investment");
+            return query.List<Investment>();
         }
     }
 }
