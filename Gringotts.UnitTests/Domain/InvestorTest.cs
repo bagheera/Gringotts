@@ -46,5 +46,16 @@ namespace Gringotts.Domain{
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
             investor.AcceptOffer(new Offer(investor, new Amount(600), null));
         }
+
+        [Test]
+        public void ShouldCreateABalanceEventWhenInvestorIsCreated(){
+            Amount amount = new Amount(100);
+            var investor = new Investor(new Name("Investor"), amount);
+            BalanceHistory history = investor.GetBalanceHistory();
+            BalanceEvent balanceEvent = new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount);
+            Assert.Contains(balanceEvent, history.GetEvents());
+        }
+
+        
     }
 }

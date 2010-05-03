@@ -1,3 +1,5 @@
+using System;
+
 namespace Gringotts.Domain
 {
     public class Investor
@@ -6,6 +8,7 @@ namespace Gringotts.Domain
         private readonly Name name;
         private readonly Portfolio portfolio = new Portfolio();
         private Offers offers = new Offers();
+        private BalanceHistory balanceHistory = new BalanceHistory();
 
         public Investor() { } // For NHibernate
 
@@ -13,6 +16,7 @@ namespace Gringotts.Domain
         {
             this.name = name;
             Corpus = amount;
+            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount));
         }
 
         public virtual Amount Corpus { get; private set; }
@@ -88,6 +92,10 @@ namespace Gringotts.Domain
         public virtual void AcceptReturn(Amount dividend)
         {
             Corpus += dividend;
+        }
+
+        public virtual BalanceHistory GetBalanceHistory(){
+            return balanceHistory;
         }
     }
 }
