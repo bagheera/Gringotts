@@ -76,6 +76,7 @@
     <Compile Include="Domain\Offers.cs" />
     <Compile Include="Domain\Portfolio.cs" />
     <Compile Include="Persistence\InvestmentRepository.cs" />
+    <Compile Include="Persistence\OfferRepository.cs" />
     <Compile Include="Persistence\VentureRepository.cs" />
     <Compile Include="Persistence\InvestorRepository.cs" />
     <Compile Include="Domain\Subscription.cs" />
@@ -86,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Mappings\Investment.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Persistence\Mappings\Offer.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<To modify your build process, add your task inside one of the targets below and uncomment it. 

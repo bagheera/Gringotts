@@ -4,6 +4,20 @@ namespace Gringotts.Domain
 {
     public class Offer
     {
+        private string id;
+
+        public virtual string Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        public Offer(){
+            // for hibernate
+        }
+
         private readonly Investor investor;
         private readonly Venture venture;
 
@@ -14,9 +28,9 @@ namespace Gringotts.Domain
             Value = amount;
         }
 
-        public Amount Value { get; set; }
+        public virtual Amount Value { get; set; }
 
-        public bool HasInvestor(Investor investor)
+        public virtual bool HasInvestor(Investor investor)
         {
             return this.investor.Equals(investor);
         }
