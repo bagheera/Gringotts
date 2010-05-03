@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Amount.cs" />
+    <Compile Include="Domain\BalanceEvent.cs" />
+    <Compile Include="Domain\BalanceHistory.cs" />
     <Compile Include="Domain\Offer.cs" />
     <Compile Include="Domain\InvalidOfferException.cs" />
     <Compile Include="Domain\Holding.cs" />
