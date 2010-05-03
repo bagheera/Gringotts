@@ -1,47 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Gringotts.Domain;
 using NHibernate;
 using NUnit.Framework;
 
 namespace Gringotts.Persistence{
-
     [TestFixture]
     public class OfferRepositoryPersistentTest : NHibernateInMemoryTestFixtureBase{
-
-        private ISession session;
-
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
-        {
-            InitalizeSessionFactory();
-        }
+        #region Setup/Teardown
 
         [SetUp]
-        public void SetUp()
-        {
+        public void SetUp(){
             session = CreateSession();
         }
 
         [TearDown]
-        public void TearDown()
-        {
+        public void TearDown(){
             session.Dispose();
+        }
+
+        #endregion
+
+        private ISession session;
+
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp(){
+            InitalizeSessionFactory();
         }
 
         [Test]
         public void ShouldPersist(){
-            Investor investor = new Investor(new Name("Jagan"), new GringottsDate(DateTime.Today), new Amount(2000M));
-            InvestorRepository investorRepository = new InvestorRepository();
+            var investor = new Investor(new Name("Jagan"), new Amount(2000M));
+            var investorRepository = new InvestorRepository();
             investorRepository.Session = session;
             investorRepository.Save(investor);
 
-            Venture venture = new Venture(new Name("Ram Capitalists"), new Amount(2000), new Amount(400));
-            VentureRepository ventureRepository = new VentureRepository(session);
+            var venture = new Venture(new Name("Ram Capitalists"), new Amount(2000), new Amount(400));
+            var ventureRepository = new VentureRepository(session);
             ventureRepository.Save(venture);
 
-            Offer offer = new Offer(investor, new Amount(500), venture);
-            OfferRepository offerRepository = new OfferRepository(session);
+            var offer = new Offer(investor, new Amount(500), venture);
+            var offerRepository = new OfferRepository(session);
             offerRepository.Save(offer);
 
             IList<Offer> offers = offerRepository.FetchAll();
