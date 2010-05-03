@@ -14,5 +14,11 @@
       <property name="value" column="MinInvestment" type="float" access="field"/>
     </component>
     <property name="State" column="State" type="String" length="40"/>
+    <component name="holding" class="Gringotts.Domain.Holding" access="field.camelcase">
+      <set name="investments" cascade="none" access="field">
+        <key column="VentureId"/>
+        <one-to-many class="Gringotts.Domain.Investment"/>
+      </set>
+    </component>
   </class>
 </hibernate-mapping>

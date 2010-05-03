@@ -27,6 +27,7 @@ namespace Gringotts.Domain
 
         public Venture()
         {
+            holding = new Holding();
         }
 
         internal virtual string Id { get; private set; }

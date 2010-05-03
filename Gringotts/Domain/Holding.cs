@@ -1,16 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Iesi.Collections.Generic;
 
 namespace Gringotts.Domain
 {
     public class Holding
     {
-        private readonly List<Investment> investments = new List<Investment>();
+        private readonly ISet<Investment> investments = new HashedSet<Investment>();
 
         internal List<Investment> Investments
         {
-            get { return investments; }
+            get { return investments.ToList(); }
+        }
+
+        public Amount Value
+        {
+            get
+            {
+                return investments.Aggregate(new Amount(0), (amount, investment) => amount + investment.Value);
+            }
+
         }
 
         public void Add(Investment investment)
@@ -29,14 +39,16 @@ namespace Gringotts.Domain
 
         public void AddRange(List<Investment> confirmedInvestments)
         {
-            investments.AddRange(confirmedInvestments);
+            foreach (Investment inv in confirmedInvestments){
+                investments.Add(inv);
+            }
         }
 
         private Dictionary<Investment, Amount> CalculateParticipation()
         {
             Amount totalInvestment = investments.Aggregate(new Amount(0), (total, investment) => total + investment.Value);
             Dictionary<Investment, Amount> participation = new Dictionary<Investment, Amount>();
-            investments.ForEach(investment => participation.Add(investment, totalInvestment / investment.Value));
+            Investments.ForEach(investment => participation.Add(investment, totalInvestment/investment.Value));
             
             return participation;
         }
