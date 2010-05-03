@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="Gringotts" namespace="Gringotts.Domain">
+  <class name="Gringotts.Domain.Offer" table="Offer">
+    <id name="Id" access="field.camelcase">
+      <generator class="native" />
+    </id>
+    <many-to-one name="investor" class="Gringotts.Domain.Investor" unique="true"	column="InvestorId"  access="field"/>
+    <many-to-one name="venture" class="Gringotts.Domain.Venture"	unique="true"	column="VentureId" access="field"/>
+  </class>
+</hibernate-mapping>

@@ -98,5 +98,9 @@ namespace Gringotts.Domain
         {
             return new Amount(Math.Abs(value));
         }
+
+        public decimal Denomination{
+            get { return value; }
+        }
     }
 }

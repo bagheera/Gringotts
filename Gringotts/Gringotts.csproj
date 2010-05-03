@@ -86,7 +86,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Mappings\Investment.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Investment.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Mappings\Offer.hbm.xml" />

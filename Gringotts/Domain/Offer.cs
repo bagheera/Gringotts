@@ -28,6 +28,16 @@ namespace Gringotts.Domain
             Value = amount;
         }
 
+        public virtual Investor Investor
+        {
+            get { return investor; }
+        }
+
+        public virtual Venture Venture
+        {
+            get { return venture; }
+        }
+
         public virtual Amount Value { get; set; }
 
         public virtual bool HasInvestor(Investor investor)
