@@ -33,7 +33,7 @@ namespace Gringotts.Persistence
         }
 
         [Test]
-        public void Should_Be_Able_To_Save_And_Load_A_Venture()
+        public void ShouldBeAbleToSaveAndLoadAVenture()
         {
             Name nameOfVenture = new Name("Ventura");
             Amount outlay = new Amount(100);
@@ -41,7 +41,10 @@ namespace Gringotts.Persistence
             Venture venture = new Venture(nameOfVenture, outlay, minInvestment);
             VentureRepository ventureRepository = new VentureRepository(session);
 
-            ventureRepository.Save(venture);            
+            ventureRepository.Save(venture);
+            session.Flush();
+            session.Evict(venture);
+
             IList<Venture> ventures = ventureRepository.FetchAll();
             
             Assert.AreEqual(venture, ventures.First());

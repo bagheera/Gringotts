@@ -6,13 +6,8 @@
     </id>
     <many-to-one name="investor" class="Gringotts.Domain.Investor" unique="true"	column="InvestorId"  access="field"/>
     <many-to-one name="venture" class="Gringotts.Domain.Venture"	unique="true"	column="VentureId" access="field"/>
-    <!--<bag name="investor" cascade="all" access="field">
-      <key column="investor_id"/>
-      <one-to-many class="Gringotts.Domain.Investor"/>
-    </bag>
-    <bag name="venture" cascade="all" access="field">
-      <key column="venture_id"/>
-      <one-to-many class="Gringotts.Domain.Venture"/>
-    </bag>-->
+    <component name="Value">
+      <property name="value" column="Value" type="float" access="field"/>
+    </component>    
   </class>
 </hibernate-mapping>

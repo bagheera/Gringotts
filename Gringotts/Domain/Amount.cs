@@ -4,14 +4,14 @@ namespace Gringotts.Domain
 {
     public class Amount : IComparable
     {
-        private decimal value;
+        private float value;
 
         public Amount(int amount)
         {
             value = amount;
         }
 
-        public Amount(decimal amount)
+        public Amount(float amount)
         {
             value = amount;
         }
