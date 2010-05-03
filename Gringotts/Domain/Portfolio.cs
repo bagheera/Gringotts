@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using Iesi.Collections.Generic;
 
 namespace Gringotts.Domain
 {
     public class Portfolio
     {
-        private List<Investment> investments = new List<Investment>();
-
+        private ISet<Investment> investments { get; set; }
+        
+        public Portfolio()
+        {
+            investments = new HashedSet<Investment>();
+        }
         public Amount Value
         {
             get

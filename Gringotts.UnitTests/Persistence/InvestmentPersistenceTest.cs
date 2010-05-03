@@ -76,6 +76,10 @@ namespace Gringotts.Persistence
             IList<Investment> investments = investmentRepository.FetchAll();
             Assert.Greater(investments.Count, 0);
             Assert.AreEqual( new Amount(10),investments[0].Value);
+            InvestorRepository repo = new InvestorRepository();
+            repo.Session = session;
+            Investor savedInvestor = repo.GetInvestorById(investor.Id);
+            Assert.AreEqual(new Amount(10), savedInvestor.PortfolioValue);
         }
-    }
+   }
 }

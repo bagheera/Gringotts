@@ -7,5 +7,11 @@
 		<component name="Name" class="Gringotts.Domain.Name" access="field.camelcase">
 			<property name="name" type="String" access="field" />
 		</component>
-	</class>
+    <component name="portfolio" class="Gringotts.Domain.Portfolio" access="field.camelcase">
+      <set name="investments" cascade="none">
+        <key column="InvestorId"/>
+        <one-to-many class="Gringotts.Domain.Investment"/>
+      </set>
+    </component>
+   </class>
 </hibernate-mapping>
