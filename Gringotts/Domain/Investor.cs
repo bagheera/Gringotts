@@ -1,21 +1,17 @@
-using System;
-
 namespace Gringotts.Domain
 {
     public class Investor
     {
         private int id;
         private readonly Name name;
-        private readonly GringottsDate date;
         private readonly Portfolio portfolio = new Portfolio();
         private Offers offers = new Offers();
 
         public Investor() { } // For NHibernate
 
-        public Investor(Name name, GringottsDate date, Amount amount)
+        public Investor(Name name, Amount amount)
         {
             this.name = name;
-            this.date = date;
             Corpus = amount;
         }
 
