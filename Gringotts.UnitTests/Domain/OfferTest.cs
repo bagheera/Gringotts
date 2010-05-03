@@ -1,16 +1,16 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Gringotts.Domain
-{
+namespace Gringotts.Domain{
     [TestFixture]
-    public class OfferTest
-    {
+    public class OfferTest{
         [Test]
-        public void Should_Be_Able_To_Create_Investment_From_Offer()
-        {
-            Offer offer = new Offer(new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(500)), new Amount(300), null);
-            Investment investment = new Investment(new Investor(new Name("Investor1"), new GringottsDate(DateTime.Now), new Amount(500)), null, new Amount(300));
+        public void ShouldBeAbleToCreateInvestmentFromOffer(){
+            var offer = new Offer(
+                new Investor(new Name("Investor1"), new Amount(500)), new Amount(300),
+                null);
+            var investment =
+                new Investment(new Investor(new Name("Investor1"), new Amount(500)),
+                               null, new Amount(300));
             Assert.AreEqual(investment, offer.ToInvestment());
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Gringotts.Domain;
 using NHibernate;
 using NUnit.Framework;
@@ -30,13 +29,13 @@ namespace Gringotts.Persistence
 		}
 
 		[Test]
-		public void Should_Be_Able_To_Save_Investor()
+		public void ShouldBeAbleToSaveInvestor()
 		{
 			string name = "Investor 1";
 			DateTime date = DateTime.Today;
 			int amount = 100;
 			
-			Investor investor = new Investor(new Name(name), new GringottsDate(date), new Amount(amount));
+			Investor investor = new Investor(new Name(name),  new Amount(amount));
 			
 			InvestorRepository investorRepository = new InvestorRepository();
 			investorRepository.Session = session;
