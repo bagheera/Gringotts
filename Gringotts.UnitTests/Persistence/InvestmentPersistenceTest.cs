@@ -32,17 +32,22 @@ namespace Gringotts.Persistence{
         public void ShouldSaveAndLoadInvestment()
         {
             Investor investor = new Investor(new Name("Investor 1"), new Amount(100));
-            InvestorRepository investorRepository = new InvestorRepository();
-            investorRepository.Session = session;
+            InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);
+            session.Flush();
+            session.Evict(investor);
 
             var venture = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
             var ventureRepository = new VentureRepository(session);
             ventureRepository.Save(venture);
+            session.Flush();
+            session.Evict(venture);
 
             var investment = new Investment(investor, venture, new Amount(10));
             var investmentRepository = new InvestmentRepository(session);
             investmentRepository.Save(investment);
+            session.Flush();
+            session.Evict(investment);
 
             IList<Investment> investments = investmentRepository.FetchAll();
             Assert.Greater(investments.Count, 0);
@@ -53,8 +58,7 @@ namespace Gringotts.Persistence{
         public void ShouldSaveAndLoadInvestorPortfolios()
         {
             Investor investor = new Investor(new Name("Investor 1"), new Amount(100));
-            InvestorRepository investorRepository = new InvestorRepository();
-            investorRepository.Session = session;
+            InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);
             session.Flush();
             session.Evict(investor);
@@ -74,8 +78,7 @@ namespace Gringotts.Persistence{
 
             IList<Investment> investments = investmentRepository.FetchAll();
             Assert.Greater(investments.Count, 0);
-            InvestorRepository repo = new InvestorRepository();
-            repo.Session = session;
+            InvestorRepository repo = new InvestorRepository(session);
             Investor savedInvestor = repo.GetInvestorById(investor.Id);
             Assert.AreEqual(new Amount(10), savedInvestor.PortfolioValue);
         }
@@ -83,8 +86,7 @@ namespace Gringotts.Persistence{
         [Test]
         public void ShouldSaveAndLoadVentureHoldings(){
             Investor investor = new Investor(new Name("Investor 1"), new Amount(100));
-            InvestorRepository investorRepository = new InvestorRepository();
-            investorRepository.Session = session;
+            InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);
             session.Flush();
             session.Evict(investor);
@@ -107,15 +109,14 @@ namespace Gringotts.Persistence{
             VentureRepository repo = new VentureRepository(session);
             IList<Venture> savedVentures = repo.FetchAll();
             Assert.AreEqual(1, savedVentures.Count);
-            Assert.AreEqual(new Amount(20), savedVentures[0].Holding.Value);
+            Assert.AreEqual(new Amount(20), savedVentures[0].HoldingValue);
         }
 
         [Test]
         public void ShouldSaveAndLoadMultipleInvestments()
         {
             Investor investor1 = new Investor(new Name("Investor 1"), new Amount(100));
-            InvestorRepository investorRepository = new InvestorRepository();
-            investorRepository.Session = session;
+            InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor1);
             session.Flush();
             session.Evict(investor1);
@@ -125,13 +126,13 @@ namespace Gringotts.Persistence{
             session.Flush();
             session.Evict(investor2);
 
-            Venture venture1 = new Venture(new Name("Ventura"), new Amount(100), new Amount(1));
+            Venture venture1 = new Venture(new Name("Ventura 1"), new Amount(100), new Amount(1));
             VentureRepository ventureRepository = new VentureRepository(session);
             ventureRepository.Save(venture1);
             session.Flush();
             session.Evict(venture1);
             
-            Venture venture2 = new Venture(new Name("Ventura1"), new Amount(150), new Amount(1));
+            Venture venture2 = new Venture(new Name("Ventura 2"), new Amount(150), new Amount(1));
             ventureRepository.Save(venture2);
             session.Flush();
             session.Evict(venture2);
@@ -159,12 +160,17 @@ namespace Gringotts.Persistence{
 
             IList<Investment> investments = investmentRepository.FetchAll();
             Assert.AreEqual(4, investments.Count);
-            InvestorRepository repo = new InvestorRepository();
-            repo.Session = session;
-            Investor savedInvestor = repo.GetInvestorById(investor1.Id);
+
+            Investor savedInvestor = investorRepository.GetInvestorById(investor1.Id);
             Assert.AreEqual(new Amount(50), savedInvestor.PortfolioValue);
-            savedInvestor = repo.GetInvestorById(investor2.Id);
+            savedInvestor = investorRepository.GetInvestorById(investor2.Id);
             Assert.AreEqual(new Amount(90), savedInvestor.PortfolioValue);
+
+            Venture savedVenture = ventureRepository.GetVentureById(venture1.Id);
+            Assert.AreEqual(new Amount(60), savedVenture.HoldingValue);
+            savedVenture = ventureRepository.GetVentureById(venture2.Id);
+            Assert.AreEqual(new Amount(80), savedVenture.HoldingValue);
+
         }
    }
 }

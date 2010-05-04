@@ -36,9 +36,8 @@ namespace Gringotts.Persistence
 			int amount = 100;
 			
 			Investor investor = new Investor(new Name(name),  new Amount(amount));
-			
-			InvestorRepository investorRepository = new InvestorRepository();
-			investorRepository.Session = session;
+
+            InvestorRepository investorRepository = new InvestorRepository(session);
 			int newId = investorRepository.Save(investor);
 			
 			Investor newInvestor = investorRepository.GetInvestorById(newId);

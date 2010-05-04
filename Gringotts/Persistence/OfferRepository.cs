@@ -5,22 +5,27 @@ using NHibernate;
 namespace Gringotts.Persistence{
     public class OfferRepository{
 
-        private ISession Session;
+        private ISession session;
 
         public OfferRepository(ISession session)
         {
-            Session = session;
+            this.session = session;
         }
 
         public void Save(Offer offer)
         {
-            Session.Save(offer);
+            session.Save(offer);
         }
 
         public IList<Offer> FetchAll()
         {
-            IQuery query = Session.CreateQuery("from Offer");            
+            IQuery query = session.CreateQuery("from Offer");            
             return query.List<Offer>();
+        }
+
+        public Offer GetOfferById(int id)
+        {
+            return session.Load<Offer>(id);
         }
     }
 }

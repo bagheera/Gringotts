@@ -18,7 +18,6 @@ namespace Gringotts.Domain
             {
                 return investments.Aggregate(new Amount(0), (amount, investment) => amount + investment.Value);
             }
-
         }
 
         public void AddInvestment(Investment investment)

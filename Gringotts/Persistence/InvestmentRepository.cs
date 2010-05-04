@@ -6,21 +6,26 @@ namespace Gringotts.Persistence
 {
     public class InvestmentRepository
     {
-        private ISession Session;
+        private ISession session;
 
         public InvestmentRepository(ISession session)
         {
-            Session = session;
+            this.session = session;
         }
 
         public void Save(Investment investment)
         {
-            Session.Save(investment);
+            session.Save(investment);
+        }
+
+        public Investment GetInvestmentById(int id)
+        {
+            return session.Load<Investment>(id);
         }
 
         public IList<Investment> FetchAll()
         {
-            IQuery query = Session.CreateQuery("from Investment");
+            IQuery query = session.CreateQuery("from Investment");
             return query.List<Investment>();
         }
     }
