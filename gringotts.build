@@ -5,7 +5,7 @@
   <property name="debug" value="true" />
   <property name="MSBuildPath" value="C:\WINDOWS\Microsoft.NET\Framework\v3.5\MSBuild.exe"/>
 
-  <target name="clean">
+  <target name="clean" depends="delete.database" >
     <echo message="${projectName}/bin/*.*" />
     <delete>
       <fileset>
@@ -24,7 +24,7 @@
     </exec>
   </target>
 
-  <target name="test" depends="build">
+  <target name="test" depends="build,create.database">
     <nunit2>
       <formatter type="Plain" />
       <test assemblyname="${projectName}.UnitTests/bin/${mode}/${projectName}.UnitTests.dll" />
@@ -32,6 +32,14 @@
   </target>
 
   <target name="all" depends="test">
+  </target>
+ 
+ <target name="create.database" depends="delete.database" >
+  <exec program="sqlite3.exe" basedir="./lib" workingdir="./database/" commandline="-init DatabaseSchemas gringotts.db"  />
+  </target>
+
+  <target name="delete.database" >
+    <delete file="database/gringotts.db" />
   </target>
 
 </project>

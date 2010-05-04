@@ -1,0 +1,2 @@
+CREATE TABLE Investor ( Id INTEGER PRIMARY KEY,
+                  Name VARCHAR(30));
