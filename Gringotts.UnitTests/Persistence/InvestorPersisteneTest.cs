@@ -38,7 +38,7 @@ namespace Gringotts.Persistence
 			Investor investor = new Investor(new Name(name),  new Amount(amount));
 
             InvestorRepository investorRepository = new InvestorRepository(session);
-			int newId = investorRepository.Save(investor);
+            string newId = investorRepository.Save(investor);
 			
 			Investor newInvestor = investorRepository.GetInvestorById(newId);
 			Assert.AreEqual(new Name(name), newInvestor.Name);

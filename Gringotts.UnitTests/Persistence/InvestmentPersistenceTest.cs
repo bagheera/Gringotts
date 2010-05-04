@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Gringotts.Domain;
 using NHibernate;
 using NUnit.Framework;
@@ -137,22 +136,26 @@ namespace Gringotts.Persistence{
             session.Flush();
             session.Evict(venture2);
 
-            Investment investment1 = new Investment(investor1, venture1, new Amount(20));
+            Amount investmentAmount1 = new Amount(20);
+            Investment investment1 = new Investment(investor1, venture1, investmentAmount1);
             InvestmentRepository investmentRepository = new InvestmentRepository(session);
             investmentRepository.Save(investment1);
             session.Flush();
-            session.Evict(investment1);            
-            
+            session.Evict(investment1);
+
+            Amount investmentAmount2 = new Amount(30);
             Investment investment2 = new Investment(investor1, venture2, new Amount(30));
             investmentRepository.Save(investment2);
             session.Flush();
-            session.Evict(investment2);            
-            
+            session.Evict(investment2);
+
+            Amount investmentAmount3 = new Amount(40);
             Investment investment3 = new Investment(investor2, venture1, new Amount(40));
             investmentRepository.Save(investment3);
             session.Flush();
-            session.Evict(investment3);            
-            
+            session.Evict(investment3);
+
+            Amount investmentAmount4 = new Amount(50);
             Investment investment4 = new Investment(investor2, venture2, new Amount(50));
             investmentRepository.Save(investment4);
             session.Flush();
@@ -162,14 +165,14 @@ namespace Gringotts.Persistence{
             Assert.AreEqual(4, investments.Count);
 
             Investor savedInvestor = investorRepository.GetInvestorById(investor1.Id);
-            Assert.AreEqual(new Amount(50), savedInvestor.PortfolioValue);
+            Assert.AreEqual(investmentAmount1 + investmentAmount2, savedInvestor.PortfolioValue);
             savedInvestor = investorRepository.GetInvestorById(investor2.Id);
-            Assert.AreEqual(new Amount(90), savedInvestor.PortfolioValue);
+            Assert.AreEqual(investmentAmount3 + investmentAmount4, savedInvestor.PortfolioValue);
 
             Venture savedVenture = ventureRepository.GetVentureById(venture1.Id);
-            Assert.AreEqual(new Amount(60), savedVenture.HoldingValue);
+            Assert.AreEqual(investmentAmount1 + investmentAmount3, savedVenture.HoldingValue);
             savedVenture = ventureRepository.GetVentureById(venture2.Id);
-            Assert.AreEqual(new Amount(80), savedVenture.HoldingValue);
+            Assert.AreEqual(investmentAmount2+ investmentAmount4, savedVenture.HoldingValue);
 
         }
    }

@@ -13,14 +13,14 @@ namespace Gringotts.Persistence
 	    {
 	        this.session = session;
 	    }
-	   
 
-		public int Save(Investor newInvestor)
+
+        public string Save(Investor newInvestor)
 		{
-            return (int)session.Save(newInvestor);
+            return (string)session.Save(newInvestor);
 		}
 
-		public Investor GetInvestorById(int id)
+		public Investor GetInvestorById(string id)
 		{
             return session.Load<Investor>(id);
 		}
