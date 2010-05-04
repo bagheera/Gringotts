@@ -7,7 +7,7 @@
     <component name="Value">
       <property name="value" column="Value" type="float" access="field"/>
     </component>
-    <many-to-one name="investor" class="Gringotts.Domain.Investor" unique="true"	column="InvestorId"  access="field"/>
-    <many-to-one name="venture" class="Gringotts.Domain.Venture"	unique="true"	column="VentureId" access="field"/>
+    <many-to-one name="investor" class="Gringotts.Domain.Investor" column="InvestorId"  access="field"/>
+    <many-to-one name="venture" class="Gringotts.Domain.Venture"	column="VentureId" access="field"/>
   </class>
 </hibernate-mapping>
