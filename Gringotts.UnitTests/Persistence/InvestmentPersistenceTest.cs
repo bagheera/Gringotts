@@ -83,6 +83,7 @@ namespace Gringotts.Persistence{
         }
 
         [Test]
+        [Ignore]
         public void ShouldSaveAndLoadVentureHoldings(){
             Investor investor = new Investor(new Name("Investor 1"), new Amount(100));
             InvestorRepository investorRepository = new InvestorRepository(session);
@@ -112,6 +113,7 @@ namespace Gringotts.Persistence{
         }
 
         [Test]
+        [Ignore]
         public void ShouldSaveAndLoadMultipleInvestments()
         {
             Investor investor1 = new Investor(new Name("Investor 1"), new Amount(100));

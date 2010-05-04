@@ -18,10 +18,10 @@ namespace Gringotts.Persistence
                 return;
 
             var properties = new Dictionary<string, string>();
-            properties.Add("connection.driver_class", "NHibernate.Driver.SQLite20Driver");
+            properties.Add("connection.driver_class", "NHibernate.Driver.SQLite20Driver,NHibernate");
             properties.Add("dialect", "NHibernate.Dialect.SQLiteDialect");
             properties.Add("connection.provider", "NHibernate.Connection.DriverConnectionProvider");
-            properties.Add("connection.connection_string", "Data Source=:memory:;Version=3;New=True;");
+            properties.Add("connection.connection_string", "Data Source=./../../../database/gringotts.db;Version=3;New=True;");
             properties.Add("connection.release_mode", "on_close");
             properties.Add("show_sql", "true");
 
@@ -36,8 +36,6 @@ namespace Gringotts.Persistence
         public ISession CreateSession()
         {
             ISession openSession = sessionFactory.OpenSession();
-            IDbConnection connection = openSession.Connection;
-            new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
             return openSession;
         }
 

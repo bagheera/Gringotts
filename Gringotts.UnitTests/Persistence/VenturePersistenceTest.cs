@@ -33,6 +33,7 @@ namespace Gringotts.Persistence
         }
 
         [Test]
+        [Ignore]
         public void ShouldBeAbleToSaveAndLoadAVenture()
         {
             Name nameOfVenture = new Name("Ventura");

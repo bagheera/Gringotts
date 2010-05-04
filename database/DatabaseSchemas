@@ -1,2 +1,22 @@
 CREATE TABLE Investor ( Id INTEGER PRIMARY KEY,
                   Name VARCHAR(30));
+                  
+CREATE TABLE Investment ( Id INTEGER PRIMARY KEY,
+					InvestorId INTEGER,
+					VentureId INTEGER,
+					Value FLOAT,
+					Foreign Key (InvestorId) references Investor(Id),
+					Foreign Key (VentureId) references Venture(Id));
+					
+CREATE TABLE Venture ( Id INTEGER PRIMARY KEY,
+					Name VARCHAR(30),
+					Outlay FLOAT,
+					MinInvestment FLOAT,
+					State VARCHAR(30));
+					
+CREATE TABLE Offer ( Id INTEGER PRIMARY KEY,
+					InvestorId INTEGER,
+					VentureId INTEGER,
+					Value FLOAT,
+					Foreign Key (InvestorId) references Investor(Id),
+					Foreign Key (VentureId) references Venture(Id));
