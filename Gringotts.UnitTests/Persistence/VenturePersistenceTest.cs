@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Gringotts.Domain;
@@ -24,11 +25,13 @@ namespace Gringotts.Persistence
         public void SetUp()
         {
             session = CreateSession();
+            session.BeginTransaction();
         }
 
         [TearDown]
         public void TearDown()
         {
+            session.Transaction.Rollback();
             session.Dispose();
         }
 
@@ -47,7 +50,7 @@ namespace Gringotts.Persistence
 
             IList<Venture> ventures = ventureRepository.FetchAll();
             
-            Assert.AreEqual(venture, ventures.First());
+            Assert.Contains(venture, ventures as ICollection);
         }
     }
 }

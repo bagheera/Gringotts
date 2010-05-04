@@ -11,10 +11,12 @@ namespace Gringotts.Persistence{
         [SetUp]
         public void SetUp(){
             session = CreateSession();
+            session.BeginTransaction();
         }
 
         [TearDown]
         public void TearDown(){
+            session.Transaction.Rollback();
             session.Dispose();
         }
 
