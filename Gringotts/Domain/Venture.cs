@@ -108,7 +108,7 @@ namespace Gringotts.Domain
         public virtual void HandOutDividends(Amount dividend)
         {
             if (!IsStarted())
-                throw new Exception("Cannot hand out dividends for an un-started venture");            
+                throw new InvalidOperationException("Cannot hand out dividends for an un-started venture");            
             holding.DistributeDividends(dividend);
         }
 
@@ -136,8 +136,10 @@ namespace Gringotts.Domain
             return State == PROPOSED_STATE;
         }
 
-        public void	 GoBankrupt(){
-            
+        public virtual void	 GoBankrupt(){
+            if(!IsStarted())
+                throw new InvalidOperationException("Cannot Go Bankrupt if not started");
+            State = BANKRUPT_STATE;
         }
     }
 }

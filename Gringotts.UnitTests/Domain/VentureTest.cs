@@ -198,5 +198,33 @@ namespace Gringotts.Domain{
             venture.GoBankrupt();
             Assert.AreEqual(Venture.BANKRUPT_STATE, venture.State);
         }
+
+        [Test]
+        public void VentureNotInStartedStateWillNotGoBankrupt()
+        {
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialCorpus = new Amount(100);
+            var investor = new Investor(new Name("Investor0"), initialCorpus);
+            venture.AddOffer(investor, new Amount(50));
+            
+            Assert.Throws<InvalidOperationException>(venture.GoBankrupt);
+        }
+
+        [Test]
+        public void ShouldNotGiveDividendsIfItIsBankrupt(){
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialCorpus = new Amount(100);
+            var investor = new Investor(new Name("Investor0"), initialCorpus);
+            venture.AddOffer(investor, new Amount(50));
+
+            venture.Start();
+
+            venture.GoBankrupt();
+
+            Assert.Throws<InvalidOperationException>(()=> venture.HandOutDividends(new Amount(100)));
+        }
+
     }
 }
