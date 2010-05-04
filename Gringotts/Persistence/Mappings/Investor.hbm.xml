@@ -7,6 +7,15 @@
 		<component name="Name" class="Gringotts.Domain.Name" access="field.camelcase">
 			<property name="name" type="String" access="field" />
 		</component>
+    <component name="Balance">
+      <property name="value" column="Balance" type="float" access="field"/>
+    </component>
+    <component name="balanceHistory" class="Gringotts.Domain.BalanceHistory" access="field.camelcase">
+      <set name="events" cascade="all" access="field">
+        <key column="InvestorId"/>
+        <one-to-many class="Gringotts.Domain.BalanceEvent"/>
+      </set>
+    </component>
     <component name="portfolio" class="Gringotts.Domain.Portfolio" access="field.camelcase">
       <set name="investments" cascade="none">
         <key column="InvestorId"/>

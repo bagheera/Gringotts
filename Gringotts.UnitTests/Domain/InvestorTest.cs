@@ -7,7 +7,7 @@ namespace Gringotts.Domain{
         public void CanCreateInvestor(){
             var amount = new Amount(10);
             var investor = new Investor(new Name("Investor 1"), amount);
-            Assert.AreEqual(amount, investor.Corpus);
+            Assert.AreEqual(amount, investor.Balance);
         }
 
         [Test]
@@ -16,7 +16,7 @@ namespace Gringotts.Domain{
             var venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
             Offer offer = venture.AddOffer(investor, new Amount(600));
             Assert.NotNull(offer);
-            Assert.AreEqual(new Amount(400), investor.Corpus);
+            Assert.AreEqual(new Amount(400), investor.Balance);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Gringotts.Domain{
         public void ShouldBeAbleToAcceptCreditSurplus(){
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
             investor.AcceptSurplus(new Amount(50));
-            Assert.AreEqual(new Amount(1050), investor.Corpus);
+            Assert.AreEqual(new Amount(1050), investor.Balance);
         }
 
         [Test]
@@ -56,6 +56,17 @@ namespace Gringotts.Domain{
             Assert.Contains(balanceEvent, history.GetEvents());
         }
 
-        
+        [Test]
+        public void ShouldCreateABalanceEventWhenInvestorMakesAnOffer()
+        {
+            var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
+            var venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
+            Offer offer = venture.AddOffer(investor, new Amount(600));
+            Assert.NotNull(offer);
+            Assert.AreEqual(new Amount(400), investor.Balance);
+            BalanceHistory history = investor.GetBalanceHistory();
+            BalanceEvent balanceEvent = new BalanceEvent(BalanceEvent.OFFER_ACCEPTED, new Amount(400));
+            Assert.Contains(balanceEvent, history.GetEvents());
+        }
     }
 }

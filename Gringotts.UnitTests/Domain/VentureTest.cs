@@ -183,7 +183,7 @@ namespace Gringotts.Domain{
             var investor = new Investor(new Name("Investor0"),  initialCorpus);
             venture.AddOffer(investor, new Amount(50));
             venture.Start();
-            Assert.AreEqual(initialCorpus - outlay, investor.Corpus);
+            Assert.AreEqual(initialCorpus - outlay, investor.Balance);
         }
     }
 }

@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Mappings\Venture.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -88,13 +89,23 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Mappings\Investor.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Mappings\Investment.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Investment.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Mappings\Offer.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Offer.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Persistence\Mappings\BalanceEvent.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<To modify your build process, add your task inside one of the targets below and uncomment it. 
