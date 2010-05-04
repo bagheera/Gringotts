@@ -49,7 +49,6 @@ namespace Gringotts.Domain
             get { return offers.Value; }
         }
 
-        //todo : remove the name
         public virtual bool Equals(Investor other)
         {
             if (ReferenceEquals(null, other)) return false;

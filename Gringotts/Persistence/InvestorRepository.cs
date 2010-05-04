@@ -7,30 +7,28 @@ namespace Gringotts.Persistence
 {
 	public class InvestorRepository
 	{
-		private ISession nhibernateSession;
+		private ISession session;
 
-		public ISession Session
-		{
-			get
-			{
-				if (nhibernateSession == null)
-					throw new InvalidOperationException("The Session property is null");
-				return nhibernateSession;
-			}
-			set
-			{
-				nhibernateSession = value;
-			}
-		}
+	    public InvestorRepository(ISession session)
+	    {
+	        this.session = session;
+	    }
+	   
 
 		public int Save(Investor newInvestor)
 		{
-			return (int)Session.Save(newInvestor);
+            return (int)session.Save(newInvestor);
 		}
 
 		public Investor GetInvestorById(int id)
 		{
-			return Session.Load<Investor>(id);
+            return session.Load<Investor>(id);
 		}
+
+        public IList<Investor> FetchAll()
+        {
+            IQuery query = session.CreateQuery("from Investor");
+            return query.List<Investor>();
+        }
 	}
 }

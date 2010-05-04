@@ -30,8 +30,7 @@ namespace Gringotts.Persistence{
         [Test]
         public void ShouldPersist(){
             var investor = new Investor(new Name("Jagan"), new Amount(2000));
-            var investorRepository = new InvestorRepository();
-            investorRepository.Session = session;
+            var investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);
 
             var venture = new Venture(new Name("Ram Capitalists"), new Amount(2000), new Amount(400));

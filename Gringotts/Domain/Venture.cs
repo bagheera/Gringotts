@@ -30,10 +30,10 @@ namespace Gringotts.Domain
             holding = new Holding();
         }
 
-        internal virtual string Id { get; private set; }
-        internal virtual Name Name { get; private set; }
-        internal virtual Amount Outlay { get; private set; }
-        internal virtual Amount MinInvestment { get; private set; }
+        public virtual string Id { get; private set; }
+        public virtual Name Name { get; private set; }
+        public virtual Amount Outlay { get; private set; }
+        public virtual Amount MinInvestment { get; private set; }
         public virtual Subscription Subscription { get; set; }
         public virtual String State { get; private set; }
 
@@ -43,6 +43,11 @@ namespace Gringotts.Domain
             {
                 return holding;
             }
+        }
+
+        public virtual Amount HoldingValue
+        {
+            get { return holding.Value; }
         }
 
         public virtual Offer AddOffer(Investor investor, Amount investedAmount)
