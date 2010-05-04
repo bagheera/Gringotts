@@ -8,27 +8,13 @@ namespace Gringotts.Persistence
 	[TestFixture]
 	public class InvsetorPersistenceTest : NHibernateInMemoryTestFixtureBase
 	{
-		private ISession session;
-
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
 			InitalizeSessionFactory();
 		}
 
-		[SetUp]
-		public void SetUp()
-		{
-			session = CreateSession();
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-			session.Dispose();
-		}
-
-		[Test]
+	    [Test]
 		public void ShouldBeAbleToSaveInvestor()
 		{
 			string name = "Investor 1";

@@ -6,22 +6,7 @@ using NUnit.Framework;
 namespace Gringotts.Persistence{
     [TestFixture]
     public class OfferRepositoryPersistentTest : NHibernateInMemoryTestFixtureBase{
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp(){
-            session = CreateSession();
-        }
-
-        [TearDown]
-        public void TearDown(){
-            session.Dispose();
-        }
-
-        #endregion
-
-        private ISession session;
-
+        
         [TestFixtureSetUp]
         public void TestFixtureSetUp(){
             InitalizeSessionFactory();

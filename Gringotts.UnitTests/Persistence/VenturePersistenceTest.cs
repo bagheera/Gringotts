@@ -13,26 +13,10 @@ namespace Gringotts.Persistence
     [TestFixture]
     public class VentureTest : NHibernateInMemoryTestFixtureBase
     {
-        private ISession session;
-
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             InitalizeSessionFactory();
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            session = CreateSession();
-            session.BeginTransaction();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            session.Transaction.Rollback();
-            session.Dispose();
         }
 
         [Test]

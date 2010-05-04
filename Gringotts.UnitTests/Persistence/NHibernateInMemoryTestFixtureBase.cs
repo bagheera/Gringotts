@@ -4,6 +4,7 @@ using System.IO;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using NUnit.Framework;
 
 namespace Gringotts.Persistence
 {
@@ -11,6 +12,7 @@ namespace Gringotts.Persistence
     {
         protected static ISessionFactory sessionFactory;
         protected static Configuration configuration;
+        protected ISession session;
 
         public static void InitalizeSessionFactory()
         {
@@ -39,5 +41,16 @@ namespace Gringotts.Persistence
             return openSession;
         }
 
+        [SetUp]
+        public void SetUp(){
+            session = CreateSession();
+            session.BeginTransaction();
+        }
+
+        [TearDown]
+        public void TearDown(){
+            session.Transaction.Rollback();
+            session.Dispose();
+        }
     }
 }

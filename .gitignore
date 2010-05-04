@@ -4,3 +4,4 @@
 **.suo
 _ReSharper.Gringotts
 Gringotts.sln.cache
+database/*.db
