@@ -29,25 +29,45 @@ namespace Gringotts.Persistence{
 
         [Test]
         public void ShouldPersist(){
-            var investor = new Investor(new Name("Jagan"), new Amount(2000));
+            const int corpus = 4000;
+            const string investorName = "Jagan";
+            var investor = new Investor(new Name(investorName), new Amount(corpus));
             var investorRepository = new InvestorRepository();
             investorRepository.Session = session;
             investorRepository.Save(investor);
 
-            var venture = new Venture(new Name("Ram Capitalists"), new Amount(2000), new Amount(400));
+            const int outlay = 2000;
+            const int minInvestment = 400;
+            const string ventureName = "Ram Capitalists";
+            var venture = new Venture(new Name(ventureName), new Amount(outlay), new Amount(minInvestment));
             var ventureRepository = new VentureRepository(session);
             ventureRepository.Save(venture);
 
-            var offer = new Offer(investor, new Amount(500), venture);
+            const int denomination = 500;
+            var offer = new Offer(investor, new Amount(denomination), venture);
             var offerRepository = new OfferRepository(session);
             offerRepository.Save(offer);
+
+            session.Flush();
+
+            session.Evict(offer);
+            session.Evict(investor);
+            session.Evict(venture);
 
             IList<Offer> offers = offerRepository.FetchAll();
             Assert.AreEqual(1, offers.Count);
             Offer savedOffer = offers[0];
-            Assert.AreEqual(500, savedOffer.Value.Denomination);
-            Assert.AreEqual("Jagan", savedOffer.Investor.Name.GetValue());
-            Assert.AreEqual("Ram Capitalists", savedOffer.Venture.Name.GetValue());
+            
+            //offer props
+            Assert.AreEqual(denomination, savedOffer.Value.Denomination);
+
+            //investor props
+            Assert.AreEqual(investorName, savedOffer.Investor.Name.GetValue());
+            
+            //venture props
+            Assert.AreEqual(ventureName, savedOffer.Venture.Name.GetValue());
+            Assert.AreEqual(new Amount(outlay), savedOffer.Venture.Outlay);
+            Assert.AreEqual(new Amount(minInvestment), savedOffer.Venture.MinInvestment);
         }
     }
 }
