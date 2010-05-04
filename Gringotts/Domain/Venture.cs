@@ -9,6 +9,7 @@ namespace Gringotts.Domain
         public const string STARTED_STATE = "Started";
         public const string CANCELLED_STATE = "Cancelled";
         public const string CLOSED_STATE = "Closed";
+        public const string BANKRUPT_STATE = "Bankrupt";
 
         public Venture(Name name, Amount outlay, Amount minInvestment)
         {
@@ -133,6 +134,10 @@ namespace Gringotts.Domain
         public virtual bool IsProposed()
         {
             return State == PROPOSED_STATE;
+        }
+
+        public void	 GoBankrupt(){
+            
         }
     }
 }
