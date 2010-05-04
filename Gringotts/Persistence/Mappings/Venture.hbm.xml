@@ -20,5 +20,11 @@
         <one-to-many class="Gringotts.Domain.Investment"/>
       </set>
     </component>
+    <component name="Subscription" class="Gringotts.Domain.Subscription">
+      <set name="subscription" cascade="none" access="field">
+        <key column="VentureId"/>
+        <one-to-many class="Gringotts.Domain.Offer"/>
+      </set>
+    </component>
   </class>
 </hibernate-mapping>

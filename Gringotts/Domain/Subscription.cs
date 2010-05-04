@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Iesi.Collections.Generic;
 
 namespace Gringotts.Domain
 {
     public class Subscription
     {
-        private readonly List<Offer> subscription = new List<Offer>();
+        private ISet<Offer> subscription = new HashedSet<Offer>();
 
         public int Count
         {

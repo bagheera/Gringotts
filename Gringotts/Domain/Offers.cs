@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using Iesi.Collections.Generic;
 
 namespace Gringotts.Domain
 {
     public class Offers
     {
-        private readonly List<Offer> offers = new List<Offer>();
+        private ISet<Offer> offers = new HashedSet<Offer>();
 
         public Amount Value
         {
