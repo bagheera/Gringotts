@@ -4,7 +4,7 @@ namespace Gringotts.Domain
 {
     public class Investor
     {
-        private int id;
+        private string id;
         private readonly Name name;
         private readonly Portfolio portfolio = new Portfolio();
         private Offers offers = new Offers();
@@ -31,7 +31,7 @@ namespace Gringotts.Domain
             get { return name; }
         }
 
-        public virtual int Id
+        public virtual string Id
         {
             get
             {
@@ -53,24 +53,25 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.id == id && Equals(other.name, name);
+            return Equals(other.id, id) && Equals(other.name, name);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(Investor)) return false;
-            return Equals((Investor)obj);
+            if (obj.GetType() != typeof (Investor)) return false;
+            return Equals((Investor) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (id * 397) ^ (name != null ? name.GetHashCode() : 0);
+                return ((id != null ? id.GetHashCode() : 0)*397) ^ (name != null ? name.GetHashCode() : 0);
             }
         }
+
 
         public virtual void AcceptSurplus(Amount surplus)
         {

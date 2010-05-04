@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Gringotts.Domain;
 using NHibernate;
 using NUnit.Framework;
