@@ -9,22 +9,7 @@ namespace Gringotts.Domain
         private readonly Portfolio portfolio = new Portfolio();
         private Offers offers = new Offers();
         private BalanceHistory balanceHistory = new BalanceHistory();
-
-        public Investor() { } // For NHibernate
-
-        public Investor(Name name, Amount amount)
-        {
-            this.name = name;
-            Corpus = amount;
-            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount));
-        }
-
-        public virtual Amount Corpus { get; private set; }
-
-        private void Pay(Amount amount)
-        {
-            Corpus -= amount;
-        }
+        public virtual Amount Balance { get; private set; }
 
         public virtual Name Name
         {
@@ -47,6 +32,15 @@ namespace Gringotts.Domain
         public virtual Amount OfferValue
         {
             get { return offers.Value; }
+        }
+
+        public Investor() { } // For NHibernate
+
+        public Investor(Name name, Amount amount)
+        {
+            this.name = name;
+            Balance = amount;
+            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount));
         }
 
         public virtual bool Equals(Investor other)
@@ -75,7 +69,7 @@ namespace Gringotts.Domain
 
         public virtual void AcceptSurplus(Amount surplus)
         {
-            Corpus += surplus;
+            Balance += surplus;
         }
 
         public virtual void AddInvestmentToPortfolio(Investment investment)
@@ -87,15 +81,21 @@ namespace Gringotts.Domain
         {
             Pay(offer.Value);
             offers.AddOffer(offer);
+            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.OFFER_ACCEPTED, Balance));
         }
 
         public virtual void AcceptReturn(Amount dividend)
         {
-            Corpus += dividend;
+            Balance += dividend;
         }
 
         public virtual BalanceHistory GetBalanceHistory(){
             return balanceHistory;
+        }
+
+        private void Pay(Amount amount)
+        {
+            Balance -= amount;
         }
     }
 }

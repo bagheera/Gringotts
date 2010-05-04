@@ -1,5 +1,7 @@
 CREATE TABLE Investor ( Id INTEGER PRIMARY KEY,
-                  Name VARCHAR(30));
+                  Name VARCHAR(30),
+				  Balance FLOAT				  
+				  );
                   
 CREATE TABLE Investment ( Id INTEGER PRIMARY KEY,
 					InvestorId INTEGER,
@@ -20,3 +22,9 @@ CREATE TABLE Offer ( Id INTEGER PRIMARY KEY,
 					Value FLOAT,
 					Foreign Key (InvestorId) references Investor(Id),
 					Foreign Key (VentureId) references Venture(Id));
+					
+CREATE TABLE BalanceEvent ( Id INTEGER PRIMARY KEY,
+					InvestorId INTEGER,					
+					Amount FLOAT,
+					EventType VARCHAR(255),
+					Foreign Key (InvestorId) references Investor(Id));				

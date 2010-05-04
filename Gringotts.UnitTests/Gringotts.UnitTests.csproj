@@ -69,6 +69,7 @@
     <Compile Include="Domain\PortfolioTest.cs" />
     <Compile Include="Domain\SubscriptionTest.cs" />
     <Compile Include="Domain\VentureTest.cs" />
+    <Compile Include="Persistence\BalanceEventPersistanceTest.cs" />
     <Compile Include="Persistence\InvestmentPersistenceTest.cs" />
     <Compile Include="Persistence\InvestorPersisteneTest.cs" />
     <Compile Include="Persistence\NHibernateInMemoryTestFixtureBase.cs" />

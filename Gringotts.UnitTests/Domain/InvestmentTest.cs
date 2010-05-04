@@ -12,7 +12,7 @@ namespace Gringotts.Domain{
 
             var investment = new Investment(investor, null, offer);
             investment.GiveReturn(dividend);
-            Assert.AreEqual(corpus + dividend, investor.Corpus);
+            Assert.AreEqual(corpus + dividend, investor.Balance);
         }
     }
 }
