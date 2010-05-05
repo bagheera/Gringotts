@@ -6,11 +6,18 @@ namespace Gringotts.Domain
     public class Venture
     {
         private Holding holding;
+        private VentureHistory ventureHistory = new VentureHistory();
         public const string PROPOSED_STATE = "Proposed";
         public const string STARTED_STATE = "Started";
         public const string CANCELLED_STATE = "Cancelled";
         public const string CLOSED_STATE = "Closed";
         public const string BANKRUPT_STATE = "Bankrupt";
+
+
+        public virtual VentureHistory VentureHistory
+        {
+            get { return ventureHistory; }
+        }
 
         public Venture(Name name, Amount outlay, Amount minInvestment):this(name, outlay)
         {
@@ -19,6 +26,7 @@ namespace Gringotts.Domain
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
             MinInvestment = minInvestment;
+            
         }
 
         private Venture(Name name, Amount outlay)
@@ -29,6 +37,7 @@ namespace Gringotts.Domain
             Subscription = new Subscription();
             State = PROPOSED_STATE;
             holding = new Holding();
+            AddEventToVentureHistory(VentureEvent.PROPOSED);
         }
 
         public Venture()
@@ -104,6 +113,7 @@ namespace Gringotts.Domain
         public virtual void ChangeStateToCancelled()
         {
             State = CANCELLED_STATE;
+            AddEventToVentureHistory(VentureEvent.CANCELLED);
         }
 
         public virtual void ChangeStateToStarted()
@@ -150,6 +160,12 @@ namespace Gringotts.Domain
         private void AddInvestmentsToHolding(List<Investment> investments)
         {
             Holding.AddRange(investments);
+            State = STARTED_STATE;
+            AddEventToVentureHistory(VentureEvent.STARTED);
+        }
+
+        private void AddEventToVentureHistory(String eventType){
+            ventureHistory.AddEvent(new VentureEvent(eventType, new Amount(Outlay.Denomination)));
         }
 
         public virtual bool IsProposed()
