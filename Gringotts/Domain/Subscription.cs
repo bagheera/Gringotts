@@ -42,8 +42,10 @@ namespace Gringotts.Domain
                 {
                     investment.Value += difference;
                     investment.CreditSurplus(difference.Abs());
+                    
                     break;
                 }
+
             }
 
             return finalSubscription;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 
 namespace Gringotts.Domain{
@@ -226,5 +227,22 @@ namespace Gringotts.Domain{
             Assert.Throws<InvalidOperationException>(()=> venture.HandOutDividends(new Amount(100)));
         }
 
+        [Test]
+        public void ShouldUpdateInvestorPortfolioWhenVentureGoesBankrupt(){
+            var outlay = new Amount(50);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialCorpus = new Amount(100);
+            var investor = new Investor(new Name("Investor0"), initialCorpus);
+            var investmentAmount = new Amount(50);
+            venture.AddOffer(investor, investmentAmount);
+
+            venture.Start();
+            var previousAmount = investor.PortfolioValue;
+            
+            venture.GoBankrupt();
+            var currentAmount = investor.PortfolioValue;
+
+            Assert.AreEqual(previousAmount-investmentAmount, currentAmount);
+        }
     }
 }

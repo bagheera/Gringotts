@@ -98,5 +98,9 @@ namespace Gringotts.Domain
         {
             Balance -= amount;
         }
+
+        public virtual void	NotifyVentureBankruptcy(Investment investment){
+            portfolio.RemoveInvestment	(investment);
+        }
     }
 }

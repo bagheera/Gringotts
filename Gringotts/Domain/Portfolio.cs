@@ -24,5 +24,9 @@ namespace Gringotts.Domain
         {
             investments.Add(investment);
         }
+
+        public void RemoveInvestment(Investment investment){
+            investments.Remove(investment);
+        }
     }
 }

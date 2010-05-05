@@ -14,6 +14,13 @@ namespace Gringotts.Domain
             }
         }
 
+
+        public virtual Investor Investor
+        {
+            get { return investor; }
+        }
+
+
         public Investment(Investor investor, Amount amount) : this (investor, null, amount)
         {
         }
