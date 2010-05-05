@@ -244,5 +244,47 @@ namespace Gringotts.Domain{
 
             Assert.AreEqual(previousAmount-investmentAmount, currentAmount);
         }
+
+        [Test]
+        public void ShouldUpdateMultipleInvestorPortfoliosWhenVentureGoesBankrupt()
+        {
+            Investor investor1 = CreateInvestor("Joy", 1000);
+            Investor investor2 = CreateInvestor("Roy", 2000);
+
+            Venture venture1 = CreateVenture(500, 100, "Ace Ventura");
+            Venture venture2 = CreateVenture(300, 50, "Liar Liar");
+
+            var investmentAmount1 = new Amount(200);
+            var investmentAmount2 = new Amount(300);
+            venture1.AddOffer(investor1, investmentAmount1);
+            venture1.AddOffer(investor2, investmentAmount2);
+            
+            venture2.AddOffer(investor1, investmentAmount1);
+            venture2.AddOffer(investor2, investmentAmount2);
+
+            venture1.Start();
+            venture2.Start();
+
+            var previousAmountInvestor1 = investor1.PortfolioValue;
+            var previousAmountInvestor2 = investor2.PortfolioValue;
+            venture2.GoBankrupt();
+
+            var currentAmountInvestor1 = investor1.PortfolioValue;
+            var currentAmountInvestor2 = investor2.PortfolioValue;
+
+            Assert.AreEqual(previousAmountInvestor1 - investmentAmount1, currentAmountInvestor1);
+            Assert.AreEqual(previousAmountInvestor2 - new Amount(100), currentAmountInvestor2);
+
+        }
+
+        private Investor CreateInvestor(string name, int corpus)
+        {
+            return new Investor(new Name(name), new Amount(corpus));
+        }
+
+        private Venture CreateVenture(int outlay, int minInvestment, string name)
+        {
+            return new Venture(new Name(name), new Amount(outlay), new Amount(minInvestment));
+        }
     }
 }
