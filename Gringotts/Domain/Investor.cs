@@ -100,9 +100,16 @@ namespace Gringotts.Domain
         }
 
         public virtual void	NotifyVentureBankruptcy(Investment investment){
-            portfolio.RemoveInvestment	(investment);
-            String ventureBankruptEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT, investment.Venture.Name.GetValue());
+            portfolio.RemoveInvestment(investment);
+            String ventureBankruptEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT,
+                                                        investment.Venture.Name.GetValue());
             balanceHistory.AddEvent(new BalanceEvent(ventureBankruptEvent, new Amount(Balance.Denomination)));
+        }
+
+        public virtual void OfferRejected(Offer offer){
+            Balance += offer.Value;
+            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, offer.VentureName);
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
     }
 }

@@ -133,7 +133,8 @@ namespace Gringotts.Domain
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
             }
 
-            Holding.AddRange(Subscription.Confirm(Outlay));
+            List<Investment> newHoldings = Subscription.Confirm(Outlay);
+            Holding.AddRange(newHoldings);
 
             foreach(var investment in Holding.Investments){
                 Investor investor = investment.Investor;
