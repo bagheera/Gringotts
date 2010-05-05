@@ -27,5 +27,18 @@ namespace Gringotts.Domain
             Assert.AreEqual(firstVentureName, ventures.First().Name);
             Assert.AreEqual(secondVentureName, ventures.Last().Name);
         }
+
+        [Test]
+        public void ShouldSplitOutlayMoneyAccordingToRatio()
+        {
+            var venture = new Venture(new Name("venture-name"), new Amount(100), new Amount(10));
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            var ventures = venture.Split(terms);
+            Assert.AreEqual(percentage.Apply(venture.Outlay), ventures.First().Outlay);
+            Assert.AreEqual(percentage.ApplyRemaining(venture.Outlay), ventures.Last().Outlay);
+        }
     }
 }
