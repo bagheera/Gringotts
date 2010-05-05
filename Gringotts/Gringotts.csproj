@@ -81,6 +81,7 @@
     <Compile Include="Domain\Name.cs" />
     <Compile Include="Domain\Offers.cs" />
     <Compile Include="Domain\Portfolio.cs" />
+    <Compile Include="Domain\TermsOfSplit.cs" />
     <Compile Include="Persistence\InvestmentRepository.cs" />
     <Compile Include="Persistence\OfferRepository.cs" />
     <Compile Include="Persistence\VentureRepository.cs" />
