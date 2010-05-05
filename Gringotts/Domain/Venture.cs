@@ -128,6 +128,11 @@ namespace Gringotts.Domain
             }
 
             Holding.AddRange(Subscription.Confirm(Outlay));
+
+            foreach(var investment in Holding.Investments){
+                Investor investor = investment.Investor;
+                investor.AddInvestmentToPortfolio(investment);
+            }
             State = STARTED_STATE;
         }
 
@@ -140,6 +145,9 @@ namespace Gringotts.Domain
             if(!IsStarted())
                 throw new InvalidOperationException("Cannot Go Bankrupt if not started");
             State = BANKRUPT_STATE;
+            foreach (var  investment in holding.Investments){
+                investment.Investor.NotifyVentureBankruptcy(investment);
+            }
         }
     }
 }
