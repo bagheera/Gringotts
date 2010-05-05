@@ -11,30 +11,11 @@ namespace Gringotts.Persistence
     [TestFixture]
     public class BalanceEventPersistanceTest : NHibernateInMemoryTestFixtureBase{
 
-        private ISession session;
-
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             InitalizeSessionFactory();
         }
-
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            session = CreateSession();
-            session.BeginTransaction();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            session.Transaction.Rollback();
-            session.Dispose();
-        }
-        #endregion
 
         [Test]
         public void ShouldVerifySaveAndLoadOfBalanceEvents()
@@ -47,6 +28,23 @@ namespace Gringotts.Persistence
             IList<BalanceEvent> events = query.List<BalanceEvent>();
             Assert.AreEqual(1,events.Count);
             Assert.AreEqual(balanceEvent, events[0]);
+        }
+
+        [Test]
+        public void VerifyCascadeSaveOfBalanceEventViaInvestor(){
+            Investor investor = new Investor(new Name("dude"), new Amount(100));
+            BalanceHistory balanceHistory = investor.GetBalanceHistory();
+            var testBalanceEvent = new BalanceEvent("test event", new Amount(20));
+            balanceHistory.AddEvent(testBalanceEvent);
+
+            InvestorRepository investorRepository = new InvestorRepository(session);
+            investorRepository.Save(investor);
+            session.Evict(investor);
+            session.Evict(testBalanceEvent);
+
+            IQuery query = session.CreateQuery("from BalanceEvent");
+            IList<BalanceEvent> savedBalanceEvents = query.List<BalanceEvent>();
+            Assert.IsTrue(savedBalanceEvents.Contains(testBalanceEvent));
         }
         
     }
