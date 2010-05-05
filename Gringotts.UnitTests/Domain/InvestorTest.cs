@@ -74,16 +74,24 @@ namespace Gringotts.Domain{
 
         [Test]
         public void ShouldCreateAOfferRejectedEventWhenVentureRejectsAnOffer(){
-            var investor = new Investor(new Name("Inverstor"), new Amount(1000));
-            var venture = new Venture(new Name("ventura Inc."), new Amount(1000), new Amount(500));
-            Offer offer = venture.AddOffer(investor, new Amount(600));
-
-            Assert.NotNull(offer);
-            Assert.AreEqual(new Amount(400), investor.Balance);
+            var initialBalance = new Amount(1000);
+            var investor1 = new Investor(new Name("Inverstor 1"), initialBalance);
+            var investor2 = new Investor(new Name("Inverstor 2"), initialBalance);
             
-            BalanceHistory history = investor.GetBalanceHistory();
-            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, offer.VentureName);
-            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(400));
+            var outlay = new Amount(500);
+            var venture = new Venture(new Name("ventura Inc."), outlay, new Amount(1));
+            
+            venture.AddOffer(investor1, outlay);
+            Assert.AreEqual(initialBalance - outlay, investor1.Balance);
+            var offerAmount2 = new Amount(600);
+            venture.AddOffer(investor2, offerAmount2);
+            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
+
+            venture.Start();
+
+            BalanceHistory history = investor2.GetBalanceHistory();
+            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, venture.Name.GetValue());
+            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
     }

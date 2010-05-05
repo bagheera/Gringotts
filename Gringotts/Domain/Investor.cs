@@ -101,7 +101,8 @@ namespace Gringotts.Domain
 
         public virtual void OfferRejected(Offer offer){
             Balance += offer.Value;
-            // TODO: Create a Offer Rejected BalanceEvent
+            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, offer.VentureName);
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
     }
 }

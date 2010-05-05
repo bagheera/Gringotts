@@ -79,17 +79,23 @@ namespace Gringotts.Domain{
         }
 
         [Test]
-        public void ShouldBeAbleToConfirmSubscription(){
+        public void SubscriptionConfirmationAcceptsJustTheMinimumSetOfOffers(){
+            // venture used here just to create the offer. not for adding offers
+            var dummyVenture = new Venture(new Name("Ventura"), new Amount(1), new Amount(1));
+
             var subscription = new Subscription();
+            
             var investor0 = new Investor(new Name("Investor0"),  new Amount(100));
             var investor1 = new Investor(new Name("Investor1"),  new Amount(100));
             var investor2 = new Investor(new Name("Investor2"),  new Amount(100));
             var investor3 = new Investor(new Name("Investor3"),  new Amount(100));
-            subscription.Add(new Offer(investor0, new Amount(100), null));
-            subscription.Add(new Offer(investor1, new Amount(200), null));
-            subscription.Add(new Offer(investor2, new Amount(300), null));
-            var excess = new Offer(investor3, new Amount(400), null);
+            
+            subscription.Add(new Offer(investor0, new Amount(100), dummyVenture));
+            subscription.Add(new Offer(investor1, new Amount(200), dummyVenture));
+            subscription.Add(new Offer(investor2, new Amount(300), dummyVenture));
+            var excess = new Offer(investor3, new Amount(400), dummyVenture);
             subscription.Add(excess);
+            
             var outlay = new Amount(600);
             List<Investment> confirmations = subscription.Confirm(outlay);
             Assert.IsFalse(confirmations.Contains(excess.ToInvestment()));
