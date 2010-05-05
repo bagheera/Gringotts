@@ -66,10 +66,16 @@ namespace Gringotts.Domain
             }
         }
 
-
-        public virtual void AcceptSurplus(Amount surplus)
+        public virtual void PartialRefundOnOffer(Amount surplus)
         {
             Balance += surplus;
+        }
+
+        public virtual void PartialRefundOnOffer(Offer offer, Amount refundAmount)
+        {
+            PartialRefundOnOffer(refundAmount);
+            string offerEvent = string.Format(BalanceEvent.OFFER_PARTIALLY_ACCEPTED, offer.VentureName);
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
 
         public virtual void AddInvestmentToPortfolio(Investment investment)
