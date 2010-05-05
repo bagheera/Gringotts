@@ -319,6 +319,46 @@ namespace Gringotts.Domain{
 
         }
 
+        [Test]
+        public void ShouldCreateAVentureEventWhenVentureIsProposed(){
+
+            Venture venture = CreateVenture(500, 100, "Ace Ventura");
+            VentureEvent ventureEvent = new VentureEvent(VentureEvent.PROPOSED,new Amount(500));
+
+            VentureHistory ventureHistory = venture.VentureHistory;
+
+            Assert.Contains(ventureEvent, ventureHistory.GetEvents());
+        }
+
+        [Test]
+        public void ShouldCreateAVentureEventWhenVentureIsStarted(){
+            Venture venture = CreateVenture(600, 100, "Ace Ventura");
+            Investor investor = CreateInvestor("Bull Investor", 10000);
+            venture.AddOffer(investor, new Amount(600));
+            venture.Start();
+          
+            VentureEvent ventureEvent = new VentureEvent(VentureEvent.STARTED, new Amount(600));
+
+            VentureHistory ventureHistory = venture.VentureHistory;
+
+            Assert.Contains(ventureEvent, ventureHistory.GetEvents());
+        }
+
+        [Test]
+        public void ShouldCreateVentureEventWhenVentureIsCancelled(){
+            Venture venture = CreateVenture(600, 100, "Ace Ventura");
+            Investor investor = CreateInvestor("Bull Investor", 10000);
+            venture.AddOffer(investor, new Amount(600));
+            venture.Start();
+            venture.ChangeStateToCancelled();
+
+            VentureEvent ventureEvent = new VentureEvent(VentureEvent.CANCELLED, new Amount(600));
+
+            VentureHistory ventureHistory = venture.VentureHistory;
+
+            Assert.Contains(ventureEvent, ventureHistory.GetEvents());
+        }
+
         private Investor CreateInvestor(string name, int corpus)
         {
             return new Investor(new Name(name), new Amount(corpus));
