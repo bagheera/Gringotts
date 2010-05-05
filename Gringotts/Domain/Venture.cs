@@ -132,14 +132,24 @@ namespace Gringotts.Domain
                 State = CANCELLED_STATE;
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
             }
+            AddInvestmentsToHolding(Subscription.Confirm(Outlay));
 
-            Holding.AddRange(Subscription.Confirm(Outlay));
+            AddInvestmentsToPortfolio(Holding.Investments);
+            ChangeStateToStarted();
+        }
 
-            foreach(var investment in Holding.Investments){
+        private void AddInvestmentsToPortfolio(IEnumerable<Investment> investments)
+        {
+            foreach (var investment in investments)
+            {
                 Investor investor = investment.Investor;
                 investor.AddInvestmentToPortfolio(investment);
             }
-            State = STARTED_STATE;
+        }
+
+        private void AddInvestmentsToHolding(List<Investment> investments)
+        {
+            Holding.AddRange(investments);
         }
 
         public virtual bool IsProposed()
@@ -158,12 +168,15 @@ namespace Gringotts.Domain
 
         public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
         {
+            // Splitting of Holding's Investments
+            
+            // Splitting of OutLay
             var aVentures = new List<Venture>();
             var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
                 termsOfSplit.Ratio.Apply(Outlay));
             var aSecondVenture = new Venture(termsOfSplit.SecondVentureName,
                 termsOfSplit.Ratio.ApplyRemaining(Outlay));
-
+            
             aVentures.Add(aFirstVenture);
             aVentures.Add(aSecondVenture);
             return aVentures;

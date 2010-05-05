@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Iesi.Collections.Generic;
@@ -51,6 +52,26 @@ namespace Gringotts.Domain
             Investments.ForEach(investment => participation.Add(investment, totalInvestment/investment.Value));
             
             return participation;
+        }
+        
+        public IEnumerable<Holding> Split(Percentage percentage)
+        {
+            IList<Holding> holdings = new List<Holding>();
+            var aHolding = new Holding();
+            foreach (var investment in Investments)
+            {
+                aHolding.Add(new Investment(investment.Investor, percentage.Apply(investment.Value)));
+            }
+            var aSecondHolding = new Holding();
+            foreach (var investment in Investments)
+            {
+                aSecondHolding.Add(new Investment(investment.Investor, percentage.ApplyRemaining(investment.Value)));
+            }
+            
+            holdings.Add(aHolding);
+            holdings.Add(aSecondHolding);
+
+            return holdings;
         }
     }
 }
