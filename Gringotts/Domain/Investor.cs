@@ -81,7 +81,8 @@ namespace Gringotts.Domain
         {
             Pay(offer.Value);
             offers.AddOffer(offer);
-            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.OFFER_ACCEPTED, Balance));
+            string offerEvent = string.Format(BalanceEvent.OFFER_ACCEPTED, offer.VentureName);
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
 
         public virtual void AcceptReturn(Amount dividend)

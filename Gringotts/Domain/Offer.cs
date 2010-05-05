@@ -40,6 +40,10 @@ namespace Gringotts.Domain
 
         public virtual Amount Value { get; set; }
 
+        public virtual string VentureName{
+            get { return Venture.Name.GetValue(); }
+        }
+
         public virtual bool HasInvestor(Investor investor)
         {
             return this.investor.Equals(investor);

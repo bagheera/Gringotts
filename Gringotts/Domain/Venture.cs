@@ -56,7 +56,7 @@ namespace Gringotts.Domain
                 throw new InvalidOfferException("Cannot invest more than once.");
             if (!MinimumInvestment(investedAmount))
                 throw new InvalidOfferException("Investment amount less than the required minimum amount.");
-            Offer offer = new Offer(investor, investedAmount, null);
+            Offer offer = new Offer(investor, investedAmount, this);
             investor.AcceptOffer(offer);
             Subscription.Add(offer);
             return offer;

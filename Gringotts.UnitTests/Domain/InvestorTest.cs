@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace Gringotts.Domain{
@@ -44,7 +45,8 @@ namespace Gringotts.Domain{
         [Test]
         public void ShouldBeAbleToAcceptOffer(){
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
-            investor.AcceptOffer(new Offer(investor, new Amount(600), null));
+            var venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
+            investor.AcceptOffer(new Offer(investor, new Amount(600), venture));
         }
 
         [Test]
@@ -60,12 +62,13 @@ namespace Gringotts.Domain{
         public void ShouldCreateABalanceEventWhenInvestorMakesAnOffer()
         {
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
-            var venture = new Venture(new Name("venture1"), new Amount(1000), new Amount(500));
+            var venture = new Venture(new Name("ventura!"), new Amount(1000), new Amount(500));
             Offer offer = venture.AddOffer(investor, new Amount(600));
             Assert.NotNull(offer);
             Assert.AreEqual(new Amount(400), investor.Balance);
             BalanceHistory history = investor.GetBalanceHistory();
-            BalanceEvent balanceEvent = new BalanceEvent(BalanceEvent.OFFER_ACCEPTED, new Amount(400));
+            string offerEvent = string.Format(BalanceEvent.OFFER_ACCEPTED, offer.VentureName);
+            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(400));
             Assert.Contains(balanceEvent, history.GetEvents());
         }
     }
