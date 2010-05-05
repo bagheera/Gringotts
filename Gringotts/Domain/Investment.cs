@@ -20,6 +20,12 @@ namespace Gringotts.Domain
             get { return investor; }
         }
 
+        public virtual Venture Venture
+        {
+            get { return venture; }
+        }
+
+
 
         public Investment(Investor investor, Amount amount) : this (investor, null, amount)
         {
@@ -50,6 +56,7 @@ namespace Gringotts.Domain
         public virtual void CreditSurplus(Amount creditSurplus)
         {
             investor.AcceptSurplus(creditSurplus);
+            // TODO: Create a Partially Accepted Balance event
         }
 
         public virtual bool Equals(Investment other)

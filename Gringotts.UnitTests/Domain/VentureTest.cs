@@ -80,21 +80,63 @@ namespace Gringotts.Domain{
         }
 
         [Test]
-        public void ShouldBeAbleToConfirmSubscription(){
+        public void SubscriptionConfirmationAcceptsJustTheMinimumSetOfOffers(){
+            // venture used here just to create the offer. not for adding offers
+            var dummyVenture = new Venture(new Name("Ventura"), new Amount(1), new Amount(1));
+
             var subscription = new Subscription();
+            
             var investor0 = new Investor(new Name("Investor0"),  new Amount(100));
             var investor1 = new Investor(new Name("Investor1"),  new Amount(100));
             var investor2 = new Investor(new Name("Investor2"),  new Amount(100));
             var investor3 = new Investor(new Name("Investor3"),  new Amount(100));
-            subscription.Add(new Offer(investor0, new Amount(100), null));
-            subscription.Add(new Offer(investor1, new Amount(200), null));
-            subscription.Add(new Offer(investor2, new Amount(300), null));
-            var excess = new Offer(investor3, new Amount(400), null);
+            
+            subscription.Add(new Offer(investor0, new Amount(100), dummyVenture));
+            subscription.Add(new Offer(investor1, new Amount(200), dummyVenture));
+            subscription.Add(new Offer(investor2, new Amount(300), dummyVenture));
+            var excess = new Offer(investor3, new Amount(400), dummyVenture);
             subscription.Add(excess);
+            
             var outlay = new Amount(600);
             List<Investment> confirmations = subscription.Confirm(outlay);
             Assert.IsFalse(confirmations.Contains(excess.ToInvestment()));
             Assert.AreEqual(outlay, confirmations.Aggregate(new Amount(0), (sum, inv) => sum + inv.Value));
+        }
+
+        [Test]
+        public void ShouldUpdateInvestorBalancesWhileStartingAVenture()
+        {
+            var outlay = new Amount(600);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialBalance = new Amount(1000);
+            var investor1 = new Investor(new Name("Investor1"), initialBalance);
+            var investor2 = new Investor(new Name("Investor2"), initialBalance);
+            var investor3 = new Investor(new Name("Investor3"), initialBalance);
+            var investor4 = new Investor(new Name("Investor4"), initialBalance);
+
+            var offerAmount1 = new Amount(100);
+            venture.AddOffer(investor1, offerAmount1);
+            Assert.AreEqual(initialBalance - offerAmount1, investor1.Balance);
+
+            var offerAmount2 = new Amount(200);
+            venture.AddOffer(investor2, offerAmount2);
+            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
+
+            var offerAmount3 = new Amount(400);
+            venture.AddOffer(investor3, offerAmount3);
+            Assert.AreEqual(initialBalance - offerAmount3, investor3.Balance);
+
+            var offerAmount4 = new Amount(500);
+            venture.AddOffer(investor4, offerAmount4);
+            Assert.AreEqual(initialBalance - offerAmount4, investor4.Balance);
+
+            venture.Start();
+
+            // check the new balances
+            Assert.AreEqual(initialBalance - offerAmount1, investor1.Balance);
+            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
+            Assert.AreEqual(initialBalance - offerAmount3 + new Amount(100), investor3.Balance, "Partially accepted amount should have been refunded");
+            Assert.AreEqual(initialBalance, investor4.Balance);
         }
 
         [Test]

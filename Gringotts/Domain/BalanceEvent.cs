@@ -12,7 +12,8 @@ namespace Gringotts.Domain
         public const String OFFER_ACCEPTED = "Offer Accepted for venture {0}";
         public const String OFFER_PARTIALLY_ACCEPTED = "Offer Partially Accepted for venture {0}";
         public const String OFFER_REJECTED = "Offer Rejected by venture {0}";
-        public const String DIVIDEND_RECIEVED = "Divident Recieved from venture {0}";
+        public const String DIVIDEND_RECEIVED = "Divident Received from venture {0}";
+        public const String VENTURE_BANKRUPT = "Venture {0} declared bankrupt";
 
         public BalanceEvent()
         {

@@ -33,20 +33,25 @@ namespace Gringotts.Domain
             Amount difference = outlay;
             List<Investment> finalSubscription = new List<Investment>();
             Amount zero = new Amount(0);
+            bool outlayMet = false;
             foreach(Offer offer in sortedInvestments)
             {
-                Investment investment = offer.ToInvestment();
-                finalSubscription.Add(investment);
-                difference -= offer.Value;
-                if (difference <= zero)
-                {
-                    investment.Value += difference;
-                    investment.CreditSurplus(difference.Abs());
-                    
-                    break;
+                if (!outlayMet){
+                    Investment investment = offer.ToInvestment();
+                    finalSubscription.Add(investment);
+                    difference -= offer.Value;
+                    if (difference <= zero){
+                        investment.Value += difference;
+                        investment.CreditSurplus(difference.Abs());
+                        // partially reject this offer
+                        outlayMet = true;
+                    }
+                } else{
+                    // reject the other offers
+                    offer.Investor.OfferRejected(offer);
                 }
-
             }
+
 
             return finalSubscription;
         }
