@@ -20,6 +20,12 @@ namespace Gringotts.Domain
             get { return investor; }
         }
 
+        public virtual Venture Venture
+        {
+            get { return venture; }
+        }
+
+
 
         public Investment(Investor investor, Amount amount) : this (investor, null, amount)
         {

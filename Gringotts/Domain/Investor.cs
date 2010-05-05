@@ -101,6 +101,8 @@ namespace Gringotts.Domain
 
         public virtual void	NotifyVentureBankruptcy(Investment investment){
             portfolio.RemoveInvestment	(investment);
+            String ventureBankruptEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT, investment.Venture.Name.GetValue());
+            balanceHistory.AddEvent(new BalanceEvent(ventureBankruptEvent, new Amount(Balance.Denomination)));
         }
     }
 }

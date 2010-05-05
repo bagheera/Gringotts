@@ -71,5 +71,24 @@ namespace Gringotts.Domain{
             BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(400));
             Assert.Contains(balanceEvent, history.GetEvents());
         }
+
+        [Test]
+        public void ShouldCreateABalanceEventWhenVentureGoesBankrupt()
+        {
+            var investor = new Investor(new Name("Inverstor1"), new Amount(1100));
+            var venture = new Venture(new Name("Hacker's Venture"), new Amount(500), new Amount(500));
+            Offer offer = venture.AddOffer(investor, new Amount(500));
+            Investment investment = offer.ToInvestment();
+            
+            venture.Start();
+
+            investor.NotifyVentureBankruptcy(investment);
+            
+            BalanceHistory history = investor.GetBalanceHistory();
+            String offerEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT, "Hacker's Venture");
+            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(600));
+
+            Assert.Contains(balanceEvent, history.GetEvents());
+        }
     }
 }
