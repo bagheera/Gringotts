@@ -34,5 +34,17 @@ namespace Gringotts.Domain
             var aPercentageOfSplit = new Percentage(0.4f);
             Assert.AreEqual(2,holding.Split(aPercentageOfSplit).Count());
         }
+
+        [Test]
+        public void ShouldSplitHoldingValueAccordingToSplitPercentage()
+        {
+            var holding = new Holding();
+            holding.Add(new Investment(new Investor(new Name("quarter"), new Amount(2500)), null, new Amount(250)));
+            holding.Add(new Investment(new Investor(new Name("threeFourths"), new Amount(2000)), null, new Amount(750)));
+            var aPercentageOfSplit = new Percentage(0.6f);
+            var splitHoldings = holding.Split(aPercentageOfSplit);
+            Assert.AreEqual(aPercentageOfSplit.Apply(holding.Value), splitHoldings.First().Value);
+            Assert.AreEqual(aPercentageOfSplit.ApplyRemaining(holding.Value), splitHoldings.Last().Value);
+        }
     }
 }

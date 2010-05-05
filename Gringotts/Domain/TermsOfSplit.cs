@@ -16,13 +16,18 @@ namespace Gringotts.Domain{
 
     public class Percentage
     {
-        private readonly float myRatio;
+        public float Ratio { get; private set; }
 
         public Percentage(float ratio)
         {
             if (!IsValid(ratio))
                 throw new ArgumentException("Ratio can be between 0.0 and 1.0 value");
-            myRatio = ratio;
+            Ratio = ratio;
+        }
+
+        public Percentage RemainingPercentage
+        {
+            get { return new Percentage(1.0f - Ratio); }
         }
 
         private bool IsValid(float ratio)
@@ -32,12 +37,12 @@ namespace Gringotts.Domain{
 
         public Amount Apply(Amount amount)
         {
-            return new Amount(amount.Denomination * myRatio);
+            return new Amount(amount.Denomination * Ratio);
         }
 
         public Amount ApplyRemaining(Amount amount)
         {
-            return new Amount(amount.Denomination * (1.0f - myRatio));
+            return new Amount(amount.Denomination * RemainingPercentage.Ratio);
         }
     }
 }

@@ -57,21 +57,23 @@ namespace Gringotts.Domain
         public IEnumerable<Holding> Split(Percentage percentage)
         {
             IList<Holding> holdings = new List<Holding>();
-            var aHolding = new Holding();
-            foreach (var investment in Investments)
-            {
-                aHolding.Add(new Investment(investment.Investor, percentage.Apply(investment.Value)));
-            }
-            var aSecondHolding = new Holding();
-            foreach (var investment in Investments)
-            {
-                aSecondHolding.Add(new Investment(investment.Investor, percentage.ApplyRemaining(investment.Value)));
-            }
+            Holding aHolding = GetSplittedHolding(percentage);
+            var aSecondHolding = GetSplittedHolding(percentage.RemainingPercentage); 
             
             holdings.Add(aHolding);
             holdings.Add(aSecondHolding);
 
             return holdings;
+        }
+
+        private Holding GetSplittedHolding(Percentage percentage)
+        {
+            var aHolding = new Holding();
+            foreach (var investment in Investments)
+            {
+                aHolding.Add(new Investment(investment.Investor, percentage.Apply(investment.Value)));
+            }
+            return aHolding;
         }
     }
 }
