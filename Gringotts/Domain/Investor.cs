@@ -91,12 +91,15 @@ namespace Gringotts.Domain
             balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
 
-        public virtual void AcceptReturn(Amount dividend)
+        public virtual void AcceptReturn(Venture venture, Amount dividend)
         {
             Balance += dividend;
+            string offerEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name.GetValue());
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
-
-        public virtual BalanceHistory GetBalanceHistory(){
+        
+        public virtual BalanceHistory GetBalanceHistory()
+        {
             return balanceHistory;
         }
 

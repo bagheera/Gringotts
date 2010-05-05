@@ -48,9 +48,9 @@ namespace Gringotts.Domain
             return this.investor.Equals(investor);
         }
 
-        public virtual void GiveReturn(Amount dividend)
+        public virtual void GiveReturn(Venture venture, Amount dividend)
         {
-            investor.AcceptReturn(dividend);
+            investor.AcceptReturn(venture, dividend);
         }
 
         public virtual bool Equals(Investment other)
