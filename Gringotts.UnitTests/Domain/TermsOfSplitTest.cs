@@ -26,7 +26,7 @@ namespace Gringotts.Domain
         public void ShouldBeAbleToApplyRemainingPercentage()
         {
             var percentage = new Percentage(0.4f);
-            Assert.AreEqual(new Amount(60.0f), percentage.ApplyRemaining(new Amount(100)));
+            Assert.AreEqual(new Amount(60.0f).Denomination, percentage.ApplyRemaining(new Amount(100)).Denomination,0.1f);
         }
     }
 }

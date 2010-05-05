@@ -44,5 +44,35 @@ namespace Gringotts.Domain{
         {
             return new Amount(amount.Denomination * RemainingPercentage.Ratio);
         }
+
+        public bool Equals(Percentage other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other.Ratio == Ratio;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Percentage)) return false;
+            return Equals((Percentage) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Ratio.GetHashCode();
+        }
+
+        public static bool operator ==(Percentage left, Percentage right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Percentage left, Percentage right)
+        {
+            return !Equals(left, right);
+        }
     }
 }
