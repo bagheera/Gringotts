@@ -148,7 +148,7 @@ namespace Gringotts.Domain
             State = BANKRUPT_STATE;
         }
 
-        public IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
+        public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
         {
             var aVentures = new List<Venture>();
             var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
