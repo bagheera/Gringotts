@@ -5,14 +5,15 @@ namespace Gringotts.Domain{
     public class InvestmentTest{
         [Test]
         public void ShouldBeAbleToGiveReturns(){
-            var corpus = new Amount(1000);
+            var balance = new Amount(1000);
             var offer = new Amount(250);
             var dividend = new Amount(50);
-            var investor = new Investor(new Name("Dummy"), corpus);
+            var investor = new Investor(new Name("Dummy"), balance);
 
             var investment = new Investment(investor, null, offer);
-            investment.GiveReturn(dividend);
-            Assert.AreEqual(corpus + dividend, investor.Balance);
+            Venture dummyVenture = new Venture(new Name("ventura"), new Amount(1000), new Amount(1));
+            investment.GiveReturn(dummyVenture, dividend);
+            Assert.AreEqual(balance + dividend, investor.Balance);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Gringotts.Domain
             Dictionary<Investment, Amount> participation = CalculateParticipation();
             foreach (var participant in participation)
             {
-                participant.Key.GiveReturn(participant.Value * amount);
+                participant.Key.GiveReturn(participant.Key.Venture, participant.Value * amount);
             }
         }
 
