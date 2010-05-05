@@ -98,5 +98,10 @@ namespace Gringotts.Domain
         {
             Balance -= amount;
         }
+
+        public virtual void OfferRejected(Offer offer){
+            Balance += offer.Value;
+            // TODO: Create a Offer Rejected BalanceEvent
+        }
     }
 }

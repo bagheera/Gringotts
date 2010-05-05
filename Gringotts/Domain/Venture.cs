@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Gringotts.Domain
 {
@@ -127,7 +129,10 @@ namespace Gringotts.Domain
                 throw new Exception("Venture cannot start with Total Subscription less than Outlay");
             }
 
-            Holding.AddRange(Subscription.Confirm(Outlay));
+            List<Investment> newHoldings = Subscription.Confirm(Outlay);
+            Holding.AddRange(newHoldings);
+            // 
+
             State = STARTED_STATE;
         }
 

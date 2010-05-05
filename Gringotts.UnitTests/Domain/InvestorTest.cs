@@ -71,5 +71,20 @@ namespace Gringotts.Domain{
             BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(400));
             Assert.Contains(balanceEvent, history.GetEvents());
         }
+
+        [Test]
+        public void ShouldCreateAOfferRejectedEventWhenVentureRejectsAnOffer(){
+            var investor = new Investor(new Name("Inverstor"), new Amount(1000));
+            var venture = new Venture(new Name("ventura Inc."), new Amount(1000), new Amount(500));
+            Offer offer = venture.AddOffer(investor, new Amount(600));
+
+            Assert.NotNull(offer);
+            Assert.AreEqual(new Amount(400), investor.Balance);
+            
+            BalanceHistory history = investor.GetBalanceHistory();
+            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, offer.VentureName);
+            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(400));
+            Assert.Contains(balanceEvent, history.GetEvents());
+        }
     }
 }

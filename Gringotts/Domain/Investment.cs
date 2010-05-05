@@ -43,6 +43,7 @@ namespace Gringotts.Domain
         public virtual void CreditSurplus(Amount creditSurplus)
         {
             investor.AcceptSurplus(creditSurplus);
+            // TODO: Create a Partially Accepted Balance event
         }
 
         public virtual bool Equals(Investment other)

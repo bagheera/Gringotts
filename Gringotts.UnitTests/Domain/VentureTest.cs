@@ -97,6 +97,42 @@ namespace Gringotts.Domain{
         }
 
         [Test]
+        public void ShouldUpdateInvestorBalancesWhileStartingAVenture()
+        {
+            var outlay = new Amount(600);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialBalance = new Amount(1000);
+            var investor1 = new Investor(new Name("Investor1"), initialBalance);
+            var investor2 = new Investor(new Name("Investor2"), initialBalance);
+            var investor3 = new Investor(new Name("Investor3"), initialBalance);
+            var investor4 = new Investor(new Name("Investor4"), initialBalance);
+
+            var offerAmount1 = new Amount(100);
+            venture.AddOffer(investor1, offerAmount1);
+            Assert.AreEqual(initialBalance - offerAmount1, investor1.Balance);
+
+            var offerAmount2 = new Amount(200);
+            venture.AddOffer(investor2, offerAmount2);
+            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
+
+            var offerAmount3 = new Amount(400);
+            venture.AddOffer(investor3, offerAmount3);
+            Assert.AreEqual(initialBalance - offerAmount3, investor3.Balance);
+
+            var offerAmount4 = new Amount(500);
+            venture.AddOffer(investor4, offerAmount4);
+            Assert.AreEqual(initialBalance - offerAmount4, investor4.Balance);
+
+            venture.Start();
+
+            // check the new balances
+            Assert.AreEqual(initialBalance - offerAmount1, investor1.Balance);
+            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
+            Assert.AreEqual(initialBalance - offerAmount3 + new Amount(100), investor3.Balance, "Partially accepted amount should have been refunded");
+            Assert.AreEqual(initialBalance, investor4.Balance);
+        }
+
+        [Test]
         public void ShouldBeAbleToCreateAVenture(){
             var nameOfVenture = new Name("Ventura");
             var outlay = new Amount(100);
