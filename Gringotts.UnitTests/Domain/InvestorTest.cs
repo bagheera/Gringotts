@@ -135,5 +135,27 @@ namespace Gringotts.Domain{
             BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance - outlay);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
+
+        [Test]
+        public void ShouldCreateDividendReceivedEventWhenDividendIsDeclared(){
+            var initialBalance = new Amount(1000);
+            var investor1 = new Investor(new Name("Inverstor 1"), initialBalance);
+
+            var outlay = new Amount(400);
+            var venture = new Venture(new Name("Ventura Inc."), outlay, new Amount(1));
+
+            var excess = new Amount(100);
+            venture.AddOffer(investor1, outlay + excess);
+            Assert.AreEqual(initialBalance - (outlay + excess), investor1.Balance);
+
+            venture.Start();
+            var dividend = new Amount(1000);
+            venture.HandOutDividends(dividend);
+
+            BalanceHistory history = investor1.GetBalanceHistory();
+            string offerEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name.GetValue());
+            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance - outlay + dividend);
+            Assert.Contains(balanceEvent, history.GetEvents());
+        }
     }
 }
