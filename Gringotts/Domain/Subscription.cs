@@ -42,7 +42,7 @@ namespace Gringotts.Domain
                     difference -= offer.Value;
                     if (difference <= zero){
                         investment.Value += difference;
-                        investment.CreditSurplus(difference.Abs());
+                        investment.Investor.PartialRefundOnOffer(offer, difference.Abs());
                         // partially reject this offer
                         outlayMet = true;
                     }
