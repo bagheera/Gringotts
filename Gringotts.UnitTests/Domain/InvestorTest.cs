@@ -73,7 +73,7 @@ namespace Gringotts.Domain{
         }
 
         [Test]
-        public void ShouldCreateABalanceEventWhenVentureGoesBankrupt()
+        public void ShouldCreateABalanceEventWhenVentureBankruptcyIsNotified()
         {
             var investor = new Investor(new Name("Inverstor1"), new Amount(1100));
             var venture = new Venture(new Name("Hacker's Venture"), new Amount(500), new Amount(500));
@@ -86,8 +86,10 @@ namespace Gringotts.Domain{
             
             BalanceHistory history = investor.GetBalanceHistory();
             String offerEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT, "Hacker's Venture");
-            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, new Amount(600));
-            Assert.Contains(balanceEvent, history.GetEvents());
+
+            BalanceEvent expectedBalanceEvent = new BalanceEvent(offerEvent, new Amount(600));
+
+            Assert.Contains(expectedBalanceEvent, history.GetEvents());
         }
 
         [Test]
