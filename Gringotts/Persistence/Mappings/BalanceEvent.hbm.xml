@@ -5,8 +5,8 @@
       <generator class="native" />
     </id>
     <property name="EventType" column="EventType" type="string" />
-    <component name="Amount">
-      <property name="value" column="Amount" type="float" access="field"/>
+    <component name="Balance">
+      <property name="value" column="Balance" type="float" access="field"/>
     </component>
   </class>
 </hibernate-mapping>

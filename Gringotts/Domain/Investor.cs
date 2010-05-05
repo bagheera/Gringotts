@@ -40,7 +40,7 @@ namespace Gringotts.Domain
         {
             this.name = name;
             Balance = amount;
-            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount));
+            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.INVESTOR_CREATED, amount));
         }
 
         public virtual bool Equals(Investor other)
@@ -81,7 +81,8 @@ namespace Gringotts.Domain
         {
             Pay(offer.Value);
             offers.AddOffer(offer);
-            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.OFFER_ACCEPTED, Balance));
+            string offerEvent = string.Format(BalanceEvent.OFFER_ACCEPTED, offer.VentureName);
+            balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
 
         public virtual void AcceptReturn(Amount dividend)
