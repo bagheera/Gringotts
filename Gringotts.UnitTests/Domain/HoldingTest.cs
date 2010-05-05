@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace Gringotts.Domain
 {
@@ -22,6 +23,16 @@ namespace Gringotts.Domain
             holding.Add(new Investment(new Investor(new Name("quarter"), new Amount(1500)), null, new Amount(250)));
             holding.Add(new Investment(new Investor(new Name("threeFourths"), new Amount(1000)), null, new Amount(750)));
             holding.DistributeDividends(new Amount(1000));
+        }
+
+        [Test]
+        public void ShouldBeAbleToSplitInvestments()
+        {
+            var holding = new Holding();
+            holding.Add(new Investment(new Investor(new Name("quarter"), new Amount(1500)), null, new Amount(250)));
+            holding.Add(new Investment(new Investor(new Name("threeFourths"), new Amount(1000)), null, new Amount(750)));
+            var aPercentageOfSplit = new Percentage(0.4f);
+            Assert.AreEqual(2,holding.Split(aPercentageOfSplit).Count());
         }
     }
 }
