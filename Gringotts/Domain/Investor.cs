@@ -40,7 +40,7 @@ namespace Gringotts.Domain
         {
             this.name = name;
             Balance = amount;
-            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount));
+            balanceHistory.AddEvent(new BalanceEvent(BalanceEvent.INVESTOR_CREATED, amount));
         }
 
         public virtual bool Equals(Investor other)

@@ -25,6 +25,6 @@ CREATE TABLE Offer ( Id INTEGER PRIMARY KEY,
 					
 CREATE TABLE BalanceEvent ( Id INTEGER PRIMARY KEY,
 					InvestorId INTEGER,					
-					Amount FLOAT,
+					Balance FLOAT,
 					EventType VARCHAR(255),
 					Foreign Key (InvestorId) references Investor(Id));				

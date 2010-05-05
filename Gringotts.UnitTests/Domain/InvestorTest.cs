@@ -52,7 +52,7 @@ namespace Gringotts.Domain{
             Amount amount = new Amount(100);
             var investor = new Investor(new Name("Investor"), amount);
             BalanceHistory history = investor.GetBalanceHistory();
-            BalanceEvent balanceEvent = new BalanceEvent(BalanceEvent.CREATE_INVESTOR, amount);
+            BalanceEvent balanceEvent = new BalanceEvent(BalanceEvent.INVESTOR_CREATED, amount);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
 
