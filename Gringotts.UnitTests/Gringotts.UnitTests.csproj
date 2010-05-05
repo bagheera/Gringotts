@@ -68,6 +68,7 @@
     <Compile Include="Domain\OfferTest.cs" />
     <Compile Include="Domain\PortfolioTest.cs" />
     <Compile Include="Domain\SubscriptionTest.cs" />
+    <Compile Include="Domain\VentureSplitTest.cs" />
     <Compile Include="Domain\VentureTest.cs" />
     <Compile Include="Persistence\InvestmentPersistenceTest.cs" />
     <Compile Include="Persistence\InvestorPersisteneTest.cs" />
