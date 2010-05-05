@@ -1,5 +1,5 @@
-﻿using System;
-using Gringotts.Domain;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Gringotts.Domain
@@ -8,12 +8,24 @@ namespace Gringotts.Domain
     public class VentureSplitTest{
         [Test]
         public void ShouldCreateTwoVenturesOnSplit(){
-            Venture venture = new Venture(new Name("venture-name"), new Amount(100), new Amount(10));
-            TermsOfSplit terms = new TermsOfSplit(20, "new-venture-1", "new-venture-2");
-            SplitVentures ventures = venture.Split();
+            var venture = new Venture(new Name("venture-name"), new Amount(100), new Amount(10));
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName =new Name("new-venture-2");
+            var terms = new TermsOfSplit(new Percentage(0.8f), firstVentureName, secondVentureName);
+            var ventures = venture.Split(terms);
+            Assert.AreEqual(2, ventures.Count());
         }
-    }
 
-    public class SplitVentures{
+        [Test]
+        public void ShouldCreateVenturesWithPassedNames()
+        {
+            var venture = new Venture(new Name("venture-name"), new Amount(100), new Amount(10));
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var terms = new TermsOfSplit(new Percentage(0.8f), firstVentureName, secondVentureName);
+            var ventures = venture.Split(terms);
+            Assert.AreEqual(firstVentureName, ventures.First().Name);
+            Assert.AreEqual(secondVentureName, ventures.Last().Name);
+        }
     }
 }

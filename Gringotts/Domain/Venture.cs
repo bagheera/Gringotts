@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gringotts.Domain
 {
@@ -11,15 +12,20 @@ namespace Gringotts.Domain
         public const string CLOSED_STATE = "Closed";
         public const string BANKRUPT_STATE = "Bankrupt";
 
-        public Venture(Name name, Amount outlay, Amount minInvestment)
+        public Venture(Name name, Amount outlay, Amount minInvestment):this(name, outlay)
         {
             if (minInvestment <= new Amount(0))
                 throw new Exception("Minimum investment must be greater than 0");
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
+            MinInvestment = minInvestment;
+        }
+
+        private Venture(Name name, Amount outlay)
+        {
             Name = name;
             Outlay = outlay;
-            MinInvestment = minInvestment;
+            MinInvestment = new Amount(0);
             Subscription = new Subscription();
             State = PROPOSED_STATE;
             holding = new Holding();
@@ -140,6 +146,19 @@ namespace Gringotts.Domain
             if(!IsStarted())
                 throw new InvalidOperationException("Cannot Go Bankrupt if not started");
             State = BANKRUPT_STATE;
+        }
+
+        public IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
+        {
+            var aVentures = new List<Venture>();
+            var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
+                termsOfSplit.Ratio.Apply(Outlay));
+            var aSecondVenture = new Venture(termsOfSplit.SecondVentureName,
+                termsOfSplit.Ratio.ApplyRemaining(Outlay));
+
+            aVentures.Add(aFirstVenture);
+            aVentures.Add(aSecondVenture);
+            return aVentures;
         }
     }
 }
