@@ -27,4 +27,11 @@ CREATE TABLE BalanceEvent ( Id INTEGER PRIMARY KEY,
 					InvestorId INTEGER,					
 					Balance FLOAT,
 					EventType VARCHAR(255),
-					Foreign Key (InvestorId) references Investor(Id));				
+					Foreign Key (InvestorId) references Investor(Id));		
+					
+					
+CREATE TABLE VentureEvent ( Id INTEGER PRIMARY KEY,
+					VentureId INTEGER,					
+					Outlay FLOAT,
+					EventType VARCHAR(255),
+					Foreign Key (VentureId) references Venture(Id));					
