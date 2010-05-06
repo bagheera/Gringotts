@@ -100,7 +100,7 @@ namespace Gringotts.Domain
         
         public virtual BalanceHistory GetBalanceHistory()
         {
-            return balanceHistory;
+            return new BalanceHistory(balanceHistory);
         }
 
         private void Pay(Amount amount)

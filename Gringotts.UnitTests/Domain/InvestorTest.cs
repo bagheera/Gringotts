@@ -50,7 +50,7 @@ namespace Gringotts.Domain{
         }
 
         [Test]
-        public void ShouldCreateABalanceEventWhenInvestorIsCreated(){
+        public void ShouldCreateAInvestorCreatedBalanceEventWhenInvestorIsCreated(){
             Amount amount = new Amount(100);
             var investor = new Investor(new Name("Investor"), amount);
             BalanceHistory history = investor.GetBalanceHistory();
@@ -59,7 +59,7 @@ namespace Gringotts.Domain{
         }
 
         [Test]
-        public void ShouldCreateABalanceEventWhenInvestorMakesAnOffer()
+        public void ShouldCreateAOfferAcceptedBalanceEventWhenInvestorMakesAnOffer()
         {
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
             var venture = new Venture(new Name("ventura!"), new Amount(1000), new Amount(500));
