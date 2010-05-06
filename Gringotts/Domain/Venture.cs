@@ -26,7 +26,8 @@ namespace Gringotts.Domain
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
             MinInvestment = minInvestment;
-            
+            State = PROPOSED_STATE;
+            AddEventToVentureHistory(VentureEvent.PROPOSED);
         }
 
         private Venture(Name name, Amount outlay)
@@ -35,9 +36,9 @@ namespace Gringotts.Domain
             Outlay = outlay;
             MinInvestment = new Amount(0);
             Subscription = new Subscription();
-            State = PROPOSED_STATE;
+            
             holding = new Holding();
-            AddEventToVentureHistory(VentureEvent.PROPOSED);
+            
         }
 
         public Venture()
@@ -133,6 +134,11 @@ namespace Gringotts.Domain
             return State == STARTED_STATE;
         }
 
+        public virtual bool IsClosed()
+        {
+            return State == CLOSED_STATE;
+        }
+
         public virtual void Start()
         {
             if (!IsProposed())
@@ -196,9 +202,17 @@ namespace Gringotts.Domain
             aFirstVenture.holding = holdings[0];
             aSecondVenture.holding = holdings[1];
 
+            CloseTheVenture();
+            aFirstVenture.ChangeStateToStarted();
+            aSecondVenture.ChangeStateToStarted();
+
             aVentures.Add(aFirstVenture);
             aVentures.Add(aSecondVenture);
             return aVentures;
+        }
+
+        private void CloseTheVenture(){
+            State = CLOSED_STATE;
         }
     }
 }
