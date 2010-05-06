@@ -117,5 +117,24 @@ namespace Gringotts.Domain
 
             Assert.Throws<Exception>(()=>venture.Split(terms));
         }
+
+        [Test]
+        public void ShouldUpdateThePortfolioOfTheInvestorWhenVentureCloses(){
+            var outlay = new Amount(50);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var investor0 = new Investor(new Name("Investor0"), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            var ventures = venture.Split(terms);
+
+           Assert.IsFalse(investor0.HasInvestmentIn(venture));
+           Assert.IsTrue(investor0.HasInvestmentIn(ventures.First()));
+           Assert.IsTrue(investor0.HasInvestmentIn(ventures.Last()));
+        }
     }
 }

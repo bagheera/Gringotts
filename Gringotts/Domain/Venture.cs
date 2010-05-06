@@ -223,6 +223,10 @@ namespace Gringotts.Domain
 
         private void CloseTheVenture(){
             State = CLOSED_STATE;
+            foreach (var investment in holding.Investments){
+                investment.Investor.RemoveInvestmentFromPortfolio(investment);
+            }
+//            holding.ClearAllInvestments();
         }
     }
 }

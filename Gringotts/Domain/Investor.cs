@@ -120,5 +120,13 @@ namespace Gringotts.Domain
             string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, offer.VentureName);
             balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
+
+        public virtual bool	HasInvestmentIn(Venture venture){
+            return portfolio.HasInvestmentIn(venture);
+        }
+
+        public virtual void RemoveInvestmentFromPortfolio(Investment investment){
+            portfolio.RemoveInvestment(investment);
+        }
     }
 }
