@@ -26,8 +26,8 @@ namespace Gringotts.Domain
             var secondVentureName = new Name("new-venture-2");
             var terms = new TermsOfSplit(new Percentage(0.8f), firstVentureName, secondVentureName);
             var ventures = venture.Split(terms);
-            Assert.AreEqual(firstVentureName, ventures.First().Name);
-            Assert.AreEqual(secondVentureName, ventures.Last().Name);
+            Assert.AreEqual(firstVentureName.GetValue(), ventures.First().Name);
+            Assert.AreEqual(secondVentureName.GetValue(), ventures.Last().Name);
         }
 
         [Test]

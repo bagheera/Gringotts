@@ -38,7 +38,7 @@ namespace Gringotts.Persistence
             var venture = new Venture(new Name("Hacker's Venture"), new Amount(500), new Amount(500));
             var offerAmount = new Amount(500);
             venture.AddOffer(investor, offerAmount);
-            var testBalanceEvent = new BalanceEvent(string.Format(BalanceEvent.OFFER_ACCEPTED,venture.Name.GetValue()), offerAmount);
+            var testBalanceEvent = new BalanceEvent(string.Format(BalanceEvent.OFFER_ACCEPTED,venture.Name), offerAmount);
 
             InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);

@@ -145,7 +145,7 @@ namespace Gringotts.Domain{
             var outlay = new Amount(100);
             var minInvestment = new Amount(1);
             var venture = new Venture(nameOfVenture, outlay, minInvestment);
-            Assert.AreEqual(nameOfVenture, venture.Name);
+            Assert.AreEqual(nameOfVenture.GetValue(), venture.Name);
             Assert.AreEqual(outlay, venture.Outlay);
             Assert.AreEqual(minInvestment, venture.MinInvestment);
             Assert.True(venture.IsProposed());

@@ -64,7 +64,6 @@ namespace Gringotts.Domain{
             var investor = new Investor(new Name("Inverstor1"), new Amount(1000));
             var venture = new Venture(new Name("ventura!"), new Amount(1000), new Amount(500));
             Offer offer = venture.AddOffer(investor, new Amount(600));
-            Assert.NotNull(offer);
             Assert.AreEqual(new Amount(400), investor.Balance);
             BalanceHistory history = investor.GetBalanceHistory();
             string offerEvent = string.Format(BalanceEvent.OFFER_ACCEPTED, offer.VentureName);
@@ -102,15 +101,13 @@ namespace Gringotts.Domain{
             var venture = new Venture(new Name("Ventura Inc."), outlay, new Amount(1));
             
             venture.AddOffer(investor1, outlay);
-            Assert.AreEqual(initialBalance - outlay, investor1.Balance);
             var offerAmount2 = new Amount(600);
             venture.AddOffer(investor2, offerAmount2);
-            Assert.AreEqual(initialBalance - offerAmount2, investor2.Balance);
 
             venture.Start();
 
             BalanceHistory history = investor2.GetBalanceHistory();
-            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, venture.Name.GetValue());
+            string offerEvent = string.Format(BalanceEvent.OFFER_REJECTED, venture.Name);
             BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
@@ -131,7 +128,7 @@ namespace Gringotts.Domain{
             venture.Start();
 
             BalanceHistory history = investor1.GetBalanceHistory();
-            string offerEvent = string.Format(BalanceEvent.OFFER_PARTIALLY_ACCEPTED, venture.Name.GetValue());
+            string offerEvent = string.Format(BalanceEvent.OFFER_PARTIALLY_ACCEPTED, venture.Name);
             BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance - outlay);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
@@ -144,17 +141,15 @@ namespace Gringotts.Domain{
             var outlay = new Amount(400);
             var venture = new Venture(new Name("Ventura Inc."), outlay, new Amount(1));
 
-            var excess = new Amount(100);
-            venture.AddOffer(investor1, outlay + excess);
-            Assert.AreEqual(initialBalance - (outlay + excess), investor1.Balance);
+            venture.AddOffer(investor1, outlay);
 
             venture.Start();
             var dividend = new Amount(1000);
             venture.HandOutDividends(dividend);
 
             BalanceHistory history = investor1.GetBalanceHistory();
-            string offerEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name.GetValue());
-            BalanceEvent balanceEvent = new BalanceEvent(offerEvent, initialBalance - outlay + dividend);
+            string dividendEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name);
+            BalanceEvent balanceEvent = new BalanceEvent(dividendEvent, initialBalance - outlay + dividend);
             Assert.Contains(balanceEvent, history.GetEvents());
         }
     }

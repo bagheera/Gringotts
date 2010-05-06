@@ -2,7 +2,7 @@ namespace Gringotts.Domain
 {
 	public class Name
 	{
-		private readonly string name;
+		private string name;
 
 		public Name(string name)
 		{
