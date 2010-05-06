@@ -71,9 +71,15 @@ namespace Gringotts.Domain
             var aHolding = new Holding();
             foreach (var investment in Investments)
             {
-                aHolding.Add(new Investment(investment.Investor, percentage.Apply(investment.Value)));
+                Investment inv = new Investment(investment.Investor, percentage.Apply(investment.Value));
+                aHolding.Add(inv);
+                inv.Investor.AddInvestmentToPortfolio(inv);
             }
             return aHolding;
+        }
+
+        public void	 ClearAllInvestments(){
+            investments.Clear();
         }
     }
 }

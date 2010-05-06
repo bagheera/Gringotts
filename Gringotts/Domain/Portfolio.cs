@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Iesi.Collections.Generic;
@@ -27,6 +28,12 @@ namespace Gringotts.Domain
 
         public void RemoveInvestment(Investment investment){
             investments.Remove(investment);
+        }
+
+        public bool	HasInvestmentIn(Venture venture){
+            IEnumerable<Investment> commonInvestments = investments.Intersect(venture.Holding.Investments);
+            if (commonInvestments.Count() > 0) return true;
+            return false;
         }
     }
 }
