@@ -8,12 +8,12 @@ namespace Gringotts.Domain{
         public const String STARTED = "Venture Started";
         public const String PROPOSED = "Venture Proposed";
         public const string BANKRUPT = "Venture Bankrupt";
-
+        public const string SPLIT = "Venture Split";
         private string Id;
         
         public virtual string EventType { get; private set; }
         public virtual Amount Outlay { get; private set; }
-
+       
         public VentureEvent(){
             //for hibernate
         }

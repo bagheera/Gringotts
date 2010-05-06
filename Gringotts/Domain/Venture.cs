@@ -13,7 +13,12 @@ namespace Gringotts.Domain
         public const string CLOSED_STATE = "Closed";
         public const string BANKRUPT_STATE = "Bankrupt";
 
-
+        public virtual string Id { get; private set; }
+        public virtual Name Name { get; private set; }
+        public virtual Amount Outlay { get; private set; }
+        public virtual Amount MinInvestment { get; private set; }
+        public virtual Subscription Subscription { get; set; }
+        public virtual String State { get; private set; }
 
         public virtual VentureHistory GetVentureHistory()
         {
@@ -47,13 +52,6 @@ namespace Gringotts.Domain
         {
             holding = new Holding();
         }
-
-        public virtual string Id { get; private set; }
-        public virtual Name Name { get; private set; }
-        public virtual Amount Outlay { get; private set; }
-        public virtual Amount MinInvestment { get; private set; }
-        public virtual Subscription Subscription { get; set; }
-        public virtual String State { get; private set; }
 
         public virtual Holding Holding
         {
@@ -121,6 +119,7 @@ namespace Gringotts.Domain
 
         public virtual void ChangeStateToStarted()
         {
+            AddEventToVentureHistory(VentureEvent.STARTED);
             State = STARTED_STATE;
         }
 
@@ -168,8 +167,7 @@ namespace Gringotts.Domain
         private void AddInvestmentsToHolding(List<Investment> investments)
         {
             Holding.AddRange(investments);
-            State = STARTED_STATE;
-            AddEventToVentureHistory(VentureEvent.STARTED);
+            ChangeStateToStarted();
         }
 
         private void AddEventToVentureHistory(String eventType)
@@ -199,10 +197,13 @@ namespace Gringotts.Domain
            // Splitting of Holding's Investments
            // Splitting of OutLay
             var aVentures = new List<Venture>();
-            var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
-                termsOfSplit.Ratio.Apply(Outlay));
-            var aSecondVenture = new Venture(termsOfSplit.SecondVentureName,
-                termsOfSplit.Ratio.ApplyRemaining(Outlay));
+            var aFirstVenture = new Venture();
+            aFirstVenture.Name = termsOfSplit.FirstVentureName;
+            aFirstVenture.Outlay = termsOfSplit.Ratio.Apply(Outlay);
+            
+            var aSecondVenture = new Venture();
+            aSecondVenture.Name = termsOfSplit.SecondVentureName;
+            aSecondVenture.Outlay = termsOfSplit.Ratio.ApplyRemaining(Outlay);
 
             // Splitting of Holding's Investments
             var holdings = Holding.Split(termsOfSplit.Ratio);
@@ -210,6 +211,8 @@ namespace Gringotts.Domain
             aSecondVenture.holding = holdings[1];
 
             CloseTheVenture();
+            aFirstVenture.AddEventToVentureHistory(VentureEvent.SPLIT);
+            aSecondVenture.AddEventToVentureHistory(VentureEvent.SPLIT);
             aFirstVenture.ChangeStateToStarted();
             aSecondVenture.ChangeStateToStarted();
 
@@ -219,6 +222,7 @@ namespace Gringotts.Domain
         }
 
         private void CloseTheVenture(){
+            AddEventToVentureHistory(VentureEvent.SPLIT);
             State = CLOSED_STATE;
         }
     }
