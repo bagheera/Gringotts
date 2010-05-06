@@ -202,8 +202,10 @@ namespace Gringotts.Domain
 
         public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
         {
-           // Splitting of Holding's Investments
-           // Splitting of OutLay
+            if(!IsStarted()){
+                throw new Exception("Cannot split a venture that is not started.");
+            }
+            // Splitting of OutLay
             var aVentures = new List<Venture>();
             var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
                 termsOfSplit.Ratio.Apply(Outlay));

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -14,6 +15,8 @@ namespace Gringotts.Domain
             var firstVentureName = new Name("new-venture-1");
             var secondVentureName = new Name("new-venture-2");
             var terms = new TermsOfSplit(new Percentage(0.8f), firstVentureName, secondVentureName);
+            venture.AddOffer(new Investor(new Name("testName"), new Amount(1000)), new Amount(100));
+            venture.Start();
             var ventures = venture.Split(terms);
             Assert.AreEqual(2, ventures.Count());
         }
@@ -25,6 +28,8 @@ namespace Gringotts.Domain
             var firstVentureName = new Name("new-venture-1");
             var secondVentureName = new Name("new-venture-2");
             var terms = new TermsOfSplit(new Percentage(0.8f), firstVentureName, secondVentureName);
+            venture.AddOffer(new Investor(new Name("testName"), new Amount(1000)), new Amount(100));
+            venture.Start();
             var ventures = venture.Split(terms);
             Assert.AreEqual(firstVentureName.GetValue(), ventures.First().Name);
             Assert.AreEqual(secondVentureName.GetValue(), ventures.Last().Name);
@@ -38,6 +43,8 @@ namespace Gringotts.Domain
             var secondVentureName = new Name("new-venture-2");
             var percentage = new Percentage(0.2f);
             var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            venture.AddOffer(new Investor(new Name("testName"), new Amount(1000)), new Amount(100));
+            venture.Start();
             var ventures = venture.Split(terms);
             Assert.AreEqual(percentage.Apply(venture.Outlay), ventures.First().Outlay);
             Assert.AreEqual(percentage.ApplyRemaining(venture.Outlay), ventures.Last().Outlay);
@@ -95,6 +102,20 @@ namespace Gringotts.Domain
             Assert.IsTrue(newVentures.First().IsStarted());
             Assert.IsTrue(newVentures.Last().IsStarted());
         }
-        //AndPut
+
+        [Test]
+        public void ShouldNotBeAbleToSplitANonStartedVenture(){
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var investor0 = new Investor(new Name("Investor0"), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+
+            Assert.Throws<Exception>(()=>venture.Split(terms));
+        }
     }
 }
