@@ -184,15 +184,18 @@ namespace Gringotts.Domain
 
         public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
         {
-            // Splitting of Holding's Investments
-            
             // Splitting of OutLay
             var aVentures = new List<Venture>();
             var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
                 termsOfSplit.Ratio.Apply(Outlay));
             var aSecondVenture = new Venture(termsOfSplit.SecondVentureName,
                 termsOfSplit.Ratio.ApplyRemaining(Outlay));
-            
+
+            // Splitting of Holding's Investments
+            var holdings = Holding.Split(termsOfSplit.Ratio);
+            aFirstVenture.holding = holdings[0];
+            aSecondVenture.holding = holdings[1];
+
             aVentures.Add(aFirstVenture);
             aVentures.Add(aSecondVenture);
             return aVentures;

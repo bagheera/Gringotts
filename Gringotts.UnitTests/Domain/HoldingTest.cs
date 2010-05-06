@@ -50,5 +50,20 @@ namespace Gringotts.Domain
             Assert.AreEqual(aPercentageOfSplit.Apply(holding.Value), splitHoldings.First().Value);
             Assert.AreEqual(aPercentageOfSplit.ApplyRemaining(holding.Value), splitHoldings.Last().Value);
         }
+
+        [Test]
+        public void ShouldSplitInvestmentsInHoldingAccordingToSplitPercentage(){
+            var holding = new Holding();
+            var firstInvestment = new Amount(250);
+            holding.Add(new Investment(new Investor(new Name("quarter"), new Amount(2500)), null, firstInvestment));
+            var secondInvestment = new Amount(750);
+            holding.Add(new Investment(new Investor(new Name("threeFourths"), new Amount(2000)), null, secondInvestment));
+            var aPercentageOfSplit = new Percentage(0.3f);
+            var splitHoldings = holding.Split(aPercentageOfSplit);
+            Assert.AreEqual(aPercentageOfSplit.Apply(firstInvestment), splitHoldings.First().Investments.First().Value);
+            Assert.AreEqual(aPercentageOfSplit.Apply(secondInvestment), splitHoldings.First().Investments.Last().Value);
+            Assert.AreEqual(aPercentageOfSplit.ApplyRemaining(firstInvestment), splitHoldings.Last().Investments.First().Value);
+            Assert.AreEqual(aPercentageOfSplit.ApplyRemaining(secondInvestment), splitHoldings.Last().Investments.Last().Value);
+        }
     }
 }

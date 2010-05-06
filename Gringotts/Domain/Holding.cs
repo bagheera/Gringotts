@@ -54,7 +54,7 @@ namespace Gringotts.Domain
             return participation;
         }
         
-        public IEnumerable<Holding> Split(Percentage percentage)
+        public IList<Holding> Split(Percentage percentage)
         {
             IList<Holding> holdings = new List<Holding>();
             Holding aHolding = GetSplittedHolding(percentage);
