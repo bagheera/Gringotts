@@ -377,6 +377,34 @@ namespace Gringotts.Domain{
             Assert.Contains(ventureEventForBankruptcy, ventureHistory.GetEvents());
         }
 
+        [Test]
+        public void ShouldCreateVentureEventWhenVentureSplits()
+        {
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var investor0 = new Investor(new Name("Investor0"), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            var newVentures = venture.Split(terms);
+
+            Assert.IsTrue(newVentures.First().IsStarted());
+            Assert.IsTrue(newVentures.Last().IsStarted());
+            
+            VentureEvent ventureEventSplit1 = new VentureEvent(VentureEvent.SPLIT,new Amount(8));
+            VentureEvent ventureEventSplit2 = new VentureEvent(VentureEvent.SPLIT,new Amount(32));
+
+            VentureHistory ventureHistory1 = newVentures.First().GetVentureHistory();
+            VentureHistory ventureHistory2 = newVentures.Last().GetVentureHistory();
+
+            Assert.Contains(ventureEventSplit1, ventureHistory1.GetEvents());
+            Assert.Contains(ventureEventSplit2, ventureHistory2.GetEvents());
+        }
+
         private Investor CreateInvestor(string name, int corpus)
         {
             return new Investor(new Name(name), new Amount(corpus));
