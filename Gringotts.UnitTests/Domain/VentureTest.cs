@@ -396,13 +396,18 @@ namespace Gringotts.Domain{
             Assert.IsTrue(newVentures.Last().IsStarted());
             
             VentureEvent ventureEventSplit1 = new VentureEvent(VentureEvent.SPLIT,new Amount(8));
+            VentureEvent ventureEventStarted1 = new VentureEvent(VentureEvent.STARTED,new Amount(8));
             VentureEvent ventureEventSplit2 = new VentureEvent(VentureEvent.SPLIT,new Amount(32));
+            VentureEvent ventureEventStarted2 = new VentureEvent(VentureEvent.STARTED,new Amount(32));
 
             VentureHistory ventureHistory1 = newVentures.First().GetVentureHistory();
             VentureHistory ventureHistory2 = newVentures.Last().GetVentureHistory();
 
             Assert.Contains(ventureEventSplit1, ventureHistory1.GetEvents());
+            Assert.Contains(ventureEventStarted1, ventureHistory1.GetEvents());
+            
             Assert.Contains(ventureEventSplit2, ventureHistory2.GetEvents());
+            Assert.Contains(ventureEventStarted2, ventureHistory2.GetEvents());
         }
 
         private Investor CreateInvestor(string name, int corpus)

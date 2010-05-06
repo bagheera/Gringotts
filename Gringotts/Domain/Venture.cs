@@ -208,6 +208,7 @@ namespace Gringotts.Domain
             aFirstVenture.holding = holdings[0];
             aSecondVenture.holding = holdings[1];
 
+            AddEventToVentureHistory(VentureEvent.SPLIT);
             CloseTheVenture();
 
             aFirstVenture.AddEventToVentureHistory(VentureEvent.SPLIT);
@@ -221,7 +222,6 @@ namespace Gringotts.Domain
         }
 
         private void CloseTheVenture(){
-            AddEventToVentureHistory(VentureEvent.SPLIT);
             State = CLOSED_STATE;
         }
     }
