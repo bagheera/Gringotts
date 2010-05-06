@@ -7,8 +7,10 @@ namespace Gringotts.Domain{
         public const String CANCELLED = "Venture Cancelled";
         public const String STARTED = "Venture Started";
         public const String PROPOSED = "Venture Proposed";
+        public const string BANKRUPT = "Venture Bankrupt";
 
         private string Id;
+        
         public virtual string EventType { get; private set; }
         public virtual Amount Outlay { get; private set; }
 

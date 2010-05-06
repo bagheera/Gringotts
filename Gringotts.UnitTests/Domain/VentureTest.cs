@@ -323,10 +323,9 @@ namespace Gringotts.Domain{
         public void ShouldCreateAVentureEventWhenVentureIsProposed(){
 
             Venture venture = CreateVenture(500, 100, "Ace Ventura");
+            
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.PROPOSED,new Amount(500));
-
             VentureHistory ventureHistory = venture.GetVentureHistory();
-
             Assert.Contains(ventureEvent, ventureHistory.GetEvents());
         }
 
@@ -338,9 +337,7 @@ namespace Gringotts.Domain{
             venture.Start();
           
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.STARTED, new Amount(600));
-
             VentureHistory ventureHistory = venture.GetVentureHistory();
-
             Assert.Contains(ventureEvent, ventureHistory.GetEvents());
         }
 
@@ -353,10 +350,31 @@ namespace Gringotts.Domain{
             venture.ChangeStateToCancelled();
 
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.CANCELLED, new Amount(600));
+            VentureHistory ventureHistory = venture.GetVentureHistory();
+            Assert.Contains(ventureEvent, ventureHistory.GetEvents());
+        }
+
+        [Test]
+        public void ShouldCreateVentureEventWhenVentureGoesBankrupt()
+        {
+            var outlay = new Amount(50);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var initialCorpus = new Amount(100);
+            var investor = new Investor(new Name("Investor0"), initialCorpus);
+            var investmentAmount = new Amount(50);
+            venture.AddOffer(investor, investmentAmount);
+
+            venture.Start();
+            venture.GoBankrupt();
+
+            VentureEvent ventureEventProposed = new VentureEvent(VentureEvent.PROPOSED, outlay);
+            VentureEvent ventureEventStarted = new VentureEvent(VentureEvent.STARTED, outlay);
+            VentureEvent ventureEventForBankruptcy = new VentureEvent(VentureEvent.BANKRUPT, outlay);
 
             VentureHistory ventureHistory = venture.GetVentureHistory();
-
-            Assert.Contains(ventureEvent, ventureHistory.GetEvents());
+            Assert.Contains(ventureEventProposed, ventureHistory.GetEvents());
+            Assert.Contains(ventureEventStarted, ventureHistory.GetEvents());
+            Assert.Contains(ventureEventForBankruptcy, ventureHistory.GetEvents());
         }
 
         private Investor CreateInvestor(string name, int corpus)

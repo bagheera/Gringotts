@@ -185,6 +185,7 @@ namespace Gringotts.Domain
             {
                 investment.Investor.NotifyVentureBankruptcy(investment);
             }
+            AddEventToVentureHistory(VentureEvent.BANKRUPT);
         }
 
         public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
