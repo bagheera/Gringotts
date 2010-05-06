@@ -31,7 +31,7 @@ namespace Gringotts.Domain
 
         private Venture(Name name, Amount outlay)
         {
-            Name = name;
+            this.name = name;
             Outlay = outlay;
             MinInvestment = new Amount(0);
             Subscription = new Subscription();
@@ -46,7 +46,13 @@ namespace Gringotts.Domain
         }
 
         public virtual string Id { get; private set; }
-        public virtual Name Name { get; private set; }
+
+        private Name name;
+
+        public virtual string Name{
+            get { return name.GetValue(); }
+        }
+
         public virtual Amount Outlay { get; private set; }
         public virtual Amount MinInvestment { get; private set; }
         public virtual Subscription Subscription { get; set; }

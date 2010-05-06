@@ -20,9 +20,6 @@ namespace Gringotts.Persistence{
             investorRepository.Save(investor);
 
             Venture venture = CreateVenture(2000, 400, "Ram Capitalists");
-            int minInvestment;
-            int outlay;
-            string ventureName;
             var ventureRepository = new VentureRepository(session);
             ventureRepository.Save(venture);
 
@@ -48,7 +45,7 @@ namespace Gringotts.Persistence{
             Assert.AreEqual(investor.Name.GetValue(), savedOffer.Investor.Name.GetValue());
 
             //venture props
-            Assert.AreEqual(venture.Name.GetValue(), savedOffer.Venture.Name.GetValue());
+            Assert.AreEqual(venture.Name, savedOffer.Venture.Name);
             Assert.AreEqual(venture.Outlay, savedOffer.Venture.Outlay);
             Assert.AreEqual(venture.MinInvestment, savedOffer.Venture.MinInvestment);
         }

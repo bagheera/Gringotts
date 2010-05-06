@@ -4,7 +4,7 @@
     <id name="Id">
       <generator class="native" />
     </id>
-    <component name="Name">
+    <component name="name" access="field">
       <property name="name" column="Name" type="String" length="40" access="field"/>
     </component>
     <component name="Outlay">

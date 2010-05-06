@@ -94,7 +94,7 @@ namespace Gringotts.Domain
         public virtual void AcceptReturn(Venture venture, Amount dividend)
         {
             Balance += dividend;
-            string offerEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name.GetValue());
+            string offerEvent = string.Format(BalanceEvent.DIVIDEND_RECEIVED, venture.Name);
             balanceHistory.AddEvent(new BalanceEvent(offerEvent, Balance));
         }
         
@@ -111,7 +111,7 @@ namespace Gringotts.Domain
         public virtual void	NotifyVentureBankruptcy(Investment investment){
             portfolio.RemoveInvestment(investment);
             String ventureBankruptEvent = String.Format(BalanceEvent.VENTURE_BANKRUPT,
-                                                        investment.Venture.Name.GetValue());
+                                                        investment.Venture.Name);
             balanceHistory.AddEvent(new BalanceEvent(ventureBankruptEvent, new Amount(Balance.Denomination)));
         }
 
