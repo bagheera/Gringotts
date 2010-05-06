@@ -325,7 +325,7 @@ namespace Gringotts.Domain{
             Venture venture = CreateVenture(500, 100, "Ace Ventura");
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.PROPOSED,new Amount(500));
 
-            VentureHistory ventureHistory = venture.VentureHistory;
+            VentureHistory ventureHistory = venture.GetVentureHistory();
 
             Assert.Contains(ventureEvent, ventureHistory.GetEvents());
         }
@@ -339,7 +339,7 @@ namespace Gringotts.Domain{
           
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.STARTED, new Amount(600));
 
-            VentureHistory ventureHistory = venture.VentureHistory;
+            VentureHistory ventureHistory = venture.GetVentureHistory();
 
             Assert.Contains(ventureEvent, ventureHistory.GetEvents());
         }
@@ -354,7 +354,7 @@ namespace Gringotts.Domain{
 
             VentureEvent ventureEvent = new VentureEvent(VentureEvent.CANCELLED, new Amount(600));
 
-            VentureHistory ventureHistory = venture.VentureHistory;
+            VentureHistory ventureHistory = venture.GetVentureHistory();
 
             Assert.Contains(ventureEvent, ventureHistory.GetEvents());
         }

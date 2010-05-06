@@ -3,12 +3,14 @@ using System;
 namespace Gringotts.Domain{
 
     public class VentureEvent{
+
         public const String CANCELLED = "Venture Cancelled";
         public const String STARTED = "Venture Started";
         public const String PROPOSED = "Venture Proposed";
 
-        public string EventType { get; private set; }
-        public Amount Outlay { get; private set; }
+        private string Id;
+        public virtual string EventType { get; private set; }
+        public virtual Amount Outlay { get; private set; }
 
         public VentureEvent(){
             //for hibernate
@@ -19,7 +21,8 @@ namespace Gringotts.Domain{
             Outlay = outlay;
         }
 
-        public bool Equals(VentureEvent other){
+        public virtual bool Equals(VentureEvent other)
+        {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Equals(other.EventType, EventType) && Equals(other.Outlay, Outlay);

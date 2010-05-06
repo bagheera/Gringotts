@@ -14,19 +14,21 @@ namespace Gringotts.Domain
         public const string BANKRUPT_STATE = "Bankrupt";
 
 
-        public virtual VentureHistory VentureHistory
+
+        public virtual VentureHistory GetVentureHistory()
         {
-            get { return ventureHistory; }
+            return ventureHistory;
         }
 
-        public Venture(Name name, Amount outlay, Amount minInvestment):this(name, outlay)
+        public Venture(Name name, Amount outlay, Amount minInvestment)
+            : this(name, outlay)
         {
             if (minInvestment <= new Amount(0))
                 throw new Exception("Minimum investment must be greater than 0");
             if (outlay < minInvestment)
                 throw new Exception("Outlay must be greater than minimum investment");
             MinInvestment = minInvestment;
-            
+
         }
 
         private Venture(Name name, Amount outlay)
@@ -93,15 +95,15 @@ namespace Gringotts.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Venture)) return false;
-            return Equals((Venture) obj);
+            if (obj.GetType() != typeof(Venture)) return false;
+            return Equals((Venture)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((Id != null ? Id.GetHashCode() : 0)*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                return ((Id != null ? Id.GetHashCode() : 0) * 397) ^ (Name != null ? Name.GetHashCode() : 0);
             }
         }
 
@@ -124,7 +126,7 @@ namespace Gringotts.Domain
         public virtual void HandOutDividends(Amount dividend)
         {
             if (!IsStarted())
-                throw new InvalidOperationException("Cannot hand out dividends for an un-started venture");            
+                throw new InvalidOperationException("Cannot hand out dividends for an un-started venture");
             holding.DistributeDividends(dividend);
         }
 
@@ -164,7 +166,8 @@ namespace Gringotts.Domain
             AddEventToVentureHistory(VentureEvent.STARTED);
         }
 
-        private void AddEventToVentureHistory(String eventType){
+        private void AddEventToVentureHistory(String eventType)
+        {
             ventureHistory.AddEvent(new VentureEvent(eventType, new Amount(Outlay.Denomination)));
         }
 
@@ -173,11 +176,13 @@ namespace Gringotts.Domain
             return State == PROPOSED_STATE;
         }
 
-        public virtual void	 GoBankrupt(){
-            if(!IsStarted())
+        public virtual void GoBankrupt()
+        {
+            if (!IsStarted())
                 throw new InvalidOperationException("Cannot Go Bankrupt if not started");
             State = BANKRUPT_STATE;
-            foreach (var  investment in holding.Investments){
+            foreach (var investment in holding.Investments)
+            {
                 investment.Investor.NotifyVentureBankruptcy(investment);
             }
         }
@@ -185,14 +190,14 @@ namespace Gringotts.Domain
         public virtual IEnumerable<Venture> Split(TermsOfSplit termsOfSplit)
         {
             // Splitting of Holding's Investments
-            
+
             // Splitting of OutLay
             var aVentures = new List<Venture>();
             var aFirstVenture = new Venture(termsOfSplit.FirstVentureName,
                 termsOfSplit.Ratio.Apply(Outlay));
             var aSecondVenture = new Venture(termsOfSplit.SecondVentureName,
                 termsOfSplit.Ratio.ApplyRemaining(Outlay));
-            
+
             aVentures.Add(aFirstVenture);
             aVentures.Add(aSecondVenture);
             return aVentures;

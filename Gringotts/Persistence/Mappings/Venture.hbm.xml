@@ -10,6 +10,12 @@
     <component name="Outlay">
       <property name="value" column="Outlay" type="float" access="field"/>
     </component>
+    <component name="ventureHistory" class="Gringotts.Domain.VentureHistory" access="field.camelcase">
+      <set name="events" cascade="all" access="field">
+        <key column="VentureId"/>
+        <one-to-many class="Gringotts.Domain.VentureEvent"/>
+      </set>
+    </component>
     <component name="MinInvestment">
       <property name="value" column="MinInvestment" type="float" access="field"/>
     </component>
