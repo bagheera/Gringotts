@@ -59,5 +59,42 @@ namespace Gringotts.Domain
             var ventures = venture.Split(terms);
             Assert.AreEqual(venture.HoldingValue.Denomination, ventures.Sum(n => n.HoldingValue.Denomination));
         }
+
+        [Test]
+        public void ShouldCloseTheVentureWhenAVentureSplits(){
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var investor0 = new Investor(new Name("Investor0"), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            venture.Split(terms);
+
+            Assert.IsTrue(venture.IsClosed());
+        }
+
+        [Test]
+        public void NewVenturesShouldStartWhenAVentureSplits()
+        {
+            var outlay = new Amount(40);
+            var venture = new Venture(new Name("Ventura"), outlay, new Amount(1));
+            var investor0 = new Investor(new Name("Investor0"), new Amount(100));
+            venture.AddOffer(investor0, new Amount(50));
+            venture.Start();
+            var firstVentureName = new Name("new-venture-1");
+            var secondVentureName = new Name("new-venture-2");
+            var percentage = new Percentage(0.2f);
+
+            var terms = new TermsOfSplit(percentage, firstVentureName, secondVentureName);
+            var newVentures = venture.Split(terms);
+
+            Assert.IsTrue(newVentures.First().IsStarted());
+            Assert.IsTrue(newVentures.Last().IsStarted());
+        }
+        //AndPut
     }
 }
