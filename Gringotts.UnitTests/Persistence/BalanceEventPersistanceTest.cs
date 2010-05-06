@@ -32,15 +32,17 @@ namespace Gringotts.Persistence
 
         [Test]
         public void VerifyCascadeSaveOfBalanceEventViaInvestor(){
-            Investor investor = new Investor(new Name("dude"), new Amount(100));
+            Investor investor = new Investor(new Name("dude"), new Amount(1000));
             BalanceHistory balanceHistory = investor.GetBalanceHistory();
-            var testBalanceEvent = new BalanceEvent("test event", new Amount(20));
-            balanceHistory.AddEvent(testBalanceEvent);
+
+            var venture = new Venture(new Name("Hacker's Venture"), new Amount(500), new Amount(500));
+            var offerAmount = new Amount(500);
+            venture.AddOffer(investor, offerAmount);
+            var testBalanceEvent = new BalanceEvent(string.Format(BalanceEvent.OFFER_ACCEPTED,venture.Name.GetValue()), offerAmount);
 
             InvestorRepository investorRepository = new InvestorRepository(session);
             investorRepository.Save(investor);
             session.Evict(investor);
-            session.Evict(testBalanceEvent);
 
             IQuery query = session.CreateQuery("from BalanceEvent");
             IList<BalanceEvent> savedBalanceEvents = query.List<BalanceEvent>();
